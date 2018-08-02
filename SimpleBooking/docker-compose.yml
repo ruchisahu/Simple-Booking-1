@@ -6,3 +6,10 @@ services:
     build:
       context: .
       dockerfile: EventManagementAPI\Dockerfile
+
+  tempwebapplication1:
+    image: ${DOCKER_REGISTRY}orderprocessorapi
+    build:
+      context: .
+      dockerfile: OrderProcessorAPI\Dockerfile
+
