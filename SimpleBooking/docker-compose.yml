@@ -1,8 +1,10 @@
 version: '3.4'
 
 services:
-  eventmanagementapi:
-    image: ${DOCKER_REGISTRY}eventmanagementapi
+  eventcatalog:
+    image: ${DOCKER_REGISTRY}eventcatalog
     build:
       context: .
-      dockerfile: EventManagementAPI\Dockerfile
+      dockerfile: EventCatalog/Dockerfile
+
+  
