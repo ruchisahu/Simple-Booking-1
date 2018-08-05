@@ -7,7 +7,7 @@ services:
       context: .
       dockerfile: EventManagementAPI\Dockerfile
 
-  tempwebapplication1:
+  orderprocessorapi:
     image: ${DOCKER_REGISTRY}orderprocessorapi
     build:
       context: .
