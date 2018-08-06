@@ -47,6 +47,10 @@ namespace EventManagementAPI.Data
             builder.Property(p => p.State).IsRequired();
             builder.Property(p => p.ZipCode).IsRequired();
             builder.Property(p => p.Price).IsRequired();
+
+            builder.HasOne(p => p.Event)
+                .WithOne(e => e.Place)
+                .HasForeignKey<Place>(p => p.EventId);
         }
 
         private void ConfigureTicket(EntityTypeBuilder<Ticket> builder)
