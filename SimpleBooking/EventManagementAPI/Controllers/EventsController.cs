@@ -16,6 +16,31 @@ namespace EventManagementAPI.Controllers
         public EventsController(ManagementContext managementContext)
         {
             this.managementContext = managementContext;
+
+            //test data
+            Event _event = new Event();
+            Place place = new Place();
+            List<Ticket> tickets = new List<Ticket>();
+
+            _event.Category = EventCategory.Tech;
+            _event.Date = DateTime.Now;
+            _event.Description = "A networking event for the tech community";
+            _event.ImageURL = "https://www.google.com";
+            _event.Name = "Tech Social";
+            _event.Place = place;
+            _event.Price = 292;
+            _event.PriceType = EventPriceType.Paid;
+            _event.Tickets = tickets;
+
+            place.Address = "111 House Street";
+            place.City = "Seattle";
+            place.Name = "Your House";
+            place.Price = 199;
+            place.State = "WA";
+            place.ZipCode = 98101;
+
+            managementContext.Events.Add(_event);
+            managementContext.SaveChanges();
         }
 
         [HttpGet]
@@ -52,12 +77,18 @@ namespace EventManagementAPI.Controllers
                 return NotFound();
             }
 
-            foreach(Ticket ticket in _event.Tickets)
+            if(_event.Tickets != null)
             {
-                foreach(Transaction transaction in ticket.Transactions)
+                foreach(Ticket ticket in _event.Tickets)
                 {
-                    count++;
-                    totalAmount += transaction.TotalAmount;
+                    if(ticket.Transactions != null)
+                    {
+                        foreach(Transaction transaction in ticket.Transactions)
+                        {
+                            count++;
+                            totalAmount += transaction.TotalAmount;
+                        }
+                    }
                 }
             }
 
@@ -71,24 +102,30 @@ namespace EventManagementAPI.Controllers
             Dictionary<DateTime, int> salesHistory = new Dictionary<DateTime, int>();
             Event _event = managementContext.Events.SingleOrDefault(x => x.Id == id);
 
-            if (_event == null)
+            if(_event == null)
             {
                 return NotFound();
             }
 
-            foreach (Ticket ticket in _event.Tickets)
+            if(_event.Tickets != null)
             {
-                foreach (Transaction transaction in ticket.Transactions)
+                foreach(Ticket ticket in _event.Tickets)
                 {
-                    DateTime date = transaction.ProcessingTime.Date;
+                    if(ticket.Transactions != null)
+                    {
+                        foreach(Transaction transaction in ticket.Transactions)
+                        {
+                            DateTime date = transaction.ProcessingTime.Date;
 
-                    if (!salesHistory.ContainsKey(date))
-                    {
-                        salesHistory[date]++;
-                    }
-                    else
-                    {
-                        salesHistory.Add(date, 1);
+                            if (!salesHistory.ContainsKey(date))
+                            {
+                                salesHistory[date]++;
+                            }
+                            else
+                            {
+                                salesHistory.Add(date, 1);
+                            }
+                        }
                     }
                 }
             }
@@ -102,7 +139,7 @@ namespace EventManagementAPI.Controllers
         {
             Event match = managementContext.Events.SingleOrDefault(x => x.Id == _event.Id);
 
-            if (match == null)
+            if(match == null)
             {
                 return NotFound();
             }
