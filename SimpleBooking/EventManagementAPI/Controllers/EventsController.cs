@@ -76,7 +76,8 @@ namespace EventManagementAPI.Controllers
         [Route("{id}")]
         public IActionResult GetEvent(int id)
         {
-            Event _event = RetrieveEvent(id);
+            //Event _event = RetrieveEvent(id);
+            Event _event = managementContext.Events.Find(id); //issue with swagger not showing nested items in json response
 
             if(_event == null)
             {
@@ -157,16 +158,45 @@ namespace EventManagementAPI.Controllers
 
         [HttpPut]
         [Route("{id}/Edit/")]
-        public IActionResult EditEvent(Event _event)
+        public IActionResult EditEvent(int id, string name, string description, EventPriceType priceType, EventCategory eventCategory, DateTime? date, Decimal? price, string imageURL)
         {
-            Event match = RetrieveEvent(_event.Id);
+            Event match = managementContext.Events.Find(id);
 
             if (match == null)
             {
                 return NotFound();
             }
 
-            match = _event;
+            if(name != null && name != match.Name)
+            {
+                match.Name = name;
+            }
+
+            if (priceType != match.PriceType)
+            {
+                match.PriceType = priceType;
+            }
+
+            if (eventCategory != match.Category)
+            {
+                match.Category = eventCategory;
+            }
+
+            if (date != null && date != match.Date)
+            {
+                match.Date = (DateTime)date;
+            }
+
+            if (price != null && price != match.Price)
+            {
+                match.Price = (Decimal)price;
+            }
+
+            if (imageURL != null && imageURL != match.ImageURL)
+            {
+                match.ImageURL = imageURL;
+            }
+
             managementContext.SaveChanges();
 
             return Ok(match);
