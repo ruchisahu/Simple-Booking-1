@@ -11,6 +11,6 @@ namespace EventManagementAPI.Domain
         public virtual Event Event { get; set; }
 
         public int TransactionId { get; set; }
-        public virtual Transaction Transaction { get; set; }
+        public virtual IEnumerable<Transaction> Transactions { get; set; }
     }
 }

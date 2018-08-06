@@ -18,6 +18,6 @@ namespace EventManagementAPI.Domain
         public virtual Place Place { get; set; }
 
         public int TicketId { get; set; }
-        public virtual IEnumerable<Ticket> Ticket { get; set; }
+        public virtual IEnumerable<Ticket> Tickets { get; set; }
     }
 }
