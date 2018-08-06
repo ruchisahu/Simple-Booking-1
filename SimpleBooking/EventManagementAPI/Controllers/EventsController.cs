@@ -1,6 +1,7 @@
 ﻿using EventManagementAPI.Data;
 using EventManagementAPI.Domain;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,11 @@ namespace EventManagementAPI.Controllers
             Event _event = new Event();
             Place place = new Place();
             List<Ticket> tickets = new List<Ticket>();
+            Ticket ticket = new Ticket();
+            List<Transaction> transactions = new List<Transaction>();
+            Transaction t1 = new Transaction();
+            Transaction t2 = new Transaction();
+            Transaction t3 = new Transaction();
 
             _event.Category = EventCategory.Tech;
             _event.Date = DateTime.Now;
@@ -39,6 +45,22 @@ namespace EventManagementAPI.Controllers
             place.State = "WA";
             place.ZipCode = 98101;
 
+            ticket.Quantity = 100;
+            ticket.Transactions = transactions;
+            tickets.Add(ticket);
+
+            t1.ProcessingTime = DateTime.Now;
+            t1.TotalAmount = 155.23m;
+            transactions.Add(t1);
+
+            t2.ProcessingTime = DateTime.Now.AddDays(-5);
+            t2.TotalAmount = 19.23m;
+            transactions.Add(t2);
+
+            t3.ProcessingTime = DateTime.Now.AddDays(-1);
+            t3.TotalAmount = 95.23m;
+            transactions.Add(t3);
+
             managementContext.Events.Add(_event);
             managementContext.SaveChanges();
         }
@@ -54,7 +76,7 @@ namespace EventManagementAPI.Controllers
         [Route("{id}")]
         public IActionResult GetEvent(int id)
         {
-            Event _event = managementContext.Events.Find(id);
+            Event _event = RetrieveEvent(id);
 
             if(_event == null)
             {
@@ -70,9 +92,9 @@ namespace EventManagementAPI.Controllers
         {
             int count = 0;
             decimal totalAmount = 0;
-            Event _event = managementContext.Events.SingleOrDefault(x => x.Id == id); //event is a keyword hence the underscore
+            Event _event = RetrieveEvent(id);
 
-            if(_event == null)
+            if (_event == null)
             {
                 return NotFound();
             }
@@ -100,9 +122,9 @@ namespace EventManagementAPI.Controllers
         public IActionResult GetEventSalesHistory(int id)
         {
             Dictionary<DateTime, int> salesHistory = new Dictionary<DateTime, int>();
-            Event _event = managementContext.Events.SingleOrDefault(x => x.Id == id);
+            Event _event = RetrieveEvent(id);
 
-            if(_event == null)
+            if (_event == null)
             {
                 return NotFound();
             }
@@ -117,7 +139,7 @@ namespace EventManagementAPI.Controllers
                         {
                             DateTime date = transaction.ProcessingTime.Date;
 
-                            if (!salesHistory.ContainsKey(date))
+                            if (salesHistory.ContainsKey(date))
                             {
                                 salesHistory[date]++;
                             }
@@ -137,9 +159,9 @@ namespace EventManagementAPI.Controllers
         [Route("{id}/Edit/")]
         public IActionResult EditEvent(Event _event)
         {
-            Event match = managementContext.Events.SingleOrDefault(x => x.Id == _event.Id);
+            Event match = RetrieveEvent(_event.Id);
 
-            if(match == null)
+            if (match == null)
             {
                 return NotFound();
             }
@@ -148,6 +170,11 @@ namespace EventManagementAPI.Controllers
             managementContext.SaveChanges();
 
             return Ok(match);
+        }
+
+        private Event RetrieveEvent(int id)
+        {
+            return managementContext.Events.Include(e => e.Tickets).ThenInclude(t => t.Transactions).SingleOrDefault(e => e.Id == id);
         }
     }
 }
