@@ -12,3 +12,9 @@ services:
     build:
       context: .
       dockerfile: OrderProcessorAPI\Dockerfile
+
+  eventcatalogapi:
+    image: ${DOCKER_REGISTRY}eventcatalogapi
+    build:
+      context: .
+      dockerfile: ../EventCatalogAPI/Dockerfile
