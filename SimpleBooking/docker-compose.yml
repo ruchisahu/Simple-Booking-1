@@ -18,3 +18,9 @@ services:
     build:
       context: .
       dockerfile: EventCatalogAPI\Dockerfile
+  searcheventapi:
+    image: ${DOCKER_REGISTRY}searcheventapi
+    build:
+      context: .
+      dockerfile: SearchEventAPI/Dockerfile
+
