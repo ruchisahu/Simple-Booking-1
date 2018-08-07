@@ -30,18 +30,18 @@ namespace TicketsAPI.Controllers
         {
             ticketContext.Tickets.Add(ticket);
             await ticketContext.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetTicketById), new { id = ticket.Id });
+            return await GetTicketById(ticket.Id);
         }
 
         [HttpGet]
         [Route("{id:int}")]
-        private async Task<IActionResult> GetTicketById(int Id)
+        public async Task<IActionResult> GetTicketById(int id)
         {
-            if (Id <= 0)
+            if (id <= 0)
             {
                 return BadRequest();
             }
-            var ticket = await ticketContext.Tickets.SingleOrDefaultAsync(c => c.Id == Id);
+            var ticket = await ticketContext.Tickets.SingleOrDefaultAsync(c => c.Id == id);
             if (ticket != null)
             {
                 return Ok(ticket);
