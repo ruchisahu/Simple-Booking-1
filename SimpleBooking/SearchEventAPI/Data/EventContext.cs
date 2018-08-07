@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using SearchEventAPI.Domain;
 
@@ -8,7 +10,23 @@ namespace SearchEventAPI.Data
 {
     public class EventContext
     {
-        public static List<Event> GetEvents()
+        static HttpClient client = new HttpClient();
+
+        public static async Task<List<Event>> GetEvents()
+        {
+            client.BaseAddress = new Uri("http://localhost:60672/");
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            HttpResponseMessage response = await client.GetAsync("api/Events/0");
+            if (response.IsSuccessStatusCode)
+            {
+                string data = await response.Content.ReadAsStringAsync();
+            }
+
+            return GetMockedEvents();
+        }
+
+        public static List<Event> GetMockedEvents()
         {
             return new List<Event>()
             {

@@ -30,6 +30,18 @@ namespace TicketsAPI
             services.AddMvc();
             var connectionString = Configuration["ConnectionString"];
             services.AddDbContext<TicketContext>(options => options.UseSqlServer(connectionString));
+
+            services.AddSwaggerGen(options =>
+            {
+                options.DescribeAllEnumsAsStrings();
+                options.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info
+                {
+                    Title = "Simple Booking - Ticket Management HTTP API",
+                    Version = "v1",
+                    Description = "Ticket Management Microservice for the Simple Booking App",
+                    TermsOfService = "Terms Of Service"
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,6 +53,11 @@ namespace TicketsAPI
             }
 
             app.UseMvc();
+
+            app.UseSwagger().UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint($"/swagger/v1/swagger.json", "TicketManagementAPI V1");
+            });
         }
     }
 }
