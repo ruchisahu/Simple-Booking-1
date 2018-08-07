@@ -1,0 +1,2 @@
+﻿- Setup EventManagementAPI database
+Update-Database -Project EventManagementAPI -StartupProject EventManagementAPI
