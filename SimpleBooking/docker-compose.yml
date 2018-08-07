@@ -17,4 +17,4 @@ services:
     image: ${DOCKER_REGISTRY}eventcatalogapi
     build:
       context: .
-      dockerfile: ../EventCatalogAPI/Dockerfile
+      dockerfile: EventCatalogAPI\Dockerfile
