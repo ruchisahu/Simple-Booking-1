@@ -25,10 +25,17 @@ services:
     ports:
       - "80"
 
+  ticketsapi:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "80"
+
 networks:
   default:
     external:
       name: nat
+
 
 
 

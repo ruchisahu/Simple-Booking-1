@@ -24,3 +24,10 @@ services:
       context: .
       dockerfile: SearchEventAPI/Dockerfile
 
+
+  ticketsapi:
+    image: ${DOCKER_REGISTRY}ticketsapi
+    build:
+      context: .
+      dockerfile: TicketsAPI/Dockerfile
+
