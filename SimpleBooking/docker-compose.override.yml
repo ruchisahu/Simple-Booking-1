@@ -13,8 +13,15 @@ services:
     ports:
       - "80"
 
+  eventcatalogapi:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "80"
+
 networks:
   default:
     external:
       name: nat
+
 
