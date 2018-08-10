@@ -31,3 +31,10 @@ services:
       context: .
       dockerfile: TicketsAPI/Dockerfile
 
+
+  webmvcclient:
+    image: ${DOCKER_REGISTRY}webmvcclient
+    build:
+      context: .
+      dockerfile: ../WebMvcClient/Dockerfile
+
