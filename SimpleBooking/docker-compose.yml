@@ -31,3 +31,10 @@ services:
       context: .
       dockerfile: TicketsAPI/Dockerfile
 
+
+  tokenserviceapi:
+    image: ${DOCKER_REGISTRY}tokenserviceapi
+    build:
+      context: .
+      dockerfile: TokenServiceAPI/Dockerfile
+
