@@ -31,12 +31,26 @@ services:
     ports:
       - "80"
 
+<<<<<<< HEAD
   webmvcclient:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
     ports:
       - "80"
 
+=======
+  tokenserviceapi:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_HTTPS_PORT=44342
+    ports:
+      - "60469:80"
+      - "44342:443"
+    volumes:
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+>>>>>>> ruchi08/10
 networks:
   default:
     external:
