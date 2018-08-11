@@ -36,6 +36,13 @@ services:
       dockerfile: TicketsAPI/Dockerfile
 
 
+  tokenserviceapi:
+    image: ${DOCKER_REGISTRY}tokenserviceapi
+    build:
+      context: .
+      dockerfile: TokenServiceAPI/Dockerfile
+
+
   webmvcclient:
     image: ${DOCKER_REGISTRY}webmvcclient
     build:
