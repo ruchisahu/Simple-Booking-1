@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace EventCatalogAPI.Data
 {
+
     public class DbInitializer
     {
         // List<Ticket> ticket1 = new List<Ticket>();
