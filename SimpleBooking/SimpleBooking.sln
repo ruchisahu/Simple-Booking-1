@@ -20,9 +20,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TicketsAPI", "TicketsAPI\TicketsAPI.csproj", "{CB5B3AA1-F9D8-4987-944E-8AC7671B8351}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TokenServiceAPI", "TokenServiceAPI\TokenServiceAPI.csproj", "{F6E2BEE6-41EA-44A5-A6A1-52CF8F57CA8A}"
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "web", "web", "{1867518F-91C5-4592-B602-AB23B57E793B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebMvcClient", "..\WebMvcClient\WebMvcClient.csproj", "{1BE1A994-7EFD-4075-A31C-21BC9CFB6669}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebMvcClient", "WebMvcClient\WebMvcClient.csproj", "{1BE1A994-7EFD-4075-A31C-21BC9CFB6669}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
