@@ -31,3 +31,10 @@ services:
       context: .
       dockerfile: TicketsAPI/Dockerfile
 
+
+  orderapiweb:
+    image: ${DOCKER_REGISTRY}orderapiweb
+    build:
+      context: .
+      dockerfile: ../OrderAPIWeb/Dockerfile
+
