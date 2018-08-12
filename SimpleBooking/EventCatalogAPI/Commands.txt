@@ -1,0 +1,3 @@
+﻿Add-Migration -Name mig -Project EventCatalogAPI -StartupProject EventCatalogAPI
+Update-Database -Project EventCatalogAPI -StartupProject EventCatalogAPI
+"ConnectionString": "Server=tcp:127.0.0.1,1445;Database=EventCatalog;User Id=sa;Password=TicketApi(!);MultipleActiveResultSets=true"
