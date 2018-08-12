@@ -13,7 +13,7 @@ namespace SearchEventAPI.Controllers
     {
         [HttpGet]
         [Route("Search")]
-        public List<int> GetEventsOnLocation([FromQuery] string location, [FromQuery] string eventType, [FromQuery] string eventCategory, [FromQuery] string evDate, [FromQuery] string priceType)
+        public List<int> Events([FromQuery] string location, [FromQuery] string eventType, [FromQuery] string eventCategory, [FromQuery] string evDate, [FromQuery] string priceType, [FromQuery] string anyText)
         {
             EventType? eventTypeParam = Convert<EventType>(eventType);
             EventCategory? eventCategoryParam = Convert<EventCategory>(eventCategory);
@@ -31,33 +31,33 @@ namespace SearchEventAPI.Controllers
 
             var events = EventContext.GetMockedEvents();
 
-            return Search.SearchByLocation(events, location, eventTypeParam, eventCategoryParam, eventDate, eventPriceTypeParam);
+            return Search.SearchEvents(events, location, eventTypeParam, eventCategoryParam, eventDate, eventPriceTypeParam,anyText);
         }
 
-        [HttpGet]
-        [Route("SearchAsync")]
-        public async Task<ActionResult> SearchAsync([FromQuery] string location, [FromQuery] string eventType, [FromQuery] string eventCategory, [FromQuery] string evDate, [FromQuery] string priceType)
-        {
-            EventType? eventTypeParam = Convert<EventType>(eventType);
-            EventCategory? eventCategoryParam = Convert<EventCategory>(eventCategory);
-            EventPriceType? eventPriceTypeParam = Convert<EventPriceType>(priceType);
+        //[HttpGet]
+       // [Route("[action]")]
+        //public async Task<ActionResult> SearchEvents([FromQuery] string location, [FromQuery] string eventType, [FromQuery] string eventCategory, [FromQuery] string evDate, [FromQuery] string priceType,[FromQuery] string anyText)
+        //{
+        //    EventType? eventTypeParam = Convert<EventType>(eventType);
+        //    EventCategory? eventCategoryParam = Convert<EventCategory>(eventCategory);
+        //    EventPriceType? eventPriceTypeParam = Convert<EventPriceType>(priceType);
 
-            DateTime? eventDate;
-            if (string.IsNullOrWhiteSpace(evDate))
-            {
-                eventDate = null;
-            }
-            else
-            {
-                eventDate = DateTime.Parse(evDate);
-            }
+        //    DateTime? eventDate;
+        //    if (string.IsNullOrWhiteSpace(evDate))
+        //    {
+        //        eventDate = null;
+        //    }
+        //    else
+        //    {
+        //        eventDate = DateTime.Parse(evDate);
+        //    }
 
-            var events = await EventContext.GetEvents();
+        //    var events = await EventContext.GetEvents();
 
-            var eventIds = Search.SearchByLocation(events, location, eventTypeParam, eventCategoryParam, eventDate, eventPriceTypeParam);
+        //    var eventIds = Search.SearchEvents(events, location, eventTypeParam, eventCategoryParam, eventDate, eventPriceTypeParam, anyText);
 
-            return Ok(eventIds);
-        }
+        //    return Ok(eventIds);
+        //}
 
         // POST: api/Search
         //[HttpPost]

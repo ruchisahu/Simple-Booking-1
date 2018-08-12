@@ -7,7 +7,7 @@ namespace SearchEventAPI.Controllers
 {
     public class Search
     {
-        public static List<int> SearchByLocation(List<Event> events, string location, EventType? evType, EventCategory? evCategory, DateTime? evDate, EventPriceType? priceType)
+        public static List<int> SearchEvents(List<Event> events, string location, EventType? evType, EventCategory? evCategory, DateTime? evDate, EventPriceType? priceType, string anyText)
         {
             // List<int> ids;
             //return (from e in events
@@ -30,6 +30,12 @@ namespace SearchEventAPI.Controllers
             {
                 filteredEvents = filteredEvents.Where(ev => ev.PriceType == priceType);
             }
+            if(anyText !=null)
+            {
+                filteredEvents = filteredEvents.Where(ev=> (ev.Description.IndexOf(anyText, StringComparison.OrdinalIgnoreCase) > -1)
+                                    || (ev.Name.IndexOf(anyText, StringComparison.OrdinalIgnoreCase)) > -1);
+            }
+
 
             return filteredEvents.Select(ev => ev.ID).ToList();
         }
@@ -57,15 +63,15 @@ namespace SearchEventAPI.Controllers
         //    return events?.Where(ev => ev.Location == location && ev.EventDate == evTime).Select(ev => ev.ID).ToList();
         //}
 
-        public static List<int> SearchByPriceType(List<Event> events, EventPriceType price, string location)
-        {
-            return events?.Where(ev => ev.Location == location && ev.PriceType == price).Select(ev => ev.ID).ToList();
-        }
+        //public static List<int> SearchByPriceType(List<Event> events, EventPriceType price, string location)
+        //{
+        //    return events?.Where(ev => ev.Location == location && ev.PriceType == price).Select(ev => ev.ID).ToList();
+        //}
 
-        public static List<int> SearchByTextLocation(List<Event> events, string textQuery, string location)
-        {
-            return events?.Where(ev => ev.Location == location && ((ev.Description.IndexOf(textQuery, StringComparison.OrdinalIgnoreCase)) > -1
-                || (ev.Name.IndexOf(textQuery, StringComparison.OrdinalIgnoreCase)) > -1)).Select(ev => ev.ID).ToList();
-        }
+        //public static List<int> SearchByTextLocation(List<Event> events, string textQuery, string location)
+        //{
+        //    return events?.Where(ev => ev.Location == location && ((ev.Description.IndexOf(textQuery, StringComparison.OrdinalIgnoreCase)) > -1
+        //        || (ev.Name.IndexOf(textQuery, StringComparison.OrdinalIgnoreCase)) > -1)).Select(ev => ev.ID).ToList();
+        //}
     }
 }

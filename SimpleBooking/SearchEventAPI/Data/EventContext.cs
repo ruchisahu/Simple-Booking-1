@@ -33,21 +33,21 @@ namespace SearchEventAPI.Data
                  new Event()
             {
                 ID = 1, Name= "Camping", Description ="Sleeping in a tent outdoor", Location ="North Bend",
-                Type =EventType.Gathering, PriceType = EventPriceType.Free, Category= EventCategory.Travel, EventDate =DateTime.Now,
+                Type =EventType.Gathering, PriceType = EventPriceType.Free, Category= EventCategory.Travel, EventDate =DateTime.Now.Date,
                 Price =0, EventImage = "image1"
             },
 
              new Event()
              {
                  ID = 2, Name= "Java Class", Description ="Learn Java", Location ="Bellevue",
-                 Type =EventType.Class, PriceType = EventPriceType.Paid, Category= EventCategory.Tech, EventDate =DateTime.Now,
+                 Type =EventType.Class, PriceType = EventPriceType.Paid, Category= EventCategory.Tech, EventDate =DateTime.Now.Date,
                  Price =550, EventImage = "image2"
              },
 
               new Event()
                {
                  ID = 3, Name= "How to live well", Description ="Seminar about life", Location ="Bellevue",
-                 Type =EventType.Seminar, PriceType = EventPriceType.Free, Category= EventCategory.Health, EventDate =DateTime.Now,
+                 Type =EventType.Seminar, PriceType = EventPriceType.Free, Category= EventCategory.Health, EventDate =DateTime.Now.Date,
                  Price =0, EventImage = "image3"
                 }
             };
