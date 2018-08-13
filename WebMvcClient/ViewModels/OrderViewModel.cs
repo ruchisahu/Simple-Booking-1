@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -8,6 +9,8 @@ namespace WebMvcClient.Models
     public class OrderViewModel
     {
         public int EventId { get; set; }
+
+        [DisplayName("Event name")]
         public string EventName { get; set; }
         public DateTime EventDate { get; set; }
         public string EventLocation { get; set; }
