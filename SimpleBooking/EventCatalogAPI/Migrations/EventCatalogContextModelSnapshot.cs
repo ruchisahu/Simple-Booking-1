@@ -39,6 +39,9 @@ namespace EventCatalogAPI.Migrations
                     b.Property<string>("ImageURL")
                         .IsRequired();
 
+                    b.Property<int>("InitialTicketCount")
+                        .IsRequired();
+
                     b.Property<string>("Name")
                         .IsRequired();
 

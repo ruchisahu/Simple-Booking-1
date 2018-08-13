@@ -54,7 +54,8 @@ namespace EventCatalogAPI.Migrations
                     Price = table.Column<decimal>(nullable: false),
                     ImageURL = table.Column<string>(nullable: false),
                     Type = table.Column<int>(nullable: false),
-                    Category = table.Column<int>(nullable: false)
+                    Category = table.Column<int>(nullable: false),
+                    InitialTicketCount = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {

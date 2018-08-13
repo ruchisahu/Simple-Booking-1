@@ -31,9 +31,6 @@ namespace EventCatalogAPI.Domain
 
         public EventCategory Category { get; set; }
 
-        //  public string Location { get; set; }
-        // public int UserId { get; set; }
-        //   public virtual User User { get; set; }
-        //  public List<Ticket> Tickets { get; set; }
+        public int InitialTicketCount { get; set; }
     }
 }

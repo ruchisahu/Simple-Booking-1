@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EventCatalogAPI.Migrations
 {
     [DbContext(typeof(EventCatalogContext))]
-    [Migration("20180813062222_mig")]
+    [Migration("20180813152949_mig")]
     partial class mig
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,6 +40,8 @@ namespace EventCatalogAPI.Migrations
 
                     b.Property<string>("ImageURL")
                         .IsRequired();
+
+                    b.Property<int>("InitialTicketCount");
 
                     b.Property<string>("Name")
                         .IsRequired();
