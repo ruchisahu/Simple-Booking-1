@@ -14,6 +14,6 @@ namespace EventCatalogAPI.Domain
        
         [ForeignKey("EventId")]
         public int EventId { get; set; }
-        public Eventcatalog Eventcatalog { get; set; }
+        public EventCatalog Eventcatalog { get; set; }
     }
 }

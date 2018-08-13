@@ -80,22 +80,22 @@ namespace EventCatalogAPI.Controllers
 
         [HttpPost]
         [Route("Event")]
-        public async Task<IActionResult> CreateEventAsync([FromBody] Eventcatalog Event)
+        public async Task<IActionResult> CreateEventAsync([FromBody] EventCatalog Event)
         {
-            var item = new Eventcatalog
+            var item = new EventCatalog
             {
-                EventId = Event.EventId,
-                EventName = Event.EventName,
+                Id = Event.Id,
+                Name = Event.Name,
                 Description = Event.Description,
-
-                EventDate = Event.EventDate,
-                EventPrice = Event.EventPrice,
-                EventImageURL = Event.EventImageURL,
-                EventPriceType = Event.EventPriceType,
-                EventCategory = Event.EventCategory,
-                
-
+                StartDate = Event.StartDate,
+                EndDate = Event.EndDate,
+                Price = Event.Price,
+                ImageURL = Event.ImageURL,
+                PriceType = Event.PriceType,
+                Category = Event.Category,
+                Type = Event.Type
             };
+
             _catalogContext.Eventcatalogs.Add(item);
             await _catalogContext.SaveChangesAsync();
 

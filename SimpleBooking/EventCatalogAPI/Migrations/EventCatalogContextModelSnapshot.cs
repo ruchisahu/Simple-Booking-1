@@ -22,33 +22,37 @@ namespace EventCatalogAPI.Migrations
                 .HasAnnotation("Relational:Sequence:.User_hilo3", "'User_hilo3', '', '1', '10', '', '', 'Int64', 'False'")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("EventCatalogAPI.Domain.Eventcatalog", b =>
+            modelBuilder.Entity("EventCatalogAPI.Domain.EventCatalog", b =>
                 {
-                    b.Property<int>("EventId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:HiLoSequenceName", "catalog_hilo3")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.SequenceHiLo);
 
+                    b.Property<int>("Category");
+
                     b.Property<string>("Description")
                         .IsRequired();
 
-                    b.Property<int>("EventCategory");
+                    b.Property<DateTime>("EndDate");
 
-                    b.Property<DateTime>("EventDate");
-
-                    b.Property<string>("EventImageURL")
+                    b.Property<string>("ImageURL")
                         .IsRequired();
 
-                    b.Property<string>("EventName")
+                    b.Property<string>("Name")
                         .IsRequired();
-
-                    b.Property<decimal>("EventPrice");
-
-                    b.Property<int>("EventPriceType");
 
                     b.Property<int>("PlaceId");
 
-                    b.HasKey("EventId");
+                    b.Property<decimal>("Price");
+
+                    b.Property<int>("PriceType");
+
+                    b.Property<DateTime>("StartDate");
+
+                    b.Property<int>("Type");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("PlaceId");
 
@@ -138,7 +142,7 @@ namespace EventCatalogAPI.Migrations
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("EventCatalogAPI.Domain.Eventcatalog", b =>
+            modelBuilder.Entity("EventCatalogAPI.Domain.EventCatalog", b =>
                 {
                     b.HasOne("EventCatalogAPI.Domain.Place", "Place")
                         .WithMany()
@@ -148,7 +152,7 @@ namespace EventCatalogAPI.Migrations
 
             modelBuilder.Entity("EventCatalogAPI.Domain.Ticket", b =>
                 {
-                    b.HasOne("EventCatalogAPI.Domain.Eventcatalog", "Eventcatalog")
+                    b.HasOne("EventCatalogAPI.Domain.EventCatalog", "Eventcatalog")
                         .WithMany()
                         .HasForeignKey("EventId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -156,7 +160,7 @@ namespace EventCatalogAPI.Migrations
 
             modelBuilder.Entity("EventCatalogAPI.Domain.User", b =>
                 {
-                    b.HasOne("EventCatalogAPI.Domain.Eventcatalog", "Eventcatalog")
+                    b.HasOne("EventCatalogAPI.Domain.EventCatalog", "Eventcatalog")
                         .WithMany()
                         .HasForeignKey("EventId")
                         .OnDelete(DeleteBehavior.Cascade);

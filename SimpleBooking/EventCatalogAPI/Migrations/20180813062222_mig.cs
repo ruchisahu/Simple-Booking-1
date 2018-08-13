@@ -44,19 +44,21 @@ namespace EventCatalogAPI.Migrations
                 name: "Catalog",
                 columns: table => new
                 {
-                    EventId = table.Column<int>(nullable: false),
-                    EventName = table.Column<string>(nullable: false),
+                    Id = table.Column<int>(nullable: false),
+                    Name = table.Column<string>(nullable: false),
                     Description = table.Column<string>(nullable: false),
                     PlaceId = table.Column<int>(nullable: false),
-                    EventDate = table.Column<DateTime>(nullable: false),
-                    EventPrice = table.Column<decimal>(nullable: false),
-                    EventImageURL = table.Column<string>(nullable: false),
-                    EventPriceType = table.Column<int>(nullable: false),
-                    EventCategory = table.Column<int>(nullable: false)
+                    StartDate = table.Column<DateTime>(nullable: false),
+                    EndDate = table.Column<DateTime>(nullable: false),
+                    PriceType = table.Column<int>(nullable: false),
+                    Price = table.Column<decimal>(nullable: false),
+                    ImageURL = table.Column<string>(nullable: false),
+                    Type = table.Column<int>(nullable: false),
+                    Category = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Catalog", x => x.EventId);
+                    table.PrimaryKey("PK_Catalog", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Catalog_Place_PlaceId",
                         column: x => x.PlaceId,
@@ -79,7 +81,7 @@ namespace EventCatalogAPI.Migrations
                         name: "FK_Ticket_Catalog_EventId",
                         column: x => x.EventId,
                         principalTable: "Catalog",
-                        principalColumn: "EventId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -102,7 +104,7 @@ namespace EventCatalogAPI.Migrations
                         name: "FK_User_Catalog_EventId",
                         column: x => x.EventId,
                         principalTable: "Catalog",
-                        principalColumn: "EventId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 

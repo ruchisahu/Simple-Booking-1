@@ -73,7 +73,7 @@ namespace EventCatalogAPI.Data
             };
         }
 
-        static IEnumerable<Eventcatalog> GetPreconfiguredevent()
+        static IEnumerable<EventCatalog> GetPreconfiguredevent()
         {
             /*      List<Ticket> Tickets =new List<Ticket>();
                   Tickets.Add(new Ticket() { TicketId=1});
@@ -91,7 +91,7 @@ namespace EventCatalogAPI.Data
                    */
 
             DateTime date1 = new DateTime(2014, 6, 14, 6, 32, 0);
-            return new List<Eventcatalog>()
+            return new List<EventCatalog>()
             {
                 //   new Eventcatalog() {EventName="event1",Description="",Location="redmond",PlaceId=1,EventDate=date1,EventPrice=101.2M,EventImageURL="https://github.com/ruchisahu/dataAnalysis_cloud9/blob/master/age.png",EventPriceType=EventPriceType.Free,EventCategory=EventCategory.Fashion},
 

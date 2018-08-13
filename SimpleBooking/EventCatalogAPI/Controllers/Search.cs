@@ -40,7 +40,7 @@ namespace EventCatalogAPI.Controllers
         //    return filteredEvents.Select(ev => ev.ID).ToList();
         //}
 
-        public static List<int> SearchEvents(List<Eventcatalog> events, string location, EventCategory? evCategory, DateTime? evDate, EventPriceType? priceType, string anyText)
+        public static List<int> SearchEvents(List<EventCatalog> events, string location, EventCategory? evCategory, DateTime? evDate, EventPriceType? priceType, string anyText)
         {
             // List<int> ids;
             //return (from e in events
@@ -54,24 +54,24 @@ namespace EventCatalogAPI.Controllers
 
             if (evCategory.HasValue)
             {
-                filteredEvents = filteredEvents.Where(ev => ev.EventCategory == evCategory);
+                filteredEvents = filteredEvents.Where(ev => ev.Category == evCategory);
             }
             if (evDate.HasValue)
             {
-                filteredEvents = filteredEvents.Where(ev => ev.EventDate == evDate);
+                filteredEvents = filteredEvents.Where(ev => ev.StartDate == evDate);
             }
             if (priceType.HasValue)
             {
-                filteredEvents = filteredEvents.Where(ev => ev.EventPriceType == priceType);
+                filteredEvents = filteredEvents.Where(ev => ev.PriceType == priceType);
             }
             if (anyText != null)
             {
                 filteredEvents = filteredEvents.Where(ev => (ev.Description.IndexOf(anyText, StringComparison.OrdinalIgnoreCase) > -1)
-                                    || (ev.EventName.IndexOf(anyText, StringComparison.OrdinalIgnoreCase)) > -1);
+                                    || (ev.Name.IndexOf(anyText, StringComparison.OrdinalIgnoreCase)) > -1);
             }
 
 
-            return filteredEvents.Select(ev => ev.EventId).ToList();
+            return filteredEvents.Select(ev => ev.Id).ToList();
         }
 
         //public static List<int> SearchByTypeLocation(List<Event> events, EventType evType, string location)
