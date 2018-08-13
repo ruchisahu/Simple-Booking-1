@@ -7,105 +7,55 @@ namespace EventCatalogAPI.Controllers
 {
     public class Search
     {
-        //public static List<int> SearchEvents(List<Eventcatalog> events, string location, EventType? evType, EventCategory? evCategory, DateTime? evDate, EventPriceType? priceType, string anyText)
-        //{
-        //    // List<int> ids;
-        //    //return (from e in events
-        //    //              where e.Location == location
-        //    //              select e.ID).ToList();
-        //    var filteredEvents = events.Where(ev => string.Equals(ev.Location, location, StringComparison.OrdinalIgnoreCase));
-        //    if (evType.HasValue)
-        //    {
-        //        filteredEvents = filteredEvents.Where(ev => ev.Type == evType);
-        //    }
-        //    if (evCategory.HasValue)
-        //    {
-        //        filteredEvents = filteredEvents.Where(ev => ev.Category == evCategory);
-        //    }
-        //    if (evDate.HasValue)
-        //    {
-        //        filteredEvents = filteredEvents.Where(ev => ev.EventDate == evDate);
-        //    }
-        //    if (priceType.HasValue)
-        //    {
-        //        filteredEvents = filteredEvents.Where(ev => ev.PriceType == priceType);
-        //    }
-        //    if (anyText != null)
-        //    {
-        //        filteredEvents = filteredEvents.Where(ev => (ev.Description.IndexOf(anyText, StringComparison.OrdinalIgnoreCase) > -1)
-        //                            || (ev.Name.IndexOf(anyText, StringComparison.OrdinalIgnoreCase)) > -1);
-        //    }
-
-
-        //    return filteredEvents.Select(ev => ev.ID).ToList();
-        //}
-
-        public static List<int> SearchEvents(List<EventCatalog> events, string location, EventCategory? evCategory, DateTime? evDate, EventPriceType? priceType, string anyText)
+        public static List<int> SearchEvents(List<EventCatalog> events, string location, EventType? evType, EventCategory? evCategory, DateTime? startDate, DateTime? endDate, EventPriceType? priceType, string anyText)
         {
-            // List<int> ids;
-            //return (from e in events
-            //              where e.Location == location
-            //              select e.ID).ToList();
-            var filteredEvents = events.Where(ev => string.Equals(ev.Place.PlaceName, location, StringComparison.OrdinalIgnoreCase));
-            //if (evType.HasValue)
-            //{
-            //    filteredEvents = filteredEvents.Where(ev => ev.Type == evType);
-            //}
+            var filteredEvents = events.Where(ev => Contains(ev.Place.PlaceName, location)
+                                                || Contains(ev.Place.Address, location)
+                                                || Contains(ev.Place.City, location)
+                                                || Contains(ev.Name, location)
+                                                || Contains(ev.Description, location));
+            if (evType.HasValue)
+            {
+                filteredEvents = filteredEvents.Where(ev => ev.Type == evType);
+            }
 
             if (evCategory.HasValue)
             {
                 filteredEvents = filteredEvents.Where(ev => ev.Category == evCategory);
             }
-            if (evDate.HasValue)
+
+            if (!startDate.HasValue && !endDate.HasValue)
             {
-                filteredEvents = filteredEvents.Where(ev => ev.StartDate == evDate);
+                var today = Today();
+                filteredEvents = filteredEvents.Where(ev => ev.StartDate <= today && today <= ev.EndDate);
             }
+
+            if (startDate.HasValue && endDate.HasValue)
+            {
+                filteredEvents = filteredEvents.Where(ev => startDate <= ev.EndDate && ev.StartDate <= endDate);
+            }
+
             if (priceType.HasValue)
             {
                 filteredEvents = filteredEvents.Where(ev => ev.PriceType == priceType);
             }
             if (anyText != null)
             {
-                filteredEvents = filteredEvents.Where(ev => (ev.Description.IndexOf(anyText, StringComparison.OrdinalIgnoreCase) > -1)
-                                    || (ev.Name.IndexOf(anyText, StringComparison.OrdinalIgnoreCase)) > -1);
+                filteredEvents = filteredEvents.Where(ev => Contains(ev.Description, anyText) || Contains(ev.Name, anyText));
             }
-
 
             return filteredEvents.Select(ev => ev.Id).ToList();
         }
 
-        //public static List<int> SearchByTypeLocation(List<Event> events, EventType evType, string location)
-        //{
-        //    // List<int> ids;
-        //    //return (from e in events
-        //    //        where (e.Location == location) && (e.Type == evType)
-        //    //        select e.ID).ToList();
-        //    return events?.Where(ev => string.Equals(ev.Location, location, StringComparison.OrdinalIgnoreCase) && ev.Type == evType).Select(ev => ev.ID).ToList();
-        //}
+        private static bool Contains(string a, string b)
+        {
+            return !string.IsNullOrEmpty(a) && a.IndexOf(b, StringComparison.OrdinalIgnoreCase) > -1;
+        }
 
-        //public static List<int> SearchByCategoryLocation(List<Event> events, EventCategory evCategory, string location)
-        //{
-        //    // List<int> ids;
-        //    //return (from e in events
-        //    //        where (e.Location == location) && (e.Type == eventType)
-        //    //        select e.ID).ToList();
-        //    return events?.Where(ev => ev.Location == location && ev.Category == evCategory).Select(ev => ev.ID).ToList();
-        //}
-
-        //public static List<int> SearchByDateLocation(List<Event> events, DateTime evTime, string location)
-        //{
-        //    return events?.Where(ev => ev.Location == location && ev.EventDate == evTime).Select(ev => ev.ID).ToList();
-        //}
-
-        //public static List<int> SearchByPriceType(List<Event> events, EventPriceType price, string location)
-        //{
-        //    return events?.Where(ev => ev.Location == location && ev.PriceType == price).Select(ev => ev.ID).ToList();
-        //}
-
-        //public static List<int> SearchByTextLocation(List<Event> events, string textQuery, string location)
-        //{
-        //    return events?.Where(ev => ev.Location == location && ((ev.Description.IndexOf(textQuery, StringComparison.OrdinalIgnoreCase)) > -1
-        //        || (ev.Name.IndexOf(textQuery, StringComparison.OrdinalIgnoreCase)) > -1)).Select(ev => ev.ID).ToList();
-        //}
+        private static DateTime Today()
+        {
+            var now = DateTime.UtcNow;
+            return new DateTime(now.Year, now.Month, now.Day);
+        }
     }
 }

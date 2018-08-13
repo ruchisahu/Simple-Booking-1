@@ -21,53 +21,38 @@ namespace EventCatalogAPI.Controllers
             eventCatalogContext = eventContext;
         }
 
-        //[HttpGet]
-        //[Route("[action]")]
-        //public async Task<ActionResult> SearchEvents([FromQuery] string location, [FromQuery] string eventType, [FromQuery] string eventCategory, [FromQuery] string evDate, [FromQuery] string priceType, [FromQuery] string anyText)
-        //{
-        //    EventType? eventTypeParam = Convert<EventType>(eventType);
-        //    EventCategory? eventCategoryParam = Convert<EventCategory>(eventCategory);
-        //    EventPriceType? eventPriceTypeParam = Convert<EventPriceType>(priceType);
-
-        //    DateTime? eventDate;
-        //    if (string.IsNullOrWhiteSpace(evDate))
-        //    {
-        //        eventDate = null;
-        //    }
-        //    else
-        //    {
-        //        eventDate = DateTime.Parse(evDate);
-        //    }
-
-        // var events = await EventContext.GetEvents();
-
-        //    var eventIds = Search.SearchEvents(events, location, eventTypeParam, eventCategoryParam, eventDate, eventPriceTypeParam, anyText);
-
-        //    return Ok(eventIds);
-        //}
-
         [HttpGet]
         [Route("[action]")]
-        public async Task<ActionResult> SearchEvents([FromQuery] string location, [FromQuery] string eventType, [FromQuery] string eventCategory, [FromQuery] string evDate, [FromQuery] string priceType, [FromQuery] string anyText)
+        public async Task<ActionResult> SearchEvents([FromQuery] string location, [FromQuery] string eventType, [FromQuery] string eventCategory, [FromQuery] string eventStartDate, [FromQuery] string eventEndDate, [FromQuery] string priceType, [FromQuery] string anyText)
         {
-            // EventType? eventTypeParam = Convert<EventType>(eventType);
+            EventType? eventTypeParam = Convert<EventType>(eventType);
             EventCategory? eventCategoryParam = Convert<EventCategory>(eventCategory);
             EventPriceType? eventPriceTypeParam = Convert<EventPriceType>(priceType);
 
-            DateTime? eventDate;
-            if (string.IsNullOrWhiteSpace(evDate))
+            DateTime? startDate;
+            if (string.IsNullOrWhiteSpace(eventStartDate))
             {
-                eventDate = null;
+                startDate = null;
             }
             else
             {
-                eventDate = DateTime.Parse(evDate);
+                startDate = DateTime.Parse(eventStartDate);
+            }
+
+            DateTime? endDate;
+            if (string.IsNullOrWhiteSpace(eventEndDate))
+            {
+                endDate = null;
+            }
+            else
+            {
+                endDate = DateTime.Parse(eventEndDate);
             }
 
             var places = await eventCatalogContext.Places.ToListAsync();
             var events = await eventCatalogContext.Eventcatalogs.ToListAsync();
 
-            var eventIds = Search.SearchEvents(events, location, eventCategoryParam, eventDate, eventPriceTypeParam, anyText);
+            var eventIds = Search.SearchEvents(events, location, eventTypeParam, eventCategoryParam, startDate, endDate, eventPriceTypeParam, anyText);
 
             return Ok(eventIds);
         }
