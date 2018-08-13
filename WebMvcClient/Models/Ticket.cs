@@ -13,11 +13,11 @@ namespace WebMvcClient.Models
         public string EventLocation { get; set; }
 
         //User Details
-        public string UserName { get; set; }
+        public string AttendeeName { get; set; }
 
         //Ticket Details
         public int TicketId { get; set; }
-        public TicketStatus status { get; set; }
+        public TicketStatus Status { get; set; }
         public int Quantity { get; set; }
         public decimal TotalAmount { get; set; }
         public string AuthCode { get; set; }

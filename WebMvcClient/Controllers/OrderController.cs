@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 using WebMvcClient.Models;
 using WebMvcClient.Services;
 
@@ -10,11 +11,11 @@ namespace WebMvcClient.Controllers
 {
     public class OrderController : Controller
     {
-        private IOrderService _OrderSvc;
-        public OrderController(IOrderService catalogSvc) =>
+        //private IOrderService _OrderSvc;
+        //public OrderController(IOrderService orderSvc) =>
 
-            _OrderSvc = catalogSvc;
-
+        //    _OrderSvc = orderSvc;
+        [HttpGet]
         public IActionResult Index(string eventName,DateTime eventDate, string eventLocation, decimal eventPrice, int quantity)
         {
             OrderViewModel orderViewModel = new OrderViewModel();
@@ -31,7 +32,15 @@ namespace WebMvcClient.Controllers
         [HttpPost]
         public IActionResult Index(OrderViewModel orderViewModel)
         {
-            return View(orderViewModel);
+            Ticket ticket = new Ticket();
+            ticket.EventName = "FitFest";
+            ticket.EventLocation = "Redmond Town Center";
+            //Ticket ticket = await _OrderSvc.ProcessAnOrder(orderViewModel);
+            string ticketSerialized = Newtonsoft.Json.JsonConvert.SerializeObject(ticket);
+
+            TempData["TicketDetails"] = ticketSerialized;
+            return RedirectToAction("Index", "Ticket");
+            //return View(orderViewModel);
         }
 
     }

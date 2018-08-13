@@ -4,49 +4,63 @@
     ViewData["Title"] = "Order";
 }
 
-<h2>Order</h2>
+<h2>Order Summary</h2>
 
-<h4>OrderViewModel</h4>
+
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-controller="Order" asp-action="Index" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
+                @*<label asp-for="EventId" class="control-label"></label>
                 <label asp-for="EventId" class="control-label"></label>
-                <label asp-for="EventId" class="control-label"></label>
-                <span asp-validation-for="EventId" class="text-danger"></span>
+                <span asp-validation-for="EventId" class="text-danger"></span>*@
             </div>
             <div class="form-group">
-                <label asp-for="EventName" class="control-label"></label>
-                <label asp-for="EventName" class="form-control"></label>
+                @*<label asp-for="EventName" class="control-label"></label>*@
+                @Html.DisplayNameFor(model => model.EventName)
+                @Html.DisplayFor(model => model.EventName)
+                @*<label asp-for="@Model.EventName"></label>*@
                 <span asp-validation-for="EventName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="EventDate" class="control-label"></label>
-                <input asp-for="EventDate" class="form-control" />
-                <span asp-validation-for="EventDate" class="text-danger"></span>
+                @Html.DisplayNameFor(model => model.EventDate)
+                @Html.DisplayFor(model => model.EventDate)
+                @*<label asp-for="EventDate" class="control-label"></label>
+                <textarea asp-for="EventDate"> </textarea>*@
+                @*<span asp-validation-for="EventDate" class="text-danger"></span>*@
             </div>
             <div class="form-group">
-                <label asp-for="EventLocation" class="control-label"></label>
-                <input asp-for="EventLocation" class="form-control" />
+                @Html.DisplayNameFor(model => model.EventLocation)
+                @Html.DisplayFor(model => model.EventLocation)
+                @*<label asp-for="EventLocation" class="control-label"></label>
+                <textarea asp-for="EventLocation"></textarea>*@
                 <span asp-validation-for="EventLocation" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="EventPrice" class="control-label"></label>
-                <input asp-for="EventPrice" class="form-control" />
+                @Html.DisplayNameFor(model => model.EventPrice)
+                @Html.DisplayFor(model => model.EventPrice)
+                @*<label asp-for="EventPrice" class="control-label"></label>
+                <input asp-for="EventPrice" class="form-control" />*@
                 <span asp-validation-for="EventPrice" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Quantity" class="control-label"></label>
-                <input asp-for="Quantity" class="form-control" />
+                @Html.DisplayNameFor(model => model.Quantity)
+                @Html.DisplayFor(model => model.Quantity)
+                @*<label asp-for="Quantity" class="control-label"></label>
+                <input asp-for="Quantity" class="form-control" />*@
                 <span asp-validation-for="Quantity" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="TotalAmount" class="control-label"></label>
-                <input asp-for="TotalAmount" class="form-control" />
+                @Html.DisplayNameFor(model => model.TotalAmount)
+                @Html.DisplayFor(model => model.TotalAmount)
+                @*<label asp-for="TotalAmount" class="control-label"></label>
+                <input asp-for="TotalAmount" class="form-control" />*@
                 <span asp-validation-for="TotalAmount" class="text-danger"></span>
             </div>
+
+            <hr style="height:5px;border:none;color:#333;background-color:#333;" />
             <div class="form-group">
                 <label asp-for="UserFirstname" class="control-label"></label>
                 <input asp-for="UserFirstname" class="form-control" />
