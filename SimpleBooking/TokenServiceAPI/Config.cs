@@ -25,8 +25,7 @@ namespace TokenServiceApi
         {
             return new List<ApiResource>
             {
-                 new ApiResource("EventCatalogAPI", "Registration API"),
-                new ApiResource("basket", "Shopping Cart Api"),
+                 new ApiResource("basket", "Shopping Cart Api"),
                  new ApiResource("orders", "Ordering Api"),
             };
         }

@@ -1,0 +1,20 @@
+@model WebMvc.Models.CatalogItem
+
+
+
+
+<form asp-controller="Cart" asp-action="AddToCart">
+    <img class="esh-catalog-thumbnail" src="@Model.PictureUrl" />
+    <input class="esh-catalog-button"  type="submit" value="[ ADD TO CART ]" />
+    <div class="esh-catalog-name">
+        <span>@Model.PictureUrl</span>
+    </div>
+    <div class="esh-catalog-name">
+        <span>@Model.Description</span>
+    </div>
+   
+    <input type="hidden" asp-for="@Model.DateTime" name="id" />
+    <input type="hidden" asp-for="@Model.EventName" name="name" />
+    <input type="hidden" asp-for="@Model.Place" name="pictureUri" />
+
+</form>

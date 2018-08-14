@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace WebMvcClient.Infrastructure
+namespace WebMvc.Infrastructure
 {
     public interface IHttpClient
     {

@@ -7,7 +7,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace WebMvcClient.Infrastructure
+namespace WebMvc.Infrastructure
 {
     public class CustomHttpClient : IHttpClient
     {
@@ -19,13 +19,11 @@ namespace WebMvcClient.Infrastructure
             _client = new HttpClient();
             _logger = logger;
         }
-
         public async Task<HttpResponseMessage> DeleteAsync(string uri)
         {
             var requestMessage = new HttpRequestMessage(HttpMethod.Delete, uri);
             return await _client.SendAsync(requestMessage);
         }
-
         public async Task<string> GetStringAsync(string uri)
         {
             var requestMessage = new HttpRequestMessage(HttpMethod.Get, uri);
