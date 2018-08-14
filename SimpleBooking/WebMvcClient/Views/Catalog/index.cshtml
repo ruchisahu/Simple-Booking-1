@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewData["Title"] = "catalog";
+    @model WebMvcClient.ViewModels.CatalogIndexViewModel
+}
+
+<h2>catalog</h2>
+
+<section class="esh-catalog-filters">
+    <div class="container">
+        <form asp-action="Index" asp-controller="Catalog" method="post">
+            <label class="esh-catalog-label" data-title="brand">
+                <select asp-for="@Model.Category" asp-items="@Model.Categories" class="esh-catalog-filter"></select>
+            </label>
+            @*<label class="esh-catalog-label" data-title="type">
+                    <select asp-for="@Model.TypesFilterApplied" asp-items="@Model.Types" class="esh-catalog-filter"></select>
+                </label>
+                <input class="esh-catalog-send" type="image" src="~/images/arrow-right.svg" />*@
+        </form>
+    </div>
+</section>

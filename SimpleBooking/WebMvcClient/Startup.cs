@@ -46,6 +46,10 @@ namespace WebMvcClient
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+
+                routes.MapRoute(
+                    name: "catalog",
+                    template: "{controller=Catalog}/{action=Index}/{id?}");
             });
         }
     }
