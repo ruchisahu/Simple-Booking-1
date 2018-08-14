@@ -13,7 +13,7 @@ namespace WebMvcClient.Models
         public string EventLocation { get; set; }
 
         //User Details
-        public string AttendeeName { get; set; }
+        public string UserName { get; set; }
 
         //Ticket Details
         public int TicketId { get; set; }
