@@ -11,31 +11,33 @@ namespace WebMvcClient.Controllers
 {
     public class OrderController : Controller
     {
-        //private IOrderService _OrderSvc;
-        //public OrderController(IOrderService orderSvc) =>
+        private IOrderService _orderSvc;
 
-        //    _OrderSvc = orderSvc;
+        public OrderController(IOrderService orderSvc) =>
+
+            _orderSvc = orderSvc;
         [HttpGet]
         public IActionResult Index(string eventName,DateTime eventDate, string eventLocation, decimal eventPrice, int quantity)
         {
             OrderViewModel orderViewModel = new OrderViewModel();
             orderViewModel.EventName = eventName;
             orderViewModel.EventDate = eventDate;
-            orderViewModel.EventLocation = eventLocation;
-            orderViewModel.EventPrice = eventPrice;
+            orderViewModel.Location = eventLocation;
+            orderViewModel.Price = eventPrice;
             orderViewModel.Quantity = quantity;
+            orderViewModel.TotalAmount = quantity*eventPrice;
 
             return View(orderViewModel);
         }
 
         [ActionName("Index")]
         [HttpPost]
-        public IActionResult Index(OrderViewModel orderViewModel)
+        public async Task<IActionResult> Index(OrderViewModel orderViewModel)
         {
-            Ticket ticket = new Ticket();
-            ticket.EventName = "FitFest";
-            ticket.EventLocation = "Redmond Town Center";
-            //Ticket ticket = await _OrderSvc.ProcessAnOrder(orderViewModel);
+            //Ticket ticket = new Ticket();
+            //ticket.EventName = "FitFest";
+            //ticket.EventLocation = "Redmond Town Center";
+            Ticket ticket = await _orderSvc.ProcessAnOrder(orderViewModel);
             string ticketSerialized = Newtonsoft.Json.JsonConvert.SerializeObject(ticket);
 
             TempData["TicketDetails"] = ticketSerialized;

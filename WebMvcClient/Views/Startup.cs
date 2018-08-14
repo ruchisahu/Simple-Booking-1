@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WebMvcClient.Infrastructure;
+using WebMvcClient.Services;
 
 namespace WebMvcClient
 {
@@ -25,6 +26,7 @@ namespace WebMvcClient
             services.AddMvc();
             services.Configure<AppSettings>(Configuration);
             services.AddSingleton<IHttpClient, CustomHttpClient>();
+            services.AddTransient<IOrderService, OrderService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
