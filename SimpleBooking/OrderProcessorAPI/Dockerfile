@@ -1,28 +1,12 @@
-FROM microsoft/aspnetcore-build:2.0.0 AS build
-
+FROM microsoft/dotnet:2.1-sdk AS build
 WORKDIR /code
 
-
-
 COPY . .
-
 RUN dotnet restore
-
-
 
 RUN dotnet publish --output /out/ --configuration Release
 
-
-
-# build runtime image
-
-FROM microsoft/aspnetcore:2.0.0
-
-
-
+FROM microsoft/dotnet:2.1-aspnetcore-runtime AS runtime
 COPY --from=build /out /app/
-
-
-
 WORKDIR /app
 ENTRYPOINT ["dotnet", "OrderProcessorAPI.dll"]
