@@ -5,21 +5,21 @@ services:
     image: ${DOCKER_REGISTRY}eventmanagementapi
     build:
       context: .
-      dockerfile: EventManagementAPI\Dockerfile
+      dockerfile: EventManagementAPI/Dockerfile
 
 
   orderprocessorapi:
     image: ${DOCKER_REGISTRY}orderprocessorapi
     build:
       context: .
-      dockerfile: OrderProcessorAPI\Dockerfile
+      dockerfile: OrderProcessorAPI/Dockerfile
 
 
   eventcatalogapi:
     image: ${DOCKER_REGISTRY}eventcatalogapi
     build:
       context: .
-      dockerfile: EventCatalogAPI\Dockerfile
+      dockerfile: EventCatalogAPI/Dockerfile
 
 
   searcheventapi:
@@ -47,5 +47,5 @@ services:
     image: ${DOCKER_REGISTRY}webmvcclient
     build:
       context: .
-      dockerfile: ../WebMvcClient/Dockerfile
+      dockerfile: WebMvcClient/Dockerfile
 
