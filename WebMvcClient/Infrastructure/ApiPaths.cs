@@ -9,6 +9,11 @@ namespace WebMvcClient.Infrastructure
     {
         public static class Order
         {
+            public static string GetUrlForWelcome(string baseUri)
+            {
+                return $"{baseUri}/welcome";
+            }
+
             public static string GetUrlForProcessAnOrder(string baseUri)
             {
                 return $"{baseUri}/processanorder";

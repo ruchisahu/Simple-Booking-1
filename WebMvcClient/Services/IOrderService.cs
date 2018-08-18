@@ -12,5 +12,7 @@ namespace WebMvcClient.Services
         Task<Ticket> ProcessAnOrder(OrderViewModel orderViewModel);
         Task<bool> CancelAnOrder(int ticketId);
         Task<Ticket> GetTicketById(int ticketId);
+
+        Task<string> TestWelcome();
     }
 }
