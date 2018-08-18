@@ -24,21 +24,6 @@ namespace WebMvcClient.Services
             _client = new HttpClient();
         }
 
-        public async Task<string> TestWelcome()
-        {
-            var welcomeUrl = ApiPaths.Order.GetUrlForWelcome(_remoteServiceBaseUrl);
-
-            var requestMessage = new HttpRequestMessage(HttpMethod.Get, welcomeUrl);
-
-            var response = await _client.SendAsync(requestMessage);
-            if (response.StatusCode == HttpStatusCode.BadRequest)
-            {
-                return null;
-            }
-            string responseString = await response.Content.ReadAsStringAsync();
-
-            return responseString;
-        }
 
         public async Task<Ticket> ProcessAnOrder(OrderViewModel orderViewModel)
         {
