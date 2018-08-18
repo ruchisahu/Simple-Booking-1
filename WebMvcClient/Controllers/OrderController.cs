@@ -40,8 +40,6 @@ namespace WebMvcClient.Controllers
             TempData["TicketDetails"] = ticketSerialized;
             return RedirectToAction("Index", "Ticket");
 
-            //string testResult = await _orderSvc.TestWelcome();
-            //return View(testResult);
         }
 
     }
