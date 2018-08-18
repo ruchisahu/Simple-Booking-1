@@ -34,15 +34,14 @@ namespace WebMvcClient.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(OrderViewModel orderViewModel)
         {
-            //Ticket ticket = new Ticket();
-            //ticket.EventName = "FitFest";
-            //ticket.EventLocation = "Redmond Town Center";
             Ticket ticket = await _orderSvc.ProcessAnOrder(orderViewModel);
             string ticketSerialized = Newtonsoft.Json.JsonConvert.SerializeObject(ticket);
 
             TempData["TicketDetails"] = ticketSerialized;
             return RedirectToAction("Index", "Ticket");
-            //return View(orderViewModel);
+
+            //string testResult = await _orderSvc.TestWelcome();
+            //return View(testResult);
         }
 
     }
