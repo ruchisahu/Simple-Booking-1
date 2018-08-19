@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -11,13 +12,15 @@ namespace WebMvcClient.Controllers
 {
     public class CatalogController : Controller
     {
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(CatalogIndexViewModel model)
         {
             var catalogService = new CatalogService();
-
             var viewModel = new CatalogIndexViewModel
             {
-                Categories = await catalogService.Categories()
+                Categories = await catalogService.Categories(),
+                Types = await catalogService.Types(),
+                Prices = await catalogService.PriceType(),
+                Events = await catalogService.Events(model.Location)
             };
             return View(viewModel);
         }

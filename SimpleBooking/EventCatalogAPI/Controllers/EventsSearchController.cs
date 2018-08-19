@@ -68,7 +68,7 @@ namespace EventCatalogAPI.Controllers
 
         [HttpGet]
         [Route("[action]")]
-        public async Task<ActionResult> NewSearchEvents([FromQuery] string location, [FromQuery] string eventType,
+        public async Task<ActionResult> Events([FromQuery] string location, [FromQuery] string eventType,
                                                     [FromQuery] string eventCategory, [FromQuery] string eventStartDate,
                                                     [FromQuery] string eventEndDate, [FromQuery] string priceType, [FromQuery] string anyText,
                                                     [FromQuery] int pageSize = 6, [FromQuery] int pageIndex = 0)
@@ -116,6 +116,22 @@ namespace EventCatalogAPI.Controllers
         {
             var categories = new List<string>(Enum.GetNames(typeof(EventCategory)));
             return categories;
+        }
+
+        [HttpGet]
+        [Route("[action]")]
+        public List<string> Types()
+        {
+            var types = new List<string>(Enum.GetNames(typeof(EventType)));
+            return types;
+        }
+
+        [HttpGet]
+        [Route("[action]")]
+        public List<string> Prices()
+        {
+            var prices = new List<string>(Enum.GetNames(typeof(EventPriceType)));
+            return prices;
         }
 
         private T? Convert<T>(string input) where T : struct

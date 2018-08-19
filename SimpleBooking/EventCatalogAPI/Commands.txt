@@ -13,3 +13,6 @@ http://localhost:49572/api/EventsSearch/SearchEvents?location=Bellevue&eventType
 
 next month
 http://localhost:49572/api/EventsSearch/SearchEvents?location=Bellevue&eventType=Class&eventCategory=Tech&priceType=Free&eventStartDate=9/1/2018&eventEndDate=9/30/2018
+
+docker container ls --all
+docker start TicketsDB
