@@ -49,6 +49,10 @@ namespace EventCatalogAPI.Controllers
 
         public static List<EventCatalog> NewSearch(List<EventCatalog> events, string location, EventType? evType, EventCategory? evCategory, DateTime? startDate, DateTime? endDate, EventPriceType? priceType, string anyText)
         {
+            if(location == null)
+            {
+                return new List<EventCatalog>();
+            }
             var filteredEvents = events.Where(ev => Contains(ev.Place.PlaceName, location)
                                                 || Contains(ev.Place.Address, location)
                                                 || Contains(ev.Place.City, location)

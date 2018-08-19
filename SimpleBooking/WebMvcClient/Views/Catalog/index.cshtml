@@ -1,21 +1,79 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "catalog";
     @model WebMvcClient.ViewModels.CatalogIndexViewModel
 }
+<!DOCTYPE html>
+<html>
+<body>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
 
-<h2>catalog</h2>
+        th, td {
+            text-align: left;
+            padding: 8px;
+        }
 
-<section class="esh-catalog-filters">
-    <div class="container">
-        <form asp-action="Index" asp-controller="Catalog" method="post">
-            <label class="esh-catalog-label" data-title="brand">
-                <select asp-for="@Model.Category" asp-items="@Model.Categories" class="esh-catalog-filter"></select>
-            </label>
-            @*<label class="esh-catalog-label" data-title="type">
-                    <select asp-for="@Model.TypesFilterApplied" asp-items="@Model.Types" class="esh-catalog-filter"></select>
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+
+    <h2>catalog</h2>
+
+    <section class="esh-catalog-filters">
+        <div class="container">
+            <form asp-action="index" asp-controller="Catalog" method="post">
+                <input type="text" name="Location" id="location" asp-for="@Model.Location" />
+                <label class="esh-catalog-label" data-title="categories">
+                    <select asp-for="@Model.Category" asp-items="@Model.Categories" class="esh-catalog-filter"></select>
                 </label>
-                <input class="esh-catalog-send" type="image" src="~/images/arrow-right.svg" />*@
-        </form>
+                <label class="esh-catalog-label" data-title="type">
+                    <select asp-for="@Model.EventType" asp-items="@Model.Types" class="esh-catalog-filter"></select>
+                </label>
+                <label class="esh-catalog-label" data-title="pricetype">
+                    <select asp-for="@Model.Price" asp-items="@Model.Prices" class="esh-catalog-filter"></select>
+                </label>
+                <input class="esh-catalog-send" type="image" src="~/images/arrow-right.svg" />
+            </form>
+        </div>
+    </section>
+
+    <div class="container">
+
+        @if (Model.Events.Count() > 0)
+        {
+            <table>
+                <tr>
+                    <th>Event Name</th>
+                    <th>Description</th>
+                    <th>Location</th>
+                </tr>
+                @foreach (var item in Model.Events)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(model => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.Description)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.Place.City)
+                        </td>
+                    </tr>
+                }
+            </table>
+        }
+        else
+        {
+            <div class="esh-catalog-items row">
+                THERE ARE NO RESULTS THAT MATCH YOUR SEARCH
+            </div>
+        }
     </div>
-</section>
+
+</body>
+</html>
