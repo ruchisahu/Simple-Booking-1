@@ -4,10 +4,67 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EventCatalogAPI.Domain
 {
-    public enum EventType { Class, Conference, Seminar, Tournament, Game, Festival, Gathering, Performance, Tour, Networking, Party, Race, Expo, Rally, Convention, Appearence, Retreat, Gala, Attraction, Other };
-    public enum EventPriceType { Free, Paid }
+    public enum EventType
+    {
+        Class = 0,
+        Conference = 1,
+        Seminar = 2,
+        Tournament = 3,
+        Game = 4,
+        Festival = 5,
+        Gathering = 6,
+        Performance = 7,
+        Tour = 8,
+        Networking = 9,
+        Party = 10,
+        Race = 11,
+        Expo = 12,
+        Rally = 13,
+        Convention = 14,
+        Appearence = 15,
+        Retreat = 16,
+        Gala = 17,
+        Attraction = 18,
+        Other = 19
+    }
 
-    public enum EventCategory { Music, Kids, Sports, Fitness, Tech, Cooking, Travel, Fashion, Holiday, Business, Health, Other, Home, Lifestyle, Family, Education, Outdoor, Community, Film, School, Auto, Boat, Air, Hobbies, Cause, Charity, Food, Arts }
+    public enum EventPriceType
+    {
+        Free = 0,
+        Paid = 1
+    }
+
+    public enum EventCategory
+    {
+        Music = 0,
+        Kids = 1,
+        Sports = 2,
+        Fitness = 3,
+        Tech = 4,
+        Cooking = 5,
+        Travel = 6,
+        Fashion = 7,
+        Holiday = 8,
+        Business = 9,
+        Health = 10,
+        Other = 11,
+        Home = 12,
+        Lifestyle = 13,
+        Family = 14,
+        Education = 15,
+        Outdoor = 16,
+        Community = 17,
+        Film = 18,
+        School = 19,
+        Auto = 20,
+        Boat = 21,
+        Air = 22,
+        Hobbies = 23,
+        Cause = 24,
+        Charity = 25,
+        Food = 26,
+        Arts = 27
+    }
 
     public class EventCatalog
     {
