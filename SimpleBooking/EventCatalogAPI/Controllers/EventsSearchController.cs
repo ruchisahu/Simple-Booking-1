@@ -1,13 +1,12 @@
-﻿using System;
+﻿using EventCatalogAPI.Data;
+using EventCatalogAPI.Domain;
+using EventCatalogAPI.ViewModel;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using EventCatalogAPI.Data;
-using EventCatalogAPI.Domain;
-using Microsoft.EntityFrameworkCore;
-using EventCatalogAPI.ViewModel;
 
 namespace EventCatalogAPI.Controllers
 {
@@ -106,6 +105,12 @@ namespace EventCatalogAPI.Controllers
             var events = await eventCatalogContext.Eventcatalogs.ToListAsync();
 
             var eventsSearched = Search.NewSearch(events, location, eventTypeParam, eventCategoryParam, startDate, endDate, eventPriceTypeParam, anyText);
+
+            foreach (var ev in eventsSearched)
+            {
+                ev.ImageURL = $"http://localhost:49572/api/image/{ev.ImageURL}";
+            }
+
             var eventModel = new PaginatedItemsViewModel<EventCatalog>(pageIndex, pageSize, totalEventsCount, eventsSearched);
             return Ok(eventModel);
         }

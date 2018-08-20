@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
-using System;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using WebMvcClient.Infrastructure;
 using WebMvcClient.Models;
@@ -21,6 +19,7 @@ namespace WebMvcClient.Services
             var events = JsonConvert.DeserializeObject<Catalog>(data);
             return events.Data;
         }
+
         public async Task<IEnumerable<SelectListItem>> Categories()
         {
             var apiUrl = "http://localhost:49572/api/EventsSearch/Categories";
