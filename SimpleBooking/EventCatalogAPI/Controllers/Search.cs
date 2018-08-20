@@ -49,7 +49,7 @@ namespace EventCatalogAPI.Controllers
 
         public static List<EventCatalog> NewSearch(List<EventCatalog> events, string location, EventType? evType, EventCategory? evCategory, DateTime? startDate, DateTime? endDate, EventPriceType? priceType, string anyText)
         {
-            if(location == null)
+            if (location == null)
             {
                 return new List<EventCatalog>();
             }
@@ -83,9 +83,11 @@ namespace EventCatalogAPI.Controllers
             {
                 filteredEvents = filteredEvents.Where(ev => ev.PriceType == priceType);
             }
+
             if (anyText != null)
             {
-                filteredEvents = filteredEvents.Where(ev => Contains(ev.Description, anyText) || Contains(ev.Name, anyText));
+                var otherEvents = events.Where(ev => Contains(ev.Description, anyText) || Contains(ev.Name, anyText));
+                filteredEvents = filteredEvents.Union(otherEvents);
             }
 
             return filteredEvents.ToList();

@@ -12,9 +12,9 @@ namespace WebMvcClient.Services
     {
         private readonly IHttpClient apiClient = new CustomHttpClient(null);
 
-        public async Task<List<Event>> Events(string location)
+        public async Task<List<Event>> Events(string location, string eventType, string eventCategory, string priceType)
         {
-            var apiUrl = $"http://localhost:49572/api/EventsSearch/Events?location={location}";
+            var apiUrl = $"http://localhost:49572/api/EventsSearch/Events?location={location}&anyText={location}&eventType={eventType}&eventCategory={eventCategory}&priceType={priceType}";
             var data = await apiClient.GetStringAsync(apiUrl);
             var events = JsonConvert.DeserializeObject<Catalog>(data);
             return events.Data;

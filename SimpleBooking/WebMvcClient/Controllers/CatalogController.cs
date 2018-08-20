@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using WebMvcClient.Models;
 using WebMvcClient.Services;
 using WebMvcClient.ViewModels;
@@ -20,7 +17,7 @@ namespace WebMvcClient.Controllers
                 Categories = await catalogService.Categories(),
                 Types = await catalogService.Types(),
                 Prices = await catalogService.PriceType(),
-                Events = await catalogService.Events(model.Location)
+                Events = await catalogService.Events(model.Location, model.EventType, model.Category, model.Price)
             };
             return View(viewModel);
         }
