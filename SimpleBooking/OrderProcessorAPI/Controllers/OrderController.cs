@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using OrderProcessorAPI.Data;
 using OrderProcessorAPI.Domain;
 using OrderProcessorAPI.Response_Entities;
@@ -32,8 +34,11 @@ namespace OrderProcessorAPI.Controllers
         [Route("api/[controller]/ProcessAnOrder")]
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public async Task<IActionResult> ProcessAnOrder(OrderViewModel orderView)
+        public async Task<IActionResult> ProcessAnOrder(/*OrderViewModel orderView*/)
         {
+            string jsonString = new StreamReader(Request.Body).ReadToEnd();
+            OrderViewModel orderView = JsonConvert.DeserializeObject<OrderViewModel>(jsonString);
+
             User user = _orderContext.Users
                 .Where(u => (u.CreditCardNo == orderView.CreditCardNo))
                 .SingleOrDefault();

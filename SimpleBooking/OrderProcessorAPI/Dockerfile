@@ -1,19 +1,12 @@
-FROM microsoft/aspnetcore:2.0 AS base
-WORKDIR /app
-EXPOSE 80
+FROM microsoft/dotnet:2.1-sdk AS build
+WORKDIR /code
 
-FROM microsoft/aspnetcore-build:2.0 AS build
-WORKDIR /src
-COPY OrderProcessorAPI/OrderProcessorAPI.csproj OrderProcessorAPI/
-RUN dotnet restore OrderProcessorAPI/OrderProcessorAPI.csproj
 COPY . .
-WORKDIR /src/OrderProcessorAPI
-RUN dotnet build OrderProcessorAPI.csproj -c Release -o /app
+RUN dotnet restore
 
-FROM build AS publish
-RUN dotnet publish OrderProcessorAPI.csproj -c Release -o /app
+RUN dotnet publish --output /out/ --configuration Release
 
-FROM base AS final
+FROM microsoft/dotnet:2.1-aspnetcore-runtime AS runtime
+COPY --from=build /out /app/
 WORKDIR /app
-COPY --from=publish /app .
 ENTRYPOINT ["dotnet", "OrderProcessorAPI.dll"]

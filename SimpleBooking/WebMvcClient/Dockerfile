@@ -1,17 +1,15 @@
-FROM microsoft/aspnetcore:2.0 AS base
+FROM microsoft/dotnet:2.1-aspnetcore-runtime AS base
 WORKDIR /app
 EXPOSE 80
 
-FROM microsoft/aspnetcore-build:2.0 AS build
+FROM microsoft/dotnet:2.1-sdk AS build
 WORKDIR /src
-COPY ../WebMvcClient/WebMvcClient.csproj ../WebMvcClient/
-RUN dotnet restore ../WebMvcClient/WebMvcClient.csproj
 COPY . .
-WORKDIR /src/../WebMvcClient
-RUN dotnet build WebMvcClient.csproj -c Release -o /app
+RUN dotnet restore
+
 
 FROM build AS publish
-RUN dotnet publish WebMvcClient.csproj -c Release -o /app
+RUN dotnet publish -c Release -o /app
 
 FROM base AS final
 WORKDIR /app

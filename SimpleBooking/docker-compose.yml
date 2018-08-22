@@ -1,51 +1,56 @@
 version: '3.4'
 
+networks:
+
+   frontend:
+
+   backend:
+
+
+
 services:
-  eventmanagementapi:
-    image: ${DOCKER_REGISTRY}eventmanagementapi
-    build:
-      context: .
-      dockerfile: EventManagementAPI/Dockerfile
 
+   webmvcclient:
+      build:
+         context: .\WebMvcClient
+         dockerfile: Dockerfile
+      environment:
+         ASPNETCORE_ENVIRONMENT: Development
+         OrderUrl: http://order
+      container_name: webshop
+      ports:
+         - "5200:80"
+      networks:
+         - frontend
+      depends_on:
+         - order
 
-  orderprocessorapi:
-    image: ${DOCKER_REGISTRY}orderprocessorapi
-    build:
-      context: .
-      dockerfile: OrderProcessorAPI/Dockerfile
+   order:
+      build:
+         context: .\OrderProcessorAPI
+         dockerfile: Dockerfile
+      image: orderapi
+      environment:
+         DatabaseServer: mssqlserver
+         DatabaseName: OrderDb
+         DatabaseUser: sa
+         DatabaseUserPassword: ProductApi(!)
+      container_name: orderprocessorapi1
+      ports:
+         - "5000:80"
+      networks:
+         - backend
+         - frontend
+      depends_on:
+         - mssqlserver
 
-
-  eventcatalogapi:
-    image: ${DOCKER_REGISTRY}eventcatalogapi
-    build:
-      context: .
-      dockerfile: EventCatalogAPI/Dockerfile
-
-
-  searcheventapi:
-    image: ${DOCKER_REGISTRY}searcheventapi
-    build:
-      context: .
-      dockerfile: SearchEventAPI/Dockerfile
-
-
-  ticketsapi:
-    image: ${DOCKER_REGISTRY}ticketsapi
-    build:
-      context: .
-      dockerfile: TicketsAPI/Dockerfile
-
-
-  tokenserviceapi:
-    image: ${DOCKER_REGISTRY}tokenserviceapi
-    build:
-      context: .
-      dockerfile: TokenServiceAPI/Dockerfile
-
-
-  webmvcclient:
-    image: ${DOCKER_REGISTRY}webmvcclient
-    build:
-      context: .
-      dockerfile: WebMvcClient/Dockerfile
-
+   mssqlserver:
+      image: "microsoft/mssql-server-linux:latest"
+      ports:
+         - "1445:1433"
+      container_name: mssqlcontainer
+      environment:
+         ACCEPT_EULA: Y
+         SA_PASSWORD: ProductApi(!)
+      networks:
+         - backend

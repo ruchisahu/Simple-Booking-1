@@ -1,0 +1,77 @@
+﻿@model WebMvcClient.Models.Ticket
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Ticket</h2>
+<div>
+    @*<h4>Ticket</h4>*@
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EventName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EventName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EventDateTime)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EventDateTime)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EventLocation)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EventLocation)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TicketId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TicketId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Quantity)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalAmount)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TotalAmount)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AuthCode)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AuthCode)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ProcessingTime)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ProcessingTime)
+        </dd>
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="Index">Back to List</a>
+</div>
