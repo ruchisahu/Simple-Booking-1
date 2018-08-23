@@ -48,6 +48,7 @@ namespace TokenServiceApi.Controllers
         [TempData]
         public string ErrorMessage { get; set; }
 
+        // GET: /Account/Login
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> Login(string returnUrl = null)
@@ -58,7 +59,7 @@ namespace TokenServiceApi.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
-
+        // POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -212,6 +213,7 @@ namespace TokenServiceApi.Controllers
             return View();
         }
 
+        // GET: /Account/Register
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Register(string returnUrl = null)
@@ -219,7 +221,7 @@ namespace TokenServiceApi.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
-
+        // POST: /Account/Register
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -257,50 +259,60 @@ namespace TokenServiceApi.Controllers
         //    _logger.LogInformation("User logged out.");
         //    return RedirectToAction(nameof(HomeController.Index), "Home");
         //}
-        [HttpGet]
-        [AllowAnonymous]
-        public async Task<IActionResult> Logout(string logoutId)
-        {
-            // build a model so the logout page knows what to display
-            var vm = await _account.BuildLogoutViewModelAsync(logoutId);
+        /*  [HttpGet]
+          [AllowAnonymous]
+          public async Task<IActionResult> Logout(string logoutId)
+          {
+              // build a model so the logout page knows what to display
+              var vm = await _account.BuildLogoutViewModelAsync(logoutId);
 
-            if (vm.ShowLogoutPrompt == false)
-            {
-                // if the request for logout was properly authenticated from IdentityServer, then
-                // we don't need to show the prompt and can just log the user out directly.
-                return await Logout(vm);
-            }
+              if (vm.ShowLogoutPrompt == false)
+              {
+                  // if the request for logout was properly authenticated from IdentityServer, then
+                  // we don't need to show the prompt and can just log the user out directly.
+                  return await Logout(vm);
+              }
 
-            return View(vm);
-        }
+              return View(vm);
+          }
 
+
+          // POST: /Account/Logout
+             [HttpPost]
+             [AllowAnonymous]
+             public async Task<IActionResult> Logout([FromBody]LogoutInputModel model)
+             {
+                 var vm = await _account.BuildLoggedOutViewModelAsync(model.LogoutId);
+
+                 await _signInManager.SignOutAsync();
+                 _logger.LogInformation("User logged out.");
+
+                 // check if we need to trigger sign-out at an upstream identity provider
+                 if (vm.TriggerExternalSignout)
+                 {
+                     // build a return URL so the upstream provider will redirect back
+                     // to us after the user has logged out. this allows us to then
+                     // complete our single sign-out processing.
+                     string url = Url.Action("Logout", new { logoutId = vm.LogoutId });
+
+                     // this triggers a redirect to the external provider for sign-out
+                     // hack: try/catch to handle social providers that throw
+                     return SignOut(new AuthenticationProperties { RedirectUri = url }, vm.ExternalAuthenticationScheme);
+                 }
+
+                 return Ok("User logged out");
+             }
+  */
+  //tempory logout
+        // POST: /Account/SignOut
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Logout(LogoutInputModel model)
+        public async Task<IActionResult> SignOut()
         {
-            var vm = await _account.BuildLoggedOutViewModelAsync(model.LogoutId);
-
             await _signInManager.SignOutAsync();
-            _logger.LogInformation("User logged out.");
-
-            // check if we need to trigger sign-out at an upstream identity provider
-            if (vm.TriggerExternalSignout)
-            {
-                // build a return URL so the upstream provider will redirect back
-                // to us after the user has logged out. this allows us to then
-                // complete our single sign-out processing.
-                string url = Url.Action("Logout", new { logoutId = vm.LogoutId });
-
-                // this triggers a redirect to the external provider for sign-out
-                // hack: try/catch to handle social providers that throw
-                return SignOut(new AuthenticationProperties { RedirectUri = url }, vm.ExternalAuthenticationScheme);
-            }
-
-            return View("LoggedOut", vm);
+            _logger.LogInformation(4, "User logged out.");
+            return RedirectToAction(nameof(HomeController.Index), "Home");
         }
-
-
 
         [HttpPost]
         [AllowAnonymous]

@@ -14,6 +14,15 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using TokenServiceApi.Models;
 using WebMvcClient.Infrastructure;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using WebMvc.Models;
+using System.IdentityModel.Tokens.Jwt;
 using WebMvcClient.Services;
 
 namespace WebMvcClient
@@ -46,22 +55,23 @@ namespace WebMvcClient
             services.AddSingleton<IHttpClient, CustomHttpClient>();
             services.AddTransient<IIdentityService<ApplicationUser>, IdentityService>();
             services.AddTransient<IOrderService, OrderService>();
-
-            var identityUrl = Configuration.GetValue<string>("IdentityUrl");
-            var callBackUrl = Configuration.GetValue<string>("CallBackUrl");
+            services.AddTransient<IIdentityService<ApplicationUser>, IdentityService>();
+            var identityUrl = "http://localhost:5000";
+            var callBackUrl = "http://localhost:6000";
+        //   var identityUrl = Configuration.GetValue<string>("IdentityUrl");
+          //  var callBackUrl = Configuration.GetValue<string>("CallBackUrl");
             services.AddAuthentication(options =>
             {
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
                 // options.DefaultAuthenticateScheme = "Cookies";
             })
-            .AddCookie()
 
-            .AddOpenIdConnect(options =>
-            {
-
+           .AddCookie()
+            .AddOpenIdConnect(options => {
                 options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                options.Authority = identityUrl.ToString();
+                options.Authority = "http://localhost:5000";
+                // options.Authority = identityUrl.ToString();
                 options.SignedOutRedirectUri = callBackUrl.ToString();
                 options.ClientId = "mvc";
                 options.ClientSecret = "secret";
@@ -73,8 +83,11 @@ namespace WebMvcClient
                 options.Scope.Add("profile");
                 options.Scope.Add("offline_access");
                 options.Scope.Add("order");
+
+
             });
         }
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
             public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -89,15 +102,19 @@ namespace WebMvcClient
                 app.UseExceptionHandler("/Home/Error");
             }
             app.UseStaticFiles();
+            app.UseAuthentication();
+            
+
             app.UseMvc(routes =>
             {
-                routes.MapRoute(
+              /*  routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
-
+             */
                 routes.MapRoute(
-                    name: "catalog",
-                    template: "{controller=Catalog}/{action=Index}/{id?}");
+                  name: "catalog",
+                   // template: "{controller=Catalog}");
+                   template: "{controller=Catalog}/{action=Index}/{id?}");
             });
         }
     }
