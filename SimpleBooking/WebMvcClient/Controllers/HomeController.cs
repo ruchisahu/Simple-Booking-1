@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebMvcClient.Models;
 
@@ -15,7 +16,9 @@ namespace WebMvcClient.Controllers
             return View();
         }
 
-        public IActionResult About()
+        [Authorize]
+
+        public IActionResult Login()
         {
             ViewData["Message"] = "Your application description page.";
 

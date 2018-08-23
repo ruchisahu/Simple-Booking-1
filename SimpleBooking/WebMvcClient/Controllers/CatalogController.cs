@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using WebMvcClient.Models;
@@ -25,6 +26,14 @@ namespace WebMvcClient.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+        [Authorize]
+        public IActionResult Login()
+        {
+            ViewData["Message"] = "Your application description page.";
+
+
+            return View();
         }
     }
 }
