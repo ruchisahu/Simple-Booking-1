@@ -62,6 +62,9 @@ namespace TokenServiceApi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+          //  loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+
+          //  loggerFactory.AddDebug();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -71,12 +74,12 @@ namespace TokenServiceApi
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-
+           // InitializeDatabase(app);
             app.UseStaticFiles();
 
             // app.UseIdentity(); // not needed, since UseIdentityServer adds the authentication middleware
             app.UseIdentityServer();
-
+           
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

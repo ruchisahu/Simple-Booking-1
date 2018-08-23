@@ -28,7 +28,7 @@ namespace EventCatalogAPI
                     services.GetRequiredService<EventCatalogContext>();
 
                 
-                DbInitializer.SeedAsync(context).Wait();
+                //DbInitializer.SeedAsync(context).Wait();
 
             }
 
