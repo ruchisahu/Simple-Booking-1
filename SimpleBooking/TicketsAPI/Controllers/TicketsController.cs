@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Net;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using TicketsAPI.Domain;
-using TicketsAPI.Data;
-using Microsoft.Extensions.Options;
-using Microsoft.EntityFrameworkCore;
+using TicketsCartAPI.Domain;
 
 namespace TicketsAPI.Controllers
 {
@@ -15,47 +9,35 @@ namespace TicketsAPI.Controllers
     [Route("api/Tickets")]
     public class TicketsController : Controller
     {
-        private readonly TicketContext ticketContext;
-        //private readonly IOptionsSnapshot<CatalogSettings> _settings;
+        private ICartRepository repository;
 
-        public TicketsController(TicketContext catalogContext)
+        public TicketsController(ICartRepository repository)
         {
-            ticketContext = catalogContext;
-            //_settings = settings;
+            this.repository = repository;
+        }
+
+        [HttpGet("{id}")]
+        [ProducesResponseType(typeof(Cart), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> Get(string id)
+        {
+            var basket = await repository.GetCartAsync(id);
+
+            return Ok(basket);
         }
 
         [HttpPost]
-        [Route("Ticket")]
-        public async Task<IActionResult> CreateTicket([FromBody]Ticket ticket)
+        [ProducesResponseType(typeof(Cart), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> Post([FromBody]Cart value)
         {
-            ticketContext.Tickets.Add(ticket);
-            await ticketContext.SaveChangesAsync();
-            return await GetTicketById(ticket.Id);
+            var basket = await repository.UpdateCartAsync(value);
+
+            return Ok(basket);
         }
 
-        [HttpGet]
-        [Route("{id:int}")]
-        public async Task<IActionResult> GetTicketById(int id)
+        [HttpDelete("{id}")]
+        public void Delete(string id)
         {
-            if (id <= 0)
-            {
-                return BadRequest();
-            }
-            var ticket = await ticketContext.Tickets.SingleOrDefaultAsync(c => c.Id == id);
-            if (ticket != null)
-            {
-                return Ok(ticket);
-            }
-
-            return NotFound();
-        }
-
-        [HttpGet]
-        [Route("PurchasedTickets")]
-        public async Task<IActionResult> GetPurchasedTickets([FromQuery] int eventId)
-        {
-            var purchasedTickets = await ticketContext.Tickets.SumAsync(t => t.EventId == eventId ? t.TicketsPurchased : 0);
-            return Ok(purchasedTickets);
+            repository.DeleteCartAsync(id);
         }
     }
 }

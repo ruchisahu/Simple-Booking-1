@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderProcessorAPI", "OrderP
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventCatalogAPI", "EventCatalogAPI\EventCatalogAPI.csproj", "{43507436-6C16-4EB7-A66F-7362B70525DB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TicketsAPI", "TicketsAPI\TicketsAPI.csproj", "{CB5B3AA1-F9D8-4987-944E-8AC7671B8351}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TicketsCartAPI", "TicketsAPI\TicketsCartAPI.csproj", "{CB5B3AA1-F9D8-4987-944E-8AC7671B8351}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TokenServiceAPI", "TokenServiceAPI\TokenServiceAPI.csproj", "{F6E2BEE6-41EA-44A5-A6A1-52CF8F57CA8A}"
 EndProject

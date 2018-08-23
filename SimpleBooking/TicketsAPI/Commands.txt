@@ -1,2 +1,7 @@
 ﻿- Setup EventManagementAPI database
 Update-Database -Project EventManagementAPI -StartupProject EventManagementAPI
+
+docker pull redis
+docker run -d --name ticketsdata –p 6379:6379 redis
+docker run –p 6379:6379 redis
+docker run -d --name ticketsdata redis

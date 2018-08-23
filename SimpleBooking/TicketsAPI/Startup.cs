@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using TicketsAPI.Data;
+using StackExchange.Redis;
+using TicketsCartAPI.Domain;
 
 namespace TicketsAPI
 {
@@ -28,8 +23,17 @@ namespace TicketsAPI
             services.Configure<TicketSettings>(Configuration);
 
             services.AddMvc();
-            var connectionString = Configuration["ConnectionString"];
-            services.AddDbContext<TicketContext>(options => options.UseSqlServer(connectionString));
+
+            services.AddSingleton<ConnectionMultiplexer>(sp =>
+            {
+                var settings = sp.GetRequiredService<IOptions<TicketSettings>>().Value;
+                var configuration = ConfigurationOptions.Parse(settings.ConnectionString, true);
+
+                configuration.ResolveDns = true;
+                configuration.AbortOnConnectFail = false;
+
+                return ConnectionMultiplexer.Connect(configuration);
+            });
 
             services.AddSwaggerGen(options =>
             {
@@ -42,6 +46,8 @@ namespace TicketsAPI
                     TermsOfService = "Terms Of Service"
                 });
             });
+
+            services.AddTransient<ICartRepository, RedisCartRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
