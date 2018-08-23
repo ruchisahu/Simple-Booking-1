@@ -24,6 +24,7 @@ services:
          - frontend
       depends_on:
          - order
+         - tokenserver
 
    order:
       build:
@@ -43,6 +44,7 @@ services:
          - frontend
       depends_on:
          - mssqlserver
+         - tokenserver
 
    mssqlserver:
       image: "microsoft/mssql-server-linux:latest"
