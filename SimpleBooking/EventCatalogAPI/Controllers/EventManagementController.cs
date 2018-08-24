@@ -18,32 +18,6 @@ namespace EventCatalogAPI.Controllers
         public EventManagementController(EventCatalogContext eventCatalogContext)
         {
             this.eventCatalogContext = eventCatalogContext;
-
-            //test data	
-            EventCatalog _event = new EventCatalog();
-            Place place = new Place();
-
-            _event.Name = "Tech Social";
-            _event.Description = "Neckbeards";
-            _event.Place = place;
-            _event.StartDate = DateTime.Now;
-            _event.EndDate = DateTime.Now.AddDays(1);
-            _event.PriceType = EventPriceType.Free;
-            _event.Price = 292m;
-            _event.ImageURL = "google.com";
-            _event.Type = EventType.Appearence;
-            _event.Category = EventCategory.Air;
-            _event.InitialTicketCount = 100;
-
-            place.Address = "111 House Street";
-            place.City = "Seattle";
-            place.State = "WA";
-            place.ZipCode = 98101;
-            place.PlaceName = "John Wayne";
-            place.PlacePrice = 100m;
-
-            eventCatalogContext.Eventcatalogs.Add(_event);
-            eventCatalogContext.SaveChanges();
         }
 
         [HttpGet]
