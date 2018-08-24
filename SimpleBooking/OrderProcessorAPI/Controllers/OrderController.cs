@@ -20,10 +20,12 @@ namespace OrderProcessorAPI.Controllers
     public class OrderController : Controller
     {
         private readonly OrderContext _orderContext;
+        private readonly ILogger<OrdersController> _logger;
 
-        public OrderController(OrderContext orderContext)
+        public OrderController(OrderContext orderContext, ILogger<OrdersController> logger)
         {
             _orderContext = orderContext;
+            _logger = logger;
         }
 
         [Route("api/[controller]/Welcome")]
