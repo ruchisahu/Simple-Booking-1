@@ -1,0 +1,5 @@
+﻿- Setup EventManagementAPI database
+Update-Database -Project EventManagementAPI -StartupProject EventManagementAPI
+
+docker pull redis
+docker run -d --name cartapi.data redis

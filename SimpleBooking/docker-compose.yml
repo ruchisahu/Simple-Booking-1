@@ -1,9 +1,8 @@
-version: '3.4'
+version: "3.4"
 
 networks:
 
    frontend:
-
    backend:
 
 
@@ -45,20 +44,20 @@ services:
          - mssqlserver
 
    cart:
-      image: ticketscartimage
+      image: cartimage
       build: 
-         context: .\TicketsAPI
+         context: .\CartAPI
          dockerfile: Dockerfile
       environment: 
          ASPNETCORE_ENVIRONMENT: Development 
-      container_name: ticketscartapi
+      container_name: cartapi
       ports:
          - "5050:80"
       networks:
          - backend
          - frontend 
       depends_on:
-         - tickets.data
+         - cartapi.data
 
    mssqlserver:
       image: "microsoft/mssql-server-linux:latest"
@@ -71,9 +70,7 @@ services:
       networks:
          - backend
 
-   tickets.data:
+   cartapi.data:
       image: redis
-      ports:
-         - "6377:6379"  
       networks:
          - backend 
