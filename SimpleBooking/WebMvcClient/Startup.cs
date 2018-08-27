@@ -44,7 +44,7 @@ namespace WebMvcClient
 
             services.AddMvc();
             services.AddSingleton<IHttpClient, CustomHttpClient>();
-            //services.AddTransient<IIdentityService<ApplicationUser>, IdentityService>();
+            services.AddTransient<IIdentityService<ApplicationUser>, IdentityService>();
             services.AddTransient<IOrderService, OrderService>();
 
             var identityUrl = Configuration.GetValue<string>("IdentityUrl");

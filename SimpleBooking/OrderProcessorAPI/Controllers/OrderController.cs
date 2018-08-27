@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using OrderProcessorAPI.Data;
 using OrderProcessorAPI.Domain;
@@ -20,9 +21,9 @@ namespace OrderProcessorAPI.Controllers
     public class OrderController : Controller
     {
         private readonly OrderContext _orderContext;
-        private readonly ILogger<OrdersController> _logger;
+        private readonly ILogger<OrderController> _logger;
 
-        public OrderController(OrderContext orderContext, ILogger<OrdersController> logger)
+        public OrderController(OrderContext orderContext, ILogger<OrderController> logger)
         {
             _orderContext = orderContext;
             _logger = logger;
@@ -94,7 +95,7 @@ namespace OrderProcessorAPI.Controllers
             ticket.User = user;
 
             transaction.ProcessingTime = DateTime.Now;
-            transaction.AuthCode = string.Empty;
+            transaction.AuthCode = orderView.AuthCode;
             transaction.TotalAmount = totalamount;
             transaction.Ticket = ticket;
 
