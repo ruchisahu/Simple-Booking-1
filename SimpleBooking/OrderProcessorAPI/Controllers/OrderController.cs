@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using OrderProcessorAPI.Data;
 using OrderProcessorAPI.Domain;
@@ -15,13 +17,16 @@ using OrderProcessorAPI.ViewModels;
 namespace OrderProcessorAPI.Controllers
 {
     [Produces("application/json")]
+    [Authorize]
     public class OrderController : Controller
     {
         private readonly OrderContext _orderContext;
+        private readonly ILogger<OrderController> _logger;
 
-        public OrderController(OrderContext orderContext)
+        public OrderController(OrderContext orderContext, ILogger<OrderController> logger)
         {
             _orderContext = orderContext;
+            _logger = logger;
         }
 
         [Route("api/[controller]/Welcome")]
@@ -90,7 +95,7 @@ namespace OrderProcessorAPI.Controllers
             ticket.User = user;
 
             transaction.ProcessingTime = DateTime.Now;
-            transaction.AuthCode = string.Empty;
+            transaction.AuthCode = orderView.AuthCode;
             transaction.TotalAmount = totalamount;
             transaction.Ticket = ticket;
 

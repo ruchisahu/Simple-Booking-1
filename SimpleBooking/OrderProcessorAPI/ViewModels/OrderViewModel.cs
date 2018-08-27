@@ -18,6 +18,7 @@ namespace OrderProcessorAPI.ViewModels
 
         //No. Of Tickets
         public int Quantity { get; set; }
+        public string AuthCode { get; set; }
 
         //User Details
         public string UserName { get; set; }

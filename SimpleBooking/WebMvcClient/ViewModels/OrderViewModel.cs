@@ -9,6 +9,7 @@ namespace WebMvcClient.Models
     public class OrderViewModel
     {
         public int EventId { get; set; }
+        public string BuyerId { get; set; }
 
         [DisplayName("Event name")]
         public string EventName { get; set; }
@@ -18,10 +19,12 @@ namespace WebMvcClient.Models
 
         public int Quantity { get; set; }
         public decimal TotalAmount { get; set; }
+        public string AuthCode { get; set; }
 
         public string UserName { get; set; }
         public string BillingAddress { get; set; }
         public string EmailAddress { get; set; }
+        public string StripeToken { get; set;}
         public long CreditCardNo { get; set; }
         public int CSC { get; set; }
         public string ExpirationDate { get; set; }
