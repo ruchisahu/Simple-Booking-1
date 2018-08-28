@@ -20,7 +20,6 @@ namespace CartAPI
                  {
                      config.AddEnvironmentVariables();
                  })
-                .UseApplicationInsights()
                 .Build();
     }
 }

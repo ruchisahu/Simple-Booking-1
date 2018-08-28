@@ -74,5 +74,7 @@ services:
 
    cartapi.data:
       image: redis
+      ports:
+         - "6377:6379"
       networks:
          - backend 
