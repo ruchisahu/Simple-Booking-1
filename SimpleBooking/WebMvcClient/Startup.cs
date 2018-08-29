@@ -12,7 +12,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using TokenServiceApi.Models;
 using WebMvcClient.Infrastructure;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
@@ -21,9 +20,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using WebMvc.Models;
 using System.IdentityModel.Tokens.Jwt;
 using WebMvcClient.Services;
+using WebMvcClient.Models;
 
 namespace WebMvcClient
 {
@@ -55,9 +54,8 @@ namespace WebMvcClient
             services.AddSingleton<IHttpClient, CustomHttpClient>();
             services.AddTransient<IIdentityService<ApplicationUser>, IdentityService>();
             services.AddTransient<IOrderService, OrderService>();
-            services.AddTransient<IIdentityService<ApplicationUser>, IdentityService>();
             var identityUrl = "http://localhost:5000";
-            var callBackUrl = "http://localhost:6000";
+            var callBackUrl = "http://localhost:5900";
         //   var identityUrl = Configuration.GetValue<string>("IdentityUrl");
           //  var callBackUrl = Configuration.GetValue<string>("CallBackUrl");
             services.AddAuthentication(options =>
@@ -70,8 +68,7 @@ namespace WebMvcClient
            .AddCookie()
             .AddOpenIdConnect(options => {
                 options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                options.Authority = "http://localhost:5000";
-                // options.Authority = identityUrl.ToString();
+                options.Authority = identityUrl.ToString();
                 options.SignedOutRedirectUri = callBackUrl.ToString();
                 options.ClientId = "mvc";
                 options.ClientSecret = "secret";

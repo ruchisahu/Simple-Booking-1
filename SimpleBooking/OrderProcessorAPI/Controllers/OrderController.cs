@@ -17,7 +17,7 @@ using OrderProcessorAPI.ViewModels;
 namespace OrderProcessorAPI.Controllers
 {
     [Produces("application/json")]
-    [Authorize]
+//    [Authorize]
     public class OrderController : Controller
     {
         private readonly OrderContext _orderContext;
@@ -45,7 +45,7 @@ namespace OrderProcessorAPI.Controllers
             OrderViewModel orderView = JsonConvert.DeserializeObject<OrderViewModel>(jsonString);
 
             User user = _orderContext.Users
-                .Where(u => (u.CreditCardNo == orderView.CreditCardNo))
+                .Where(u => (u.BuyerId == orderView.BuyerId))
                 .SingleOrDefault();
 
             if (user == null)
@@ -53,11 +53,9 @@ namespace OrderProcessorAPI.Controllers
                 user = new User();
 
                 user.Name = orderView.UserName;
+                user.BuyerId = orderView.BuyerId;
                 user.BillingAddress = orderView.BillingAddress;
                 user.EmailAddress = orderView.EmailAddress;
-                user.CreditCardNo = orderView.CreditCardNo;
-                user.CSC = orderView.CSC;
-                user.ExpirationDate = orderView.ExpirationDate;
 
                 _orderContext.Users.Add(user);
             }

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TokenServiceApi.Models;
 using System.Security.Claims;
 using System.Security.Principal;
+using WebMvcClient.Models;
 
 namespace WebMvcClient.Services
 {
