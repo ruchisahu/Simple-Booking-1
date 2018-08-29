@@ -10,8 +10,8 @@ namespace WebMvcClient.Services
     public interface IOrderService
     {
         Task<Ticket> ProcessAnOrder(OrderViewModel orderViewModel);
-        Task<bool> CancelAnOrder(int ticketId);
-        Task<Ticket> GetTicketById(int ticketId);
+        //Task<bool> CancelAnOrder(int ticketId);
+        //Task<Ticket> GetTicketById(int ticketId);
 
     }
 }

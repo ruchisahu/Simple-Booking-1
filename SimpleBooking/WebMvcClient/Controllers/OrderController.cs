@@ -9,7 +9,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Polly.CircuitBreaker;
 using Stripe;
-using TokenServiceApi.Models;
 using WebMvcClient.Models;
 using WebMvcClient.Services;
 
@@ -51,12 +50,12 @@ namespace WebMvcClient.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(OrderViewModel orderViewModel)
         {
-            if (ModelState.IsValid)
+            //if (ModelState.IsValid)
             {
                 var user = _identitySvc.Get(HttpContext.User);
                 OrderViewModel order = orderViewModel;
-                order.UserName = user.Email;
                 order.BuyerId = user.Id;
+                order.EmailAddress = user.Email;
 
                 var chargeOptions = new StripeChargeCreateOptions()
                 {
@@ -66,7 +65,7 @@ namespace WebMvcClient.Controllers
                     SourceTokenOrExistingSourceId = order.StripeToken,
                     //optional
                     Description = string.Format("Order Payment {0}", order.UserName),
-                    ReceiptEmail = order.UserName,
+                    ReceiptEmail = order.EmailAddress
                 };
                 var chargeService = new StripeChargeService();
                 chargeService.ApiKey = paymentSettings.StripePrivateKey;
@@ -112,10 +111,10 @@ namespace WebMvcClient.Controllers
                     return View(orderViewModel);
                 }
             }
-            else
-            {
-                return View(orderViewModel);
-            }
+            //else
+            //{
+            //    return View(orderViewModel);
+            //}
         }
         //public IActionResult Complete(int id, string userName)
         //{

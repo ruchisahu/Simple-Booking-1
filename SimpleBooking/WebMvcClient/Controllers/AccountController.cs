@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Claims;
 using System.Diagnostics;
 using WebMvcClient.Controllers;
-using WebMvc.Models;
+using WebMvcClient.Models;
 using Microsoft.AspNetCore.Identity;
 
 namespace WebMvc.Controllers
@@ -16,8 +16,6 @@ namespace WebMvc.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-
-        private readonly SignInManager<ApplicationUser> _signInManager;
         [Authorize]
         public async Task<IActionResult> SignIn(string returnUrl)
         {
@@ -61,20 +59,18 @@ namespace WebMvc.Controllers
            }
            */
         [HttpPost]
-
         [ValidateAntiForgeryToken]
-
         public async Task<ActionResult> SignOut()
-
         {
-            await _signInManager.SignOutAsync();
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            await HttpContext.SignOutAsync(OpenIdConnectDefaults.AuthenticationScheme);
 
-
-
-            return RedirectToAction(nameof(CatalogController.Index), "Catalog");
-
+            ////// "Catalog" because UrlHelper doesn't support nameof() for controllers
+            ////// https://github.com/aspnet/Mvc/issues/5853
+            var homeUrl = Url.Action(nameof(CatalogController.Index), "Catalog");
+            return new SignOutResult(OpenIdConnectDefaults.AuthenticationScheme,
+                new AuthenticationProperties { RedirectUri = homeUrl });
         }
-
     }
 }
 
