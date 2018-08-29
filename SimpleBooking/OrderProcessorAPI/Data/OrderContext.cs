@@ -90,16 +90,8 @@ namespace OrderProcessorAPI.Data
             builder.Property(e => e.EmailAddress)
                 .IsRequired();
 
-            //Creating column "CreditcardNo"
-            builder.Property(e => e.CreditCardNo)
-                .IsRequired();
-
-            //Creating column "CSC"
-            builder.Property(e => e.CSC)
-                .IsRequired();
-
-            //Creating column "Expiration Date"
-            builder.Property(e => e.ExpirationDate)
+            //Creating column "BuyerId"
+            builder.Property(e => e.BuyerId)
                 .IsRequired();
 
         }
