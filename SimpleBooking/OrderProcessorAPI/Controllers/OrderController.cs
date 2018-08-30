@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using MassTransit;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using OrderProcessorAPI.Data;
 using OrderProcessorAPI.Domain;
+using OrderProcessorAPI.Messaging;
 using OrderProcessorAPI.Response_Entities;
 using OrderProcessorAPI.ViewModels;
 
@@ -22,11 +24,13 @@ namespace OrderProcessorAPI.Controllers
     {
         private readonly OrderContext _orderContext;
         private readonly ILogger<OrderController> _logger;
+        private IBus _bus;
 
-        public OrderController(OrderContext orderContext, ILogger<OrderController> logger)
+        public OrderController(OrderContext orderContext, ILogger<OrderController> logger, IBus bus)
         {
             _orderContext = orderContext;
             _logger = logger;
+            _bus = bus;
         }
 
         [Route("api/[controller]/Welcome")]
@@ -111,6 +115,7 @@ namespace OrderProcessorAPI.Controllers
             _orderContext.Transactions.Add(transaction);
 
             await _orderContext.SaveChangesAsync();
+            _bus.Publish(new OrderCompletedEvent(orderView.BuyerId)).Wait();
 
             TicketForJson ticketforjson = ConvertTicketToTicketForJson(ticket);
 
