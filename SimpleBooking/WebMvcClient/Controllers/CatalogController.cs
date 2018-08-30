@@ -28,7 +28,7 @@ namespace WebMvcClient.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
         [Authorize]
-        public IActionResult Login()
+        public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
 

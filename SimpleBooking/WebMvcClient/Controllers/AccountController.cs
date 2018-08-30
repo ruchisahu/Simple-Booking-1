@@ -40,7 +40,7 @@ namespace WebMvc.Controllers
             }
             // "Catalog" because UrlHelper doesn't support nameof() for controllers
             // https://github.com/aspnet/Mvc/issues/5853
-            return RedirectToAction(nameof(CatalogController.Login), "Catalog");
+            return RedirectToAction(nameof(CatalogController.Index), "Catalog");
         }
 
 
@@ -64,9 +64,6 @@ namespace WebMvc.Controllers
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             await HttpContext.SignOutAsync(OpenIdConnectDefaults.AuthenticationScheme);
-
-            ////// "Catalog" because UrlHelper doesn't support nameof() for controllers
-            ////// https://github.com/aspnet/Mvc/issues/5853
             var homeUrl = Url.Action(nameof(CatalogController.Index), "Catalog");
             return new SignOutResult(OpenIdConnectDefaults.AuthenticationScheme,
                 new AuthenticationProperties { RedirectUri = homeUrl });

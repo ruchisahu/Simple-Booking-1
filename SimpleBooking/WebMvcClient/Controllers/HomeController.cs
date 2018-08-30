@@ -16,7 +16,7 @@ namespace WebMvcClient.Controllers
             return View();
         }
 
-        [Authorize]
+     /*   [Authorize]
 
         public IActionResult Login()
         {
@@ -24,7 +24,7 @@ namespace WebMvcClient.Controllers
 
             return View();
         }
-
+*/
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";

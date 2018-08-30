@@ -259,7 +259,7 @@ namespace TokenServiceApi.Controllers
         //    _logger.LogInformation("User logged out.");
         //    return RedirectToAction(nameof(HomeController.Index), "Home");
         //}
-        /*  [HttpGet]
+          [HttpGet]
           [AllowAnonymous]
           public async Task<IActionResult> Logout(string logoutId)
           {
@@ -300,12 +300,12 @@ namespace TokenServiceApi.Controllers
                      return SignOut(new AuthenticationProperties { RedirectUri = url }, vm.ExternalAuthenticationScheme);
                  }
 
-                 return Ok("User logged out");
-             }
-  */
+            return View("LoggedOut", vm);
+        }
+  
   //tempory logout
         // POST: /Account/SignOut
-        [HttpPost]
+    /*    [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SignOut()
         {
@@ -314,7 +314,7 @@ namespace TokenServiceApi.Controllers
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
-        [HttpPost]
+    */    [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public IActionResult ExternalLogin(string provider, string returnUrl = null)
