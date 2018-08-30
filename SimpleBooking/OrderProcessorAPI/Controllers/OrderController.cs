@@ -17,7 +17,7 @@ using OrderProcessorAPI.ViewModels;
 namespace OrderProcessorAPI.Controllers
 {
     [Produces("application/json")]
-//    [Authorize]
+    [Authorize]
     public class OrderController : Controller
     {
         private readonly OrderContext _orderContext;
