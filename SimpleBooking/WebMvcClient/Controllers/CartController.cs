@@ -11,9 +11,12 @@ namespace WebMvcClient.Controllers
     {
         private IEventManagementService eventManagementService;
 
-        public CartController(IEventManagementService eventManagementService)
+        private ICartService cartService;
+
+        public CartController(IEventManagementService eventManagementService, ICartService cartService)
         {
             this.eventManagementService = eventManagementService;
+            this.cartService = cartService;
         }
 
         [HttpGet]
@@ -40,11 +43,8 @@ namespace WebMvcClient.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(Dictionary<int, int> tickets, string action)
         {
-            var cartService = new CartService();
-
             await cartService.Checkout("test", tickets);
-
-            return View();
+            return RedirectToAction("Index", "order");
         }
     }
 }

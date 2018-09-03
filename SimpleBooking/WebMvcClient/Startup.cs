@@ -44,6 +44,7 @@ namespace WebMvcClient
             services.AddTransient<IOrderService, OrderService>();
             services.AddTransient<IEventsSearch, EventsSearchService>();
             services.AddTransient<IEventManagementService, EventManagementService>();
+            services.AddTransient<ICartService, CartService>();
 
             var identityUrl = "http://localhost:5000";
             var callBackUrl = "http://localhost:5900";

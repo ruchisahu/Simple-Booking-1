@@ -7,5 +7,6 @@
         public string EventManagementUrl { get; set; }
         public string EventsSearchUrl { get; set; }
         public string ImageUrl { get; set; }
+        public string CartUrl { get; set; }
     }
 }

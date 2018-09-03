@@ -1,18 +1,26 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.Extensions.Options;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using WebMvcClient.Infrastructure;
 using WebMvcClient.Models;
 
 namespace WebMvcClient.Services
 {
-    public class CartService
+    public class CartService : ICartService
     {
-        private readonly IHttpClient apiClient = new CustomHttpClient(null);
+        private readonly IOptionsSnapshot<AppSettings> settings;
+        private readonly IHttpClient apiClient;
+        private readonly string remoteServiceBaseUrl;
+
+        public CartService(IOptionsSnapshot<AppSettings> settings, IHttpClient httpClient)
+        {
+            this.settings = settings;
+            this.apiClient = httpClient;
+            this.remoteServiceBaseUrl = $"{settings.Value.CartUrl}/api/Tickets";
+        }
 
         public async Task Checkout(string buyerId, Dictionary<int, int> tickets)
         {
-            var apiUrl = $"http://localhost:5050/api/Tickets";
-
             var cart = new Cart
             {
                 BuyerId = buyerId
@@ -29,7 +37,7 @@ namespace WebMvcClient.Services
                 cart.Items.Add(cartTicket);
             }
 
-            var response = await apiClient.PostAsync(apiUrl, cart);
+            var response = await apiClient.PostAsync(remoteServiceBaseUrl, cart);
             response.EnsureSuccessStatusCode();
         }
     }

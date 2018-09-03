@@ -4,7 +4,11 @@ http://localhost:5900/catalog
 EventManagement
 http://localhost:5030/api/eventmanagement/1
 
+Image testing
+http://localhost:5030/api/image/java.png
+
 Cart testing
 http://localhost:5900/cart?eventId=1
 
-http://localhost:5030/api/image/java.png
+Get purchase from Cart service
+http://localhost:5050/api/Tickets/test

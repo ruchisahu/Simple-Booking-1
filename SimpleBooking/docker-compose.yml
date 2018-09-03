@@ -20,6 +20,7 @@ services:
          EventManagementUrl: http://eventcatalog
          EventsSearchUrl: http://eventcatalog
          ImageUrl: http://localhost:5030
+         CartUrl: http://cart
       container_name: webshop
       ports:
          - "5900:80"
