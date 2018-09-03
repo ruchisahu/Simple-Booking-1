@@ -10,9 +10,6 @@ namespace EventCatalogAPI.Data
 
     public class DbInitializer
     {
-        // List<Ticket> ticket1 = new List<Ticket>();
-
-
         public static async Task SeedAsync(EventCatalogContext context)
         {
             context.Database.Migrate();
@@ -45,21 +42,43 @@ namespace EventCatalogAPI.Data
         {
             return new List<Place>()
             {
-
-
+                new Place
+                {
+                    PlaceId = 1,
+                    PlaceName = "Mountain",
+                    Address = "Tiger Mountain",
+                    City = "Issaquah",
+                    State = "WA",
+                    ZipCode = 98027,
+                    PlacePrice = 0
+                },
+                new Place
+                {
+                    PlaceId = 2,
+                    PlaceName = "Bellevue College",
+                    Address = "Main Street",
+                    City = "Bellevue",
+                    State = "WA",
+                    ZipCode = 98048,
+                    PlacePrice = 500
+                },
+                new Place
+                {
+                    PlaceId = 3,
+                    PlaceName = "Sammamish Lake",
+                    Address = "Lake Sammamish Street",
+                    City = "Sammamish",
+                    State = "WA",
+                    ZipCode = 98075,
+                    PlacePrice = 760
+                }
             };
         }
         static IEnumerable<Ticket> GetPreconfiguredTickets()
         {
             return new List<Ticket>()
             {
-
-                //  new Ticket() { TicketId=2},
-                //   new Ticket() { TicketId=3},
-                //   new Ticket() { TicketId=4}
-
             };
-
         }
         static IEnumerable<User> GetPreconfiguredUsers()
         {
@@ -75,26 +94,98 @@ namespace EventCatalogAPI.Data
 
         static IEnumerable<EventCatalog> GetPreconfiguredevent()
         {
-            /*      List<Ticket> Tickets =new List<Ticket>();
-                  Tickets.Add(new Ticket() { TicketId=1});
-                  Tickets.Add(new Ticket() { TicketId = 2 });
-                  Tickets.Add(new Ticket() { TicketId = 3 });
-
-                  Place place1 = new Place
-                  {
-                      PlaceId = 101,
-                      Address = "redmond",
-                      PlacePrice=1000.00M
-
-                  };
-
-                   */
-
-            DateTime date1 = new DateTime(2014, 6, 14, 6, 32, 0);
             return new List<EventCatalog>()
             {
-                //   new Eventcatalog() {EventName="event1",Description="",Location="redmond",PlaceId=1,EventDate=date1,EventPrice=101.2M,EventImageURL="https://github.com/ruchisahu/dataAnalysis_cloud9/blob/master/age.png",EventPriceType=EventPriceType.Free,EventCategory=EventCategory.Fashion},
-
+                new EventCatalog
+                {
+                    Id = 1,
+                    Name = "Camping",
+                    Description = "Sleeping in a tent outdoor",
+                    PlaceId = 1,
+                    StartDate = DateTime.Parse("8/12/2018"),
+                    EndDate = DateTime.Parse("8/12/2019"),
+                    PriceType = EventPriceType.Free,
+                    Price = 0,
+                    ImageURL = "large_gonecamping-1.png",
+                    Type = EventType.Party,
+                    Category = EventCategory.Outdoor,
+                    InitialTicketCount = 100
+                },
+                new EventCatalog
+                {
+                    Id = 2,
+                    Name = "Java Class",
+                    Description = "Learn Java",
+                    PlaceId = 2,
+                    StartDate = DateTime.Parse("8/11/2018"),
+                    EndDate = DateTime.Parse("8/11/2019"),
+                    PriceType = EventPriceType.Free,
+                    Price = 0,
+                    ImageURL = "java.png",
+                    Type = EventType.Seminar,
+                    Category = EventCategory.Tech,
+                    InitialTicketCount = 200
+                },
+                new EventCatalog
+                {
+                    Id = 3,
+                    Name = "DotNet Class",
+                    Description = "Learn DotNet",
+                    PlaceId = 2,
+                    StartDate = DateTime.Parse("9/11/2018"),
+                    EndDate = DateTime.Parse("9/11/2019"),
+                    PriceType = EventPriceType.Free,
+                    Price = 0,
+                    ImageURL = "dotnet-1.png",
+                    Type = EventType.Seminar,
+                    Category = EventCategory.Tech,
+                    InitialTicketCount = 300
+                },
+                new EventCatalog
+                {
+                    Id = 4,
+                    Name = "php Class",
+                    Description = "Learn php",
+                    PlaceId = 2,
+                    StartDate = DateTime.Parse("8/14/2018"),
+                    EndDate = DateTime.Parse("9/11/2019"),
+                    PriceType = EventPriceType.Free,
+                    Price = 0,
+                    ImageURL = "php-1.png",
+                    Type = EventType.Seminar,
+                    Category = EventCategory.Tech,
+                    InitialTicketCount = 400
+                },
+                new EventCatalog
+                {
+                    Id = 5,
+                    Name = "perl Class",
+                    Description = "Learn perl",
+                    PlaceId = 2,
+                    StartDate = DateTime.Parse("8/14/2018"),
+                    EndDate = DateTime.Parse("8/16/2018"),
+                    PriceType = EventPriceType.Free,
+                    Price = 0,
+                    ImageURL = "perl-1.png",
+                    Type = EventType.Seminar,
+                    Category = EventCategory.Tech,
+                    InitialTicketCount = 500
+                },
+                new EventCatalog
+                {
+                    Id = 6,
+                    Name = "Fishing",
+                    Description = "Salmon fishing",
+                    PlaceId = 3,
+                    StartDate = DateTime.Parse("8/19/2018"),
+                    EndDate = DateTime.Parse("8/27/2018"),
+                    PriceType = EventPriceType.Paid,
+                    Price = 760,
+                    ImageURL = "fishing-1.png",
+                    Type = EventType.Gathering,
+                    Category = EventCategory.Outdoor,
+                    InitialTicketCount = 75
+                }
             };
         }
     }

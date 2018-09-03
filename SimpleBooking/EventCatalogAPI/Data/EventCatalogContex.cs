@@ -1,10 +1,7 @@
 ﻿using EventCatalogAPI.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 namespace EventCatalogAPI.Data
 {
     public class EventCatalogContext : DbContext
@@ -20,7 +17,6 @@ namespace EventCatalogAPI.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-
             builder.Entity<Place>(ConfigurePlace);
             builder.Entity<Ticket>(ConfigureTicket);
             builder.Entity<User>(ConfigureUser);
@@ -53,8 +49,6 @@ namespace EventCatalogAPI.Data
                 .IsRequired();
             builder.Property(c => c.Type)
                 .IsRequired();
-
-
         }
 
         private void ConfigureUser(EntityTypeBuilder<User> builder)
@@ -81,8 +75,6 @@ namespace EventCatalogAPI.Data
 
             builder.Property(c => c.CreditCardNo)
               .IsRequired();
-
-
         }
 
         private void ConfigureTicket(EntityTypeBuilder<Ticket> builder)
@@ -120,7 +112,6 @@ namespace EventCatalogAPI.Data
                 .HasMaxLength(50);
             builder.Property(c => c.PlacePrice)
               .IsRequired();
-
         }
     }
 }

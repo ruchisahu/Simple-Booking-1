@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using EventCatalogAPI.Data;
+﻿using EventCatalogAPI.Data;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 namespace EventCatalogAPI
 {
@@ -20,16 +13,10 @@ namespace EventCatalogAPI
 
             using (var scope = host.Services.CreateScope())      // setting up docker destroy docer andclean memory if use in a using loop.
             {
-
                 var services = scope.ServiceProvider;  //docker providing alll the provider one iscatalogcontext
+                var context = services.GetRequiredService<EventCatalogContext>();
 
-                var context =
-
-                    services.GetRequiredService<EventCatalogContext>();
-
-                
-                //DbInitializer.SeedAsync(context).Wait();
-
+                DbInitializer.SeedAsync(context).Wait();
             }
 
             host.Run();
