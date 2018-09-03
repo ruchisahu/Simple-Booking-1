@@ -26,6 +26,7 @@
                             <input type="hidden" name="@("tickets[" + i + "].Key")" value="@item.Event.Id" />
                             <input type="number" class="esh-basket-input" min="1" name="@("tickets[" + i + "].Value")" value="" />
                         </section>
+                        <section>@(item.Event.PriceType == EventPriceType.Free ? "Free" : ("$ " + item.Event.Price.ToString()))</section>
                     </div>
                 }
                 <input type="submit" class="btn esh-basket-checkout" value="[ Checkout ]" name="action" />
