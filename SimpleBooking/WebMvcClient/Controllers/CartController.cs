@@ -9,12 +9,17 @@ namespace WebMvcClient.Controllers
 {
     public class CartController : Controller
     {
+        private IEventManagementService eventManagementService;
+
+        public CartController(IEventManagementService eventManagementService)
+        {
+            this.eventManagementService = eventManagementService;
+        }
+
         [HttpGet]
         public async Task<IActionResult> Index([FromQuery] int eventId)
         {
-            var catalogService = new CatalogService();
-
-            var catalogEvent = await catalogService.GetEvent(eventId);
+            var catalogEvent = await eventManagementService.GetEvent(eventId);
 
             var viewModel = new CartViewModel
             {

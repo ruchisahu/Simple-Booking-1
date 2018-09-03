@@ -10,15 +10,21 @@ namespace WebMvcClient.Controllers
 {
     public class CatalogController : Controller
     {
+        private IEventsSearch eventsSearchService;
+
+        public CatalogController(IEventsSearch eventsSearchService)
+        {
+            this.eventsSearchService = eventsSearchService;
+        }
+
         public async Task<IActionResult> Index(CatalogIndexViewModel model)
         {
-            var catalogService = new CatalogService();
             var viewModel = new CatalogIndexViewModel
             {
-                Categories = await catalogService.Categories(),
-                Types = await catalogService.Types(),
-                Prices = await catalogService.PriceType(),
-                Events = await catalogService.Events(model.Location, model.EventType, model.Category, model.Price)
+                Categories = await eventsSearchService.Categories(),
+                Types = await eventsSearchService.Types(),
+                Prices = await eventsSearchService.PriceType(),
+                Events = await eventsSearchService.Events(model.Location, model.EventType, model.Category, model.Price)
             };
             return View(viewModel);
         }

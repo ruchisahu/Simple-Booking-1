@@ -20,7 +20,15 @@ namespace EventCatalogAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            services.AddDbContext<EventCatalogContext>(options => options.UseSqlServer(Configuration["ConnectionString"]));
+            services.AddDbContext<EventCatalogContext>(options =>
+            {
+                var server = Configuration["DatabaseServer"];
+                var database = Configuration["DatabaseName"];
+                var user = Configuration["DatabaseUser"];
+                var password = Configuration["DatabaseUserPassword"];
+                var connectionString = $"Server={server};Database={database};User={user};Password={password};";
+                options.UseSqlServer(connectionString);
+            });
 
             services.AddSwaggerGen(options =>
             {

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace WebMvcClient.Infrastructure
+﻿namespace WebMvcClient.Infrastructure
 {
     public class ApiPaths
     {
@@ -43,6 +38,45 @@ namespace WebMvcClient.Infrastructure
             public static string CleanBasket(string baseUri, string basketId)
             {
                 return $"{baseUri}/{basketId}";
+            }
+        }
+
+        public static class EventsSearch
+        {
+            public static string GetEvents(string baseUri, string location, string eventType, string eventCategory, string priceType)
+            {
+                return $"{baseUri}/Events?location={location}&anyText={location}&eventType={eventType}&eventCategory={eventCategory}&priceType={priceType}";
+            }
+
+            public static string GetCategories(string baseUri)
+            {
+                return $"{baseUri}/Categories";
+            }
+
+            public static string GetTypes(string baseUri)
+            {
+                return $"{baseUri}/Types";
+            }
+
+            public static string GetPrices(string baseUri)
+            {
+                return $"{baseUri}/Prices";
+            }
+        }
+
+        public static class EventManagement
+        {
+            public static string GetEvent(string baseUri, int eventId)
+            {
+                return $"{baseUri}/{eventId}";
+            }
+        }
+
+        public static class Image
+        {
+            public static string GetImageUrl(string baseUri, string image)
+            {
+                return $"{baseUri}/{image}";
             }
         }
     }

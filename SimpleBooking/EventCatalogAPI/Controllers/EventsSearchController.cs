@@ -106,11 +106,6 @@ namespace EventCatalogAPI.Controllers
 
             var eventsSearched = Search.NewSearch(events, location, eventTypeParam, eventCategoryParam, startDate, endDate, eventPriceTypeParam, anyText);
 
-            foreach (var ev in eventsSearched)
-            {
-                ev.ImageURL = $"http://localhost:49572/api/image/{ev.ImageURL}";
-            }
-
             var eventModel = new PaginatedItemsViewModel<EventCatalog>(pageIndex, pageSize, totalEventsCount, eventsSearched);
             return Ok(eventModel);
         }

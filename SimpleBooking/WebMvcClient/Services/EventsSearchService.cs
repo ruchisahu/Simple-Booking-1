@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
@@ -8,24 +9,37 @@ using WebMvcClient.Models;
 
 namespace WebMvcClient.Services
 {
-    public class CatalogService
+    public class EventsSearchService : IEventsSearch
     {
-        private readonly IHttpClient apiClient = new CustomHttpClient(null);
+        private readonly IOptionsSnapshot<AppSettings> settings;
+        private readonly IHttpClient apiClient;
+        private readonly string remoteServiceBaseUrl;
+        private readonly string imageServiceBaseUrl;
+
+        public EventsSearchService(IOptionsSnapshot<AppSettings> settings, IHttpClient httpClient)
+        {
+            this.settings = settings;
+            this.apiClient = httpClient;
+            this.remoteServiceBaseUrl = $"{settings.Value.EventsSearchUrl}/api/EventsSearch";
+            this.imageServiceBaseUrl = $"{settings.Value.ImageUrl}/api/image";
+        }
 
         public async Task<List<Event>> Events(string location, string eventType, string eventCategory, string priceType)
         {
-            var apiUrl = $"http://localhost:49572/api/EventsSearch/Events?location={location}&anyText={location}&eventType={eventType}&eventCategory={eventCategory}&priceType={priceType}";
-            var data = await apiClient.GetStringAsync(apiUrl);
+            var getEventsUri = ApiPaths.EventsSearch.GetEvents(remoteServiceBaseUrl, location, eventType, eventCategory, priceType);
+            var data = await apiClient.GetStringAsync(getEventsUri);
             var events = JsonConvert.DeserializeObject<Catalog>(data);
+            foreach (var eventData in events.Data)
+            {
+                eventData.ImageURL = ApiPaths.Image.GetImageUrl(imageServiceBaseUrl, eventData.ImageURL);
+            }
             return events.Data;
         }
 
         public async Task<IEnumerable<SelectListItem>> Categories()
         {
-            var apiUrl = "http://localhost:49572/api/EventsSearch/Categories";
-
-            var data = await apiClient.GetStringAsync(apiUrl);
-
+            var getCategoriesUri = ApiPaths.EventsSearch.GetCategories(remoteServiceBaseUrl);
+            var data = await apiClient.GetStringAsync(getCategoriesUri);
             var categories = JArray.Parse(data);
 
             var items = new List<SelectListItem>
@@ -47,10 +61,8 @@ namespace WebMvcClient.Services
 
         public async Task<IEnumerable<SelectListItem>> Types()
         {
-            var apiUrl = "http://localhost:49572/api/EventsSearch/Types";
-
-            var data = await apiClient.GetStringAsync(apiUrl);
-
+            var getTypesUri = ApiPaths.EventsSearch.GetTypes(remoteServiceBaseUrl);
+            var data = await apiClient.GetStringAsync(getTypesUri);
             var eventTypes = JArray.Parse(data);
 
             var items = new List<SelectListItem>
@@ -71,10 +83,8 @@ namespace WebMvcClient.Services
 
         public async Task<IEnumerable<SelectListItem>> PriceType()
         {
-            var apiUrl = "http://localhost:49572/api/EventsSearch/Prices";
-
-            var data = await apiClient.GetStringAsync(apiUrl);
-
+            var getGetPricesUri = ApiPaths.EventsSearch.GetPrices(remoteServiceBaseUrl);
+            var data = await apiClient.GetStringAsync(getGetPricesUri);
             var priceTypes = JArray.Parse(data);
 
             var items = new List<SelectListItem>
@@ -91,16 +101,6 @@ namespace WebMvcClient.Services
                 });
             }
             return items;
-        }
-
-        public async Task<Event> GetEvent(int eventId)
-        {
-            var apiUrl = $"http://localhost:49572/api/EventManagement/{eventId}";
-
-            var data = await apiClient.GetStringAsync(apiUrl);
-
-            var eventData = JsonConvert.DeserializeObject<Event>(data);
-            return eventData;
         }
     }
 }

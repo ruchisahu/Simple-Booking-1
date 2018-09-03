@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using EventCatalogAPI.Data;
+﻿using EventCatalogAPI.Data;
 using EventCatalogAPI.Domain;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace EventCatalogAPI.Controllers
 {
@@ -31,8 +27,7 @@ namespace EventCatalogAPI.Controllers
         [Route("{id}")]
         public IActionResult GetEvent(int id)
         {
-            //Event _event = RetrieveEvent(id);
-            EventCatalog _event = eventCatalogContext.Eventcatalogs.Find(id); //issue with swagger not showing nested items in json response
+            EventCatalog _event = eventCatalogContext.Eventcatalogs.Find(id);
 
             if (_event == null)
             {

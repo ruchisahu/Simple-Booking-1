@@ -17,6 +17,9 @@ services:
          ASPNETCORE_ENVIRONMENT: Development
          OrderUrl: http://order
          TicketsCartUrl: http://TicketsCart
+         EventManagementUrl: http://eventcatalog
+         EventsSearchUrl: http://eventcatalog
+         ImageUrl: http://localhost:5030
       container_name: webshop
       ports:
          - "5900:80"
@@ -25,6 +28,7 @@ services:
       depends_on:
          - order
          - eventcatalog
+         - cart
 #         - tokenserver
 
    order:
@@ -70,6 +74,10 @@ services:
          dockerfile: Dockerfile
       environment: 
          ASPNETCORE_ENVIRONMENT: Development
+         DatabaseServer: mssqlserver
+         DatabaseName: EventCatalogDb1
+         DatabaseUser: sa
+         DatabaseUserPassword: ProductApi(!)
       container_name: eventcatalogapi
       ports:
          - "5030:80"

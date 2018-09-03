@@ -1,0 +1,10 @@
+﻿Search testing
+http://localhost:5900/catalog
+
+EventManagement
+http://localhost:5030/api/eventmanagement/1
+
+Cart testing
+http://localhost:5900/cart?eventId=1
+
+http://localhost:5030/api/image/java.png

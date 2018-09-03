@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -12,17 +7,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using WebMvcClient.Infrastructure;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.OpenIdConnect;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using System.IdentityModel.Tokens.Jwt;
-using WebMvcClient.Services;
+using WebMvcClient.Infrastructure;
 using WebMvcClient.Models;
+using WebMvcClient.Services;
 
 namespace WebMvcClient
 {
@@ -54,12 +42,13 @@ namespace WebMvcClient
             services.AddSingleton<IHttpClient, CustomHttpClient>();
             services.AddTransient<IIdentityService<ApplicationUser>, IdentityService>();
             services.AddTransient<IOrderService, OrderService>();
-
+            services.AddTransient<IEventsSearch, EventsSearchService>();
+            services.AddTransient<IEventManagementService, EventManagementService>();
 
             var identityUrl = "http://localhost:5000";
             var callBackUrl = "http://localhost:5900";
-        //   var identityUrl = Configuration.GetValue<string>("IdentityUrl");
-          //  var callBackUrl = Configuration.GetValue<string>("CallBackUrl");
+            //   var identityUrl = Configuration.GetValue<string>("IdentityUrl");
+            //  var callBackUrl = Configuration.GetValue<string>("CallBackUrl");
             services.AddAuthentication(options =>
             {
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -68,7 +57,8 @@ namespace WebMvcClient
             })
 
            .AddCookie()
-            .AddOpenIdConnect(options => {
+            .AddOpenIdConnect(options =>
+            {
                 options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 options.Authority = identityUrl.ToString();
                 options.SignedOutRedirectUri = callBackUrl.ToString();
@@ -89,7 +79,7 @@ namespace WebMvcClient
 
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-            public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -102,14 +92,14 @@ namespace WebMvcClient
             }
             app.UseStaticFiles();
             app.UseAuthentication();
-            
+
 
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
-             
+
                 routes.MapRoute(
                   name: "catalog",
                    // template: "{controller=Catalog}");
