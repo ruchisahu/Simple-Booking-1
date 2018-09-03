@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "Cart";
+}
+@model WebMvcClient.ViewModels.CartViewModel
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Cart</title>
+</head>
+<body>
+    <h2>Select Tickets</h2>
+
+    <div class="container">
+
+        @if (Model.Items != null && Model.Items.Items != null && Model.Items.Items.Count > 0)
+        {
+            <form asp-action="index" asp-controller="Cart" method="post">
+                @for (int i = 0; i < Model.Items.Items.Count; i++)
+                {
+                    var item = Model.Items.Items[i];
+                    <div>
+                        <section>@(item.Event.Name)</section>
+                        <section>
+                            <input type="hidden" name="@("tickets[" + i + "].Key")" value="@item.Event.Id" />
+                            <input type="number" class="esh-basket-input" min="1" name="@("tickets[" + i + "].Value")" value="" />
+                        </section>
+                    </div>
+                }
+                <input type="submit" class="btn esh-basket-checkout" value="[ Checkout ]" name="action" />
+            </form>
+        }
+    </div>
+</body>
+</html>

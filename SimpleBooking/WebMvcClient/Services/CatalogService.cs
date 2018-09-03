@@ -92,5 +92,15 @@ namespace WebMvcClient.Services
             }
             return items;
         }
+
+        public async Task<Event> GetEvent(int eventId)
+        {
+            var apiUrl = $"http://localhost:49572/api/EventManagement/{eventId}";
+
+            var data = await apiClient.GetStringAsync(apiUrl);
+
+            var eventData = JsonConvert.DeserializeObject<Event>(data);
+            return eventData;
+        }
     }
 }
