@@ -16,6 +16,7 @@ services:
       environment:
          ASPNETCORE_ENVIRONMENT: Development
          OrderUrl: http://order
+         TicketsCartUrl: http://TicketsCart
       container_name: webshop
       ports:
          - "5900:80"

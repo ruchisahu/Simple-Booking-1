@@ -54,6 +54,8 @@ namespace WebMvcClient
             services.AddSingleton<IHttpClient, CustomHttpClient>();
             services.AddTransient<IIdentityService<ApplicationUser>, IdentityService>();
             services.AddTransient<IOrderService, OrderService>();
+
+
             var identityUrl = "http://localhost:5000";
             var callBackUrl = "http://localhost:5900";
         //   var identityUrl = Configuration.GetValue<string>("IdentityUrl");
