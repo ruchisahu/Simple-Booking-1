@@ -46,10 +46,10 @@ namespace WebMvcClient
             services.AddTransient<IEventManagementService, EventManagementService>();
             services.AddTransient<ICartService, CartService>();
 
-            var identityUrl = "http://localhost:5000";
-            var callBackUrl = "http://localhost:5900";
-            //   var identityUrl = Configuration.GetValue<string>("IdentityUrl");
-            //  var callBackUrl = Configuration.GetValue<string>("CallBackUrl");
+          //  var identityUrl = "http://localhost:5000";
+          //  var callBackUrl = "http://localhost:5900";
+               var identityUrl = Configuration.GetValue<string>("IdentityUrl");
+              var callBackUrl = Configuration.GetValue<string>("CallBackUrl");
             services.AddAuthentication(options =>
             {
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
