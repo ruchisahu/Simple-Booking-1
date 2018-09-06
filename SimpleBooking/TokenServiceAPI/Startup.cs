@@ -14,6 +14,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TokenServiceApi.Models;
 using TokenServiceApi.Services;
+using Microsoft.IdentityModel.Logging;
+using Microsoft.Extensions.Logging.Console;
 
 namespace TokenServiceApi
 {
@@ -29,6 +31,7 @@ namespace TokenServiceApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            IdentityModelEventSource.ShowPII = true;
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -54,7 +57,8 @@ namespace TokenServiceApi
                 .AddInMemoryIdentityResources(Config.GetIdentityResources())
                 .AddInMemoryApiResources(Config.GetApiResources())
                 .AddInMemoryClients(Config.GetClients(Config.GetUrls(Configuration)))
-                .AddAspNetIdentity<ApplicationUser>();
+                .AddAspNetIdentity<ApplicationUser>()
+                ;
 
 
         }
@@ -62,7 +66,7 @@ namespace TokenServiceApi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-          //  loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+           // loggerFactory.AddConsole(Configuration.GetSection("Logging"));
 
           //  loggerFactory.AddDebug();
             if (env.IsDevelopment())
