@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System.IdentityModel.Tokens.Jwt;
@@ -26,6 +27,7 @@ namespace WebMvcClient
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            IdentityModelEventSource.ShowPII = true;
             services.AddMvc().AddJsonOptions(options =>
             {
                 options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
@@ -73,6 +75,7 @@ namespace WebMvcClient
                 options.Scope.Add("profile");
                 options.Scope.Add("offline_access");
                 options.Scope.Add("order");
+                options.Scope.Add("eventcatalog");
 
 
             });
