@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 
 using Serilog;
 using Serilog.Events;
+using TokenServiceApi.Data;
 using TokenServiceApi.Models;
 
 namespace TokenServiceApi
@@ -33,11 +34,12 @@ namespace TokenServiceApi
                 var services = scope.ServiceProvider;
 
                 var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
-              //  var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-              //  var emailService = services.GetRequiredService<IEmailService>();
-              //  SeedData.EnsureSeedData(host.Services, roleManager, userManager, emailService);
-
-                host.Run();
+            //  var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+            //  var emailService = services.GetRequiredService<IEmailService>();
+            //  SeedData.EnsureSeedData(host.Services, roleManager, userManager, emailService);
+            var context = services.GetRequiredService<ApplicationDbContext>();
+            IdentityDbInit.Initialize(context, userManager);
+            host.Run();
             }
 
             public static IWebHost BuildWebHost(string[] args) =>
