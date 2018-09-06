@@ -43,7 +43,7 @@ namespace WebMvcClient.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(Dictionary<int, int> tickets, string action)
         {
-            await cartService.Checkout("test", tickets);
+            await cartService.Checkout("testUser", tickets);
             return RedirectToAction("Index", "order");
         }
     }

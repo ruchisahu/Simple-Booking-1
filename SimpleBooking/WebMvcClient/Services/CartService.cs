@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using WebMvcClient.Infrastructure;
 using WebMvcClient.Models;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace WebMvcClient.Services
 {
@@ -39,6 +41,18 @@ namespace WebMvcClient.Services
 
             var response = await apiClient.PostAsync(remoteServiceBaseUrl, cart);
             response.EnsureSuccessStatusCode();
+        }
+        //Add the user ApplicationUser user
+        public async Task<Cart> GetCart(string userID)
+        {
+            string basketURI = ApiPaths.Basket.GetBasket(remoteServiceBaseUrl, userID);
+            var data = await apiClient.GetStringAsync(basketURI);
+            var response = JsonConvert.DeserializeObject<Cart>(data.ToString());
+            if(response==null)
+            {
+                return response = new Cart { BuyerId = userID };
+            }
+            return response;
         }
     }
 }

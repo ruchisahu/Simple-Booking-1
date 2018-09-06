@@ -29,8 +29,9 @@
         </div>
     </section>
 
-    
-    <section class="col-lg-1 col-xs-12"></section>
+    <section class="col-lg-1 col-xs-12">
+        @await Component.InvokeAsync("Cart")
+    </section>
 }
 else
 {
@@ -47,5 +48,8 @@ else
         </div>
     </section>
 
-    <section class="col-lg-1 col-xs-12"></section>
+    <!-- ToDo : remove this after login works -->
+    <section class="col-lg-1 col-xs-12">
+        @await Component.InvokeAsync("Cart")
+    </section>
 }
