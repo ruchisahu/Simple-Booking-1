@@ -13,4 +13,7 @@ not free
 http://localhost:5900/cart?eventId=6
 
 Get purchase from Cart service
-http://localhost:5050/api/Tickets/test
+http://localhost:5050/api/Tickets/testUser
+
+TokenService
+http://localhost:5000/home/about

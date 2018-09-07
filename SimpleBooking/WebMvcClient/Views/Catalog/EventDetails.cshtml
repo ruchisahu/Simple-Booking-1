@@ -1,0 +1,26 @@
+﻿@{
+    ViewData["Title"] = "Event Description";
+    @model WebMvcClient.Models.Event
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>EventDetails</title>
+</head>
+<body>
+    <div>
+        <p>@Model.Name</p>
+        <p>@Model.StartDate</p>
+        <p>@Model.Place.Address</p>
+        <p>@Model.Price</p>
+        <p>@Model.Description</p>
+    </div>
+
+    <form asp-controller="Cart" asp-action="Index">
+        <input type="hidden" name="eventId" value="@Model.Id" />
+        <input class="esh-catalog-button" type="submit" value="[ ADD TO CART ]" />
+    </form>
+</body>
+</html>

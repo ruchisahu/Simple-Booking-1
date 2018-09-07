@@ -113,6 +113,11 @@ namespace WebMvcClient
                   name: "cart",
                    // template: "{controller=Catalog}");
                    template: "{controller=Cart}/{action=Index}");
+
+                routes.MapRoute(
+                  name: "EventDetails",
+                   // template: "{controller=Catalog}");
+                   template: "{controller=Catalog}/{action=EventDetails}/{id}");
             });
         }
     }

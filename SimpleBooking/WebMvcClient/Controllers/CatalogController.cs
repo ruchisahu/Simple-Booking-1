@@ -11,10 +11,12 @@ namespace WebMvcClient.Controllers
     public class CatalogController : Controller
     {
         private IEventsSearch eventsSearchService;
+        private IEventManagementService eventManagementService;
 
-        public CatalogController(IEventsSearch eventsSearchService)
+        public CatalogController(IEventsSearch eventsSearchService, IEventManagementService evManagementService)
         {
             this.eventsSearchService = eventsSearchService;
+            this.eventManagementService = evManagementService;
         }
 
         public async Task<IActionResult> Index(CatalogIndexViewModel model)
@@ -33,6 +35,7 @@ namespace WebMvcClient.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
         [Authorize]
         public IActionResult About()
         {
@@ -40,6 +43,13 @@ namespace WebMvcClient.Controllers
 
 
             return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EventDetails(int id)
+        {
+            var catalogEvent = await eventManagementService.GetEvent(id);
+            return View(catalogEvent);
         }
     }
 }
