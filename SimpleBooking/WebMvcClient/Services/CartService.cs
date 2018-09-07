@@ -47,12 +47,15 @@ namespace WebMvcClient.Services
         {
             string basketURI = ApiPaths.Basket.GetBasket(remoteServiceBaseUrl, userID);
             var data = await apiClient.GetStringAsync(basketURI);
-            var response = JsonConvert.DeserializeObject<Cart>(data.ToString());
-            if(response==null)
+            try
             {
-                return response = new Cart { BuyerId = userID };
+                var response = JsonConvert.DeserializeObject<Cart>(data.ToString());
+                return response;
             }
-            return response;
+            catch
+            { 
+                return new Cart { BuyerId = userID };
+            }
         }
     }
 }

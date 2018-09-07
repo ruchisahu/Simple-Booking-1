@@ -57,8 +57,7 @@ namespace TokenServiceApi
                 .AddInMemoryIdentityResources(Config.GetIdentityResources())
                 .AddInMemoryApiResources(Config.GetApiResources())
                 .AddInMemoryClients(Config.GetClients(Config.GetUrls(Configuration)))
-                .AddAspNetIdentity<ApplicationUser>()
-                ;
+                .AddAspNetIdentity<ApplicationUser>();
 
 
         }

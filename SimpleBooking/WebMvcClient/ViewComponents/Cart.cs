@@ -20,7 +20,7 @@ namespace WebMvcClient.ViewComponents
             var vm = new CartComponentViewModel();
             try
             {
-                var cart = await cartSvc.GetCart("testUser");
+                var cart = await cartSvc.GetCart("tom@networks.com");
                 if (cart.Items == null)
                 {
                     vm.ItemsInCart = 0;

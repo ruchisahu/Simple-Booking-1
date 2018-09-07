@@ -77,7 +77,6 @@ namespace WebMvcClient
                 options.Scope.Add("order");
                 options.Scope.Add("eventcatalog");
 
-
             });
         }
 

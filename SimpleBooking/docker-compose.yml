@@ -18,7 +18,7 @@ services:
          OrderUrl: http://order
          TicketsCartUrl: http://TicketsCart
          EventManagementUrl: http://eventcatalog
-         IdentityUrl: http://10.0.75.1:5000
+         IdentityUrl: http://tokenserviceapi:5020
          EventsSearchUrl: http://eventcatalog
          ImageUrl: http://localhost:5030
          CartUrl: http://cart
@@ -119,7 +119,7 @@ services:
          OrderApiClient: http://localhost:8000
       container_name: tokenserviceapi
       ports:
-         - "5000:80"
+         - "5020:80"
       networks:
          - backend
          - frontend 

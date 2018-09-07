@@ -16,7 +16,7 @@ namespace EventCatalogAPI
                 var services = scope.ServiceProvider;  //docker providing alll the provider one iscatalogcontext
                 var context = services.GetRequiredService<EventCatalogContext>();
 
-                DbInitializer.SeedAsync(context).Wait();
+                //DbInitializer.SeedAsync(context).Wait();
             }
 
             host.Run();

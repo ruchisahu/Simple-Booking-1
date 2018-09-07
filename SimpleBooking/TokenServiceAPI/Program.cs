@@ -37,8 +37,8 @@ namespace TokenServiceApi
             //  var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
             //  var emailService = services.GetRequiredService<IEmailService>();
             //  SeedData.EnsureSeedData(host.Services, roleManager, userManager, emailService);
-            var context = services.GetRequiredService<ApplicationDbContext>();
-            IdentityDbInit.Initialize(context, userManager);
+            //var context = services.GetRequiredService<ApplicationDbContext>();
+            //IdentityDbInit.Initialize(context, userManager);
             host.Run();
             }
 
