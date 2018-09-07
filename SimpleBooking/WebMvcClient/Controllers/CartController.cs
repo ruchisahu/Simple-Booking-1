@@ -19,8 +19,8 @@ namespace WebMvcClient.Controllers
             this.cartService = cartService;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Index([FromQuery] int eventId)
+        [HttpPost]
+        public async Task<IActionResult> Index(int eventId)
         {
             var catalogEvent = await eventManagementService.GetEvent(eventId);
 
@@ -41,7 +41,7 @@ namespace WebMvcClient.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(Dictionary<int, int> tickets, string action)
+        public async Task<IActionResult> Checkout(Dictionary<int, int> tickets, string action)
         {
             await cartService.Checkout("testUser", tickets);
             return RedirectToAction("Index", "order");

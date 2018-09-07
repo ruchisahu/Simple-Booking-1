@@ -28,6 +28,7 @@ namespace EventCatalogAPI.Controllers
         public IActionResult GetEvent(int id)
         {
             EventCatalog _event = eventCatalogContext.Eventcatalogs.Find(id);
+            var place = eventCatalogContext.Places.Find(_event.PlaceId);
 
             if (_event == null)
             {

@@ -18,7 +18,7 @@ services:
          OrderUrl: http://order
          TicketsCartUrl: http://TicketsCart
          EventManagementUrl: http://eventcatalog
-         IdentityUrl: http://172.28.145.209:5020
+         IdentityUrl: http://localhost:5000
          EventsSearchUrl: http://eventcatalog
          ImageUrl: http://localhost:5030
          CartUrl: http://cart
