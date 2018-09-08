@@ -25,9 +25,9 @@ namespace TokenServiceApi
         {
             return new List<ApiResource>
             {
-                 new ApiResource("EventCatalogAPI", "Registration API"),
-               new ApiResource("api1", "api1"),
-                 //new ApiResource("basket", "Shopping Cart Api"),
+                 new ApiResource("eventcatalog", "Registration API"),
+               //new ApiResource("api1", "api1"),
+                 new ApiResource("cart", "Shopping Cart Api"),
                  new ApiResource("order", "Ordering Api"),
             };
         }
@@ -67,9 +67,9 @@ namespace TokenServiceApi
                         IdentityServerConstants.StandardScopes.Profile,
                         IdentityServerConstants.StandardScopes.OfflineAccess,
                       //  IdentityServerConstants.StandardScopes.Email,
-                         "order",
-                        "basket",
-
+                        "order",
+                        "cart",
+                        "eventcatalog"
                     }
 
                 },

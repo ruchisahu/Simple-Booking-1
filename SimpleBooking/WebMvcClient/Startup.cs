@@ -75,6 +75,7 @@ namespace WebMvcClient
                 options.Scope.Add("profile");
                 options.Scope.Add("offline_access");
                 options.Scope.Add("order");
+                options.Scope.Add("cart");
                 options.Scope.Add("eventcatalog");
 
 
