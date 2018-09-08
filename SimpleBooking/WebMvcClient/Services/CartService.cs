@@ -77,6 +77,13 @@ namespace WebMvcClient.Services
             return response;
         }
 
+        public async Task ClearCartForUser(string userID)
+        {
+            var token = await GetUserTokenAsync();
+            string basketURI = ApiPaths.Basket.CleanBasket(remoteServiceBaseUrl, userID);
+            await apiClient.DeleteAsync(basketURI, token);
+        }
+
         async Task<string> GetUserTokenAsync()
         {
             var context = httpContextAccesor.HttpContext;
