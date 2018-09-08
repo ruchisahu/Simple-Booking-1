@@ -116,7 +116,7 @@ namespace WebMvcClient.Controllers
                         Ticket ticket = await _orderSvc.ProcessAnOrder(orderViewModel);
                         //_logger.LogDebug("User {userName} finished order processing  of {orderId}.", order.UserName, order.OrderId);
 
-                        //await _cartSvc.ClearCart(user);
+                        await _cartSvc.ClearCartForUser(user.Email);
                         string ticketSerialized = Newtonsoft.Json.JsonConvert.SerializeObject(ticket);
 
                         TempData["TicketDetails"] = ticketSerialized;
