@@ -2,9 +2,11 @@
 using System.Net;
 using System.Threading.Tasks;
 using CartAPI.Domain;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CartAPI.Controllers
 {
+    [Authorize]
     [Produces("application/json")]
     [Route("api/Tickets")]
     public class TicketsController : Controller
