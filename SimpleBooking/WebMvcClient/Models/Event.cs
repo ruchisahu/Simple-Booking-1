@@ -29,5 +29,7 @@ namespace WebMvcClient.Models
         public EventCategory Category { get; set; }
 
         public int InitialTicketCount { get; set; }
+
+        public int TicketsInCart { get; set; }
     }
 }

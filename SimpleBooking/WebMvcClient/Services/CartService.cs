@@ -1,10 +1,10 @@
 ﻿using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using WebMvcClient.Infrastructure;
 using WebMvcClient.Models;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
 
 namespace WebMvcClient.Services
 {
@@ -23,34 +23,50 @@ namespace WebMvcClient.Services
 
         public async Task Checkout(string buyerId, Dictionary<int, int> tickets)
         {
-            var cart = new Cart
-            {
-                BuyerId = buyerId
-            };
+            var cart = await GetCart(buyerId);
 
-            cart.Items = new List<CartTicket>();
+            if (cart == null)
+            {
+                cart = new Cart
+                {
+                    BuyerId = buyerId,
+                    Items = new List<CartTicket>()
+                };
+            }
+
             foreach (var ticket in tickets)
             {
-                var cartTicket = new CartTicket
+                var existingItem = cart.Items.Where(p => p.EventId == ticket.Key).FirstOrDefault();
+
+                if (existingItem == null)
                 {
-                    EventId = ticket.Key,
-                    TicketsPurchased = ticket.Value
-                };
-                cart.Items.Add(cartTicket);
+                    existingItem = new CartTicket
+                    {
+                        EventId = ticket.Key
+                    };
+                    cart.Items.Add(existingItem);
+                }
+
+                existingItem.TicketsPurchased += ticket.Value;
             }
 
             var response = await apiClient.PostAsync(remoteServiceBaseUrl, cart);
             response.EnsureSuccessStatusCode();
         }
+
         //Add the user ApplicationUser user
-        public async Task<Cart> GetCart(string userID)
+        public async Task<Cart> GetCart(string buyerId)
         {
-            string basketURI = ApiPaths.Basket.GetBasket(remoteServiceBaseUrl, userID);
+            string basketURI = ApiPaths.Basket.GetBasket(remoteServiceBaseUrl, buyerId);
             var data = await apiClient.GetStringAsync(basketURI);
             var response = JsonConvert.DeserializeObject<Cart>(data.ToString());
-            if(response==null)
+            if (response == null)
             {
-                return response = new Cart { BuyerId = userID };
+                return response = new Cart
+                {
+                    BuyerId = buyerId,
+                    Items = new List<CartTicket>()
+                };
             }
             return response;
         }
