@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Polly.CircuitBreaker;
 using System.Collections.Generic;
@@ -10,14 +11,17 @@ using WebMvcClient.ViewModels;
 
 namespace WebMvcClient.Controllers
 {
+    [Authorize]
     public class CartListController : Controller
     {
+        private readonly IIdentityService<ApplicationUser> identitySvc;
         private readonly ICartService cartSvc;
         private IEventManagementService eventManagementService;
         private readonly string imageServiceBaseUrl;
 
-        public CartListController(IOptionsSnapshot<AppSettings> settings, ICartService cartSvc, IEventManagementService evManagementService)
+        public CartListController(IOptionsSnapshot<AppSettings> settings, ICartService cartSvc, IIdentityService<ApplicationUser> identitySvc, IEventManagementService evManagementService)
         {
+            this.identitySvc = identitySvc;
             this.cartSvc = cartSvc;
             this.eventManagementService = evManagementService;
             this.imageServiceBaseUrl = $"{settings.Value.ImageUrl}/api/image";
@@ -37,7 +41,8 @@ namespace WebMvcClient.Controllers
 
             try
             {
-                var cart = await cartSvc.GetCart("testUser");
+                var user = identitySvc.Get(HttpContext.User);
+                var cart = await cartSvc.GetCart(user.Email);
                 if (cart.Items != null)
                 {
                     foreach (var cartItem in cart.Items)
