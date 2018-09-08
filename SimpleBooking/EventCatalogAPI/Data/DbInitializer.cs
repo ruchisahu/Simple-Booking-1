@@ -119,8 +119,8 @@ namespace EventCatalogAPI.Data
                     PlaceId = 2,
                     StartDate = DateTime.Parse("8/11/2018"),
                     EndDate = DateTime.Parse("8/11/2019"),
-                    PriceType = EventPriceType.Free,
-                    Price = 0,
+                    PriceType = EventPriceType.Paid,
+                    Price = 100,
                     ImageURL = "java.png",
                     Type = EventType.Seminar,
                     Category = EventCategory.Tech,
@@ -132,7 +132,7 @@ namespace EventCatalogAPI.Data
                     Name = "DotNet Class",
                     Description = "Learn DotNet",
                     PlaceId = 2,
-                    StartDate = DateTime.Parse("9/11/2018"),
+                    StartDate = DateTime.Parse("9/1/2018"),
                     EndDate = DateTime.Parse("9/11/2019"),
                     PriceType = EventPriceType.Free,
                     Price = 0,
@@ -174,6 +174,21 @@ namespace EventCatalogAPI.Data
                 new EventCatalog
                 {
                     Id = 6,
+                    Name = "perl Class",
+                    Description = "Learn perl",
+                    PlaceId = 2,
+                    StartDate = DateTime.Parse("8/14/2018"),
+                    EndDate = DateTime.Parse("8/16/2019"),
+                    PriceType = EventPriceType.Free,
+                    Price = 0,
+                    ImageURL = "perl-1.png",
+                    Type = EventType.Seminar,
+                    Category = EventCategory.Tech,
+                    InitialTicketCount = 500
+                },
+                new EventCatalog
+                {
+                    Id = 7,
                     Name = "Fishing",
                     Description = "Salmon fishing",
                     PlaceId = 3,

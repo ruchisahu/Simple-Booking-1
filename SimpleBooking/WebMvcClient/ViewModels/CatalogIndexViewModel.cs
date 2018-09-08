@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
-using System.ComponentModel;
 using WebMvcClient.Models;
 
 namespace WebMvcClient.ViewModels
@@ -25,5 +24,7 @@ namespace WebMvcClient.ViewModels
         public IEnumerable<Event> Events { get; set; }
 
         public string Location { get; set; }
+
+        public PaginationInfo PaginationInfo { get; set; }
     }
 }

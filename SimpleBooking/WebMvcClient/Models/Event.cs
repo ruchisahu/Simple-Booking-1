@@ -21,6 +21,7 @@ namespace WebMvcClient.Models
 
         public EventPriceType PriceType { get; set; }
         public Decimal Price { get; set; }
+        public string DisplayPrice { get; set; }
 
         public string ImageURL { get; set; }
         public EventType Type { get; set; }

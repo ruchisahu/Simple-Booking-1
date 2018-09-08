@@ -45,12 +45,15 @@
 
         @if (Model.Events.Count() > 0)
         {
+            @Html.Partial("_pagination", Model)
+
             <table>
                 <tr>
                     <th></th>
                     <th>Event Name</th>
                     <th>Description</th>
                     <th>Location</th>
+                    <th>Price</th>
                 </tr>
                 @foreach (var item in Model.Events)
                 {
@@ -69,9 +72,14 @@
                         <td>
                             @Html.DisplayFor(model => item.Place.City)
                         </td>
+                        <td>
+                            @Html.DisplayFor(model => item.DisplayPrice)
+                        </td>
                     </tr>
                 }
             </table>
+
+            @Html.Partial("_pagination", Model)
         }
         else
         {

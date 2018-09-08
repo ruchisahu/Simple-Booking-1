@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using WebMvcClient.Models;
@@ -19,15 +20,42 @@ namespace WebMvcClient.Controllers
             this.eventManagementService = evManagementService;
         }
 
-        public async Task<IActionResult> Index(CatalogIndexViewModel model)
+        public async Task<IActionResult> Index(string category, string eventType, string price, string location, int? page)
         {
+            const int itemsPage = 2;
+
+            if(location == null)
+            {
+                location = "Bellevue";
+            }
+
+            var actualPage = page.HasValue ? page.Value : 0;
+            var events = await eventsSearchService.Events(location, eventType, category, price, actualPage, itemsPage);
+
+            events.Data.ForEach(e => e.DisplayPrice = e.PriceType == EventPriceType.Free ? "Free" : e.Price.ToString());
+
             var viewModel = new CatalogIndexViewModel
             {
                 Categories = await eventsSearchService.Categories(),
                 Types = await eventsSearchService.Types(),
                 Prices = await eventsSearchService.PriceType(),
-                Events = await eventsSearchService.Events(model.Location, model.EventType, model.Category, model.Price)
+                Events = events.Data,
+                PaginationInfo = new PaginationInfo()
+                {
+                    ActualPage = page ?? 0,
+                    ItemsPerPage = itemsPage, //catalog.Data.Count,
+                    TotalItems = events.Count,
+                    TotalPages = (int)Math.Ceiling(((decimal)events.Count / itemsPage))
+                },
+                Location = location,
+                Category = category,
+                EventType = eventType,
+                Price = price
             };
+
+            viewModel.PaginationInfo.Next = (viewModel.PaginationInfo.ActualPage == viewModel.PaginationInfo.TotalPages - 1) ? "is-disabled" : "";
+            viewModel.PaginationInfo.Previous = (viewModel.PaginationInfo.ActualPage == 0) ? "is-disabled" : "";
+
             return View(viewModel);
         }
 

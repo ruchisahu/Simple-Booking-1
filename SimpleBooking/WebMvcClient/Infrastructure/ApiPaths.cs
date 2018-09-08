@@ -43,9 +43,15 @@
 
         public static class EventsSearch
         {
-            public static string GetEvents(string baseUri, string location, string eventType, string eventCategory, string priceType)
+            //public static string GetEvents(string baseUri, string location, string eventType, string eventCategory, string priceType)
+            //{
+            //    return $"{baseUri}/Events?location={location}&anyText={location}&eventType={eventType}&eventCategory={eventCategory}&priceType={priceType}";
+            //}
+
+            public static string GetEvents(string baseUri, string location, string eventType, string eventCategory, string priceType, int page, int take)
             {
-                return $"{baseUri}/Events?location={location}&anyText={location}&eventType={eventType}&eventCategory={eventCategory}&priceType={priceType}";
+                return $"{baseUri}/Events?location={location}&anyText={location}&eventType={eventType}&eventCategory={eventCategory}" +
+                    $"&priceType={priceType}&pageIndex={page}&pageSize={take}";
             }
 
             public static string GetCategories(string baseUri)
