@@ -53,44 +53,54 @@ namespace EventCatalogAPI.Controllers
             {
                 return new List<EventCatalog>();
             }
+
             var filteredEvents = events.Where(ev => Contains(ev.Place.PlaceName, location)
                                                 || Contains(ev.Place.Address, location)
                                                 || Contains(ev.Place.City, location)
                                                 || Contains(ev.Name, location)
-                                                || Contains(ev.Description, location));
+                                                || Contains(ev.Description, location)).ToList();
+
+            filteredEvents = FilterEvents(filteredEvents, location, evType, evCategory, startDate, endDate, priceType);
+
+            if (anyText != null)
+            {
+                var otherEvents = events.Where(ev => Contains(ev.Description, anyText) || Contains(ev.Name, anyText)).ToList();
+                otherEvents = FilterEvents(otherEvents, location, evType, evCategory, startDate, endDate, priceType);
+                filteredEvents = filteredEvents.Union(otherEvents).ToList();
+            }
+
+            return filteredEvents;
+        }
+
+        private static List<EventCatalog> FilterEvents(List<EventCatalog> events, string location, EventType? evType, EventCategory? evCategory, DateTime? startDate, DateTime? endDate, EventPriceType? priceType)
+        {
             if (evType.HasValue)
             {
-                filteredEvents = filteredEvents.Where(ev => ev.Type == evType);
+                events = events.Where(ev => ev.Type == evType).ToList();
             }
 
             if (evCategory.HasValue)
             {
-                filteredEvents = filteredEvents.Where(ev => ev.Category == evCategory);
+                events = events.Where(ev => ev.Category == evCategory).ToList();
             }
 
             if (!startDate.HasValue && !endDate.HasValue)
             {
                 var today = Today();
-                filteredEvents = filteredEvents.Where(ev => ev.StartDate <= today && today <= ev.EndDate);
+                events = events.Where(ev => ev.StartDate <= today && today <= ev.EndDate).ToList();
             }
 
             if (startDate.HasValue && endDate.HasValue)
             {
-                filteredEvents = filteredEvents.Where(ev => startDate <= ev.EndDate && ev.StartDate <= endDate);
+                events = events.Where(ev => startDate <= ev.EndDate && ev.StartDate <= endDate).ToList();
             }
 
             if (priceType.HasValue)
             {
-                filteredEvents = filteredEvents.Where(ev => ev.PriceType == priceType);
+                events = events.Where(ev => ev.PriceType == priceType).ToList();
             }
 
-            if (anyText != null)
-            {
-                var otherEvents = events.Where(ev => Contains(ev.Description, anyText) || Contains(ev.Name, anyText));
-                filteredEvents = filteredEvents.Union(otherEvents);
-            }
-
-            return filteredEvents.ToList();
+            return events;
         }
 
         private static bool Contains(string a, string b)

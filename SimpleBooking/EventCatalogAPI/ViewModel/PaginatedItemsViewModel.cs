@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace EventCatalogAPI.ViewModel
 {
@@ -14,11 +11,10 @@ namespace EventCatalogAPI.ViewModel
 
         public PaginatedItemsViewModel(int pageIndex, int pageSize, long Count, IEnumerable<TEntity> Data)
         {
-            this.PageSize = PageSize;
+            this.PageSize = pageSize;
             this.PageIndex = pageIndex;
             this.Count = Count;
             this.Data = Data;
         }
     }
 }
-    

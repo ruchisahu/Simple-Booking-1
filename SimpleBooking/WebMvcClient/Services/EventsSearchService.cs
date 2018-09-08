@@ -24,16 +24,27 @@ namespace WebMvcClient.Services
             this.imageServiceBaseUrl = $"{settings.Value.ImageUrl}/api/image";
         }
 
-        public async Task<List<Event>> Events(string location, string eventType, string eventCategory, string priceType)
+        //public async Task<List<Event>> Events(string location, string eventType, string eventCategory, string priceType)
+        //{
+        //    var getEventsUri = ApiPaths.EventsSearch.GetEvents(remoteServiceBaseUrl, location, eventType, eventCategory, priceType);
+        //    var data = await apiClient.GetStringAsync(getEventsUri);
+        //    var events = JsonConvert.DeserializeObject<Catalog>(data);
+        //    foreach (var eventData in events.Data)
+        //    {
+        //        eventData.ImageURL = ApiPaths.Image.GetImageUrl(imageServiceBaseUrl, eventData.ImageURL);
+        //    }
+        //    return events.Data;
+        //}
+        public async Task<Catalog> Events(string location, string eventType, string eventCategory, string priceType, int page, int take)
         {
-            var getEventsUri = ApiPaths.EventsSearch.GetEvents(remoteServiceBaseUrl, location, eventType, eventCategory, priceType);
+            var getEventsUri = ApiPaths.EventsSearch.GetEvents(remoteServiceBaseUrl, location, eventType, eventCategory, priceType, page, take);
             var data = await apiClient.GetStringAsync(getEventsUri);
             var events = JsonConvert.DeserializeObject<Catalog>(data);
             foreach (var eventData in events.Data)
             {
                 eventData.ImageURL = ApiPaths.Image.GetImageUrl(imageServiceBaseUrl, eventData.ImageURL);
             }
-            return events.Data;
+            return events;
         }
 
         public async Task<IEnumerable<SelectListItem>> Categories()

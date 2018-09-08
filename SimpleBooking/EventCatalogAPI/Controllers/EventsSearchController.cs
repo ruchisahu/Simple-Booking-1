@@ -21,62 +21,57 @@ namespace EventCatalogAPI.Controllers
             eventCatalogContext = eventContext;
         }
 
-        [HttpGet]
-        [Route("[action]")]
-        public async Task<ActionResult> SearchEvents([FromQuery] string location, [FromQuery] string eventType,
-                                                    [FromQuery] string eventCategory, [FromQuery] string eventStartDate,
-                                                    [FromQuery] string eventEndDate, [FromQuery] string priceType, [FromQuery] string anyText,
-                                                    [FromQuery] int pageSize = 6, [FromQuery] int pageIndex = 0)
-        {
-            var totalEventsCount = await eventCatalogContext.Eventcatalogs.LongCountAsync();
-            var itemOnPage = await eventCatalogContext.Eventcatalogs.OrderBy(ev => ev.Name)
-                                                                    .Skip(pageIndex * pageSize)
-                                                                    .Take(pageSize).ToListAsync();
+        //[HttpGet]
+        //[Route("[action]")]
+        //public async Task<ActionResult> SearchEvents([FromQuery] string location, [FromQuery] string eventType,
+        //                                            [FromQuery] string eventCategory, [FromQuery] string eventStartDate,
+        //                                            [FromQuery] string eventEndDate, [FromQuery] string priceType, [FromQuery] string anyText,
+        //                                            [FromQuery] int pageSize = 6, [FromQuery] int pageIndex = 0)
+        //{
+        //    var totalEventsCount = await eventCatalogContext.Eventcatalogs.LongCountAsync();
+        //    var itemOnPage = await eventCatalogContext.Eventcatalogs.OrderBy(ev => ev.Name)
+        //                                                            .Skip(pageIndex * pageSize)
+        //                                                            .Take(pageSize).ToListAsync();
 
-            EventType? eventTypeParam = Convert<EventType>(eventType);
-            EventCategory? eventCategoryParam = Convert<EventCategory>(eventCategory);
-            EventPriceType? eventPriceTypeParam = Convert<EventPriceType>(priceType);
+        //    EventType? eventTypeParam = Convert<EventType>(eventType);
+        //    EventCategory? eventCategoryParam = Convert<EventCategory>(eventCategory);
+        //    EventPriceType? eventPriceTypeParam = Convert<EventPriceType>(priceType);
 
-            DateTime? startDate;
-            if (string.IsNullOrWhiteSpace(eventStartDate))
-            {
-                startDate = null;
-            }
-            else
-            {
-                startDate = DateTime.Parse(eventStartDate);
-            }
+        //    DateTime? startDate;
+        //    if (string.IsNullOrWhiteSpace(eventStartDate))
+        //    {
+        //        startDate = null;
+        //    }
+        //    else
+        //    {
+        //        startDate = DateTime.Parse(eventStartDate);
+        //    }
 
-            DateTime? endDate;
-            if (string.IsNullOrWhiteSpace(eventEndDate))
-            {
-                endDate = null;
-            }
-            else
-            {
-                endDate = DateTime.Parse(eventEndDate);
-            }
+        //    DateTime? endDate;
+        //    if (string.IsNullOrWhiteSpace(eventEndDate))
+        //    {
+        //        endDate = null;
+        //    }
+        //    else
+        //    {
+        //        endDate = DateTime.Parse(eventEndDate);
+        //    }
 
-            var places = await eventCatalogContext.Places.ToListAsync();
-            var events = await eventCatalogContext.Eventcatalogs.ToListAsync();
+        //    var places = await eventCatalogContext.Places.ToListAsync();
+        //    var events = await eventCatalogContext.Eventcatalogs.ToListAsync();
 
-            var eventIds = Search.SearchEvents(events, location, eventTypeParam, eventCategoryParam, startDate, endDate, eventPriceTypeParam, anyText);
+        //    var eventIds = Search.SearchEvents(events, location, eventTypeParam, eventCategoryParam, startDate, endDate, eventPriceTypeParam, anyText);
 
-            return Ok(eventIds);
-        }
+        //    return Ok(eventIds);
+        //}
 
         [HttpGet]
         [Route("[action]")]
         public async Task<ActionResult> Events([FromQuery] string location, [FromQuery] string eventType,
                                                     [FromQuery] string eventCategory, [FromQuery] string eventStartDate,
                                                     [FromQuery] string eventEndDate, [FromQuery] string priceType, [FromQuery] string anyText,
-                                                    [FromQuery] int pageSize = 6, [FromQuery] int pageIndex = 0)
+                                                    [FromQuery] int pageSize = 2, [FromQuery] int pageIndex = 0)
         {
-            var totalEventsCount = await eventCatalogContext.Eventcatalogs.LongCountAsync();
-            var itemOnPage = await eventCatalogContext.Eventcatalogs.OrderBy(ev => ev.Name)
-                                                                    .Skip(pageIndex * pageSize)
-                                                                    .Take(pageSize).ToListAsync();
-
             EventType? eventTypeParam = Convert<EventType>(eventType);
             EventCategory? eventCategoryParam = Convert<EventCategory>(eventCategory);
             EventPriceType? eventPriceTypeParam = Convert<EventPriceType>(priceType);
@@ -106,7 +101,13 @@ namespace EventCatalogAPI.Controllers
 
             var eventsSearched = Search.NewSearch(events, location, eventTypeParam, eventCategoryParam, startDate, endDate, eventPriceTypeParam, anyText);
 
-            var eventModel = new PaginatedItemsViewModel<EventCatalog>(pageIndex, pageSize, totalEventsCount, eventsSearched);
+            var totalEventsCount = eventsSearched.Count;
+
+            var itemsOnPage = eventsSearched.OrderBy(ev => ev.Name)
+                                                        .Skip(pageIndex * pageSize)
+                                                        .Take(pageSize).ToList();
+
+            var eventModel = new PaginatedItemsViewModel<EventCatalog>(pageIndex, pageSize, totalEventsCount, itemsOnPage);
             return Ok(eventModel);
         }
 

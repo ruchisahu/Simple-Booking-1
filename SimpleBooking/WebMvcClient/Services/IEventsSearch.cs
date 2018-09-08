@@ -7,7 +7,7 @@ namespace WebMvcClient.Services
 {
     public interface IEventsSearch
     {
-        Task<List<Event>> Events(string location, string eventType, string eventCategory, string priceType);
+        Task<Catalog> Events(string location, string eventType, string eventCategory, string priceType, int page, int take);
 
         Task<IEnumerable<SelectListItem>> Categories();
 
