@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using WebMvcClient.Models;
@@ -7,19 +8,23 @@ using WebMvcClient.ViewModels;
 
 namespace WebMvcClient.Controllers
 {
+    [Authorize]
     public class CartController : Controller
     {
         private IEventManagementService eventManagementService;
 
         private ICartService cartService;
 
-        public CartController(IEventManagementService eventManagementService, ICartService cartService)
+        private readonly IIdentityService<ApplicationUser> identitySvc;
+
+        public CartController(IEventManagementService eventManagementService, ICartService cartService, IIdentityService<ApplicationUser> identitySvc)
         {
             this.eventManagementService = eventManagementService;
             this.cartService = cartService;
+            this.identitySvc = identitySvc;
         }
 
-        [HttpPost]
+        //[HttpPost]
         public async Task<IActionResult> Index(int eventId)
         {
             var catalogEvent = await eventManagementService.GetEvent(eventId);
@@ -43,7 +48,9 @@ namespace WebMvcClient.Controllers
         [HttpPost]
         public async Task<IActionResult> Checkout(Dictionary<int, int> tickets, string action)
         {
-            await cartService.Checkout("testUser", tickets);
+            var user = identitySvc.Get(HttpContext.User);
+
+            await cartService.Checkout(user.Email, tickets);
             return RedirectToAction("Index", "order");
         }
     }

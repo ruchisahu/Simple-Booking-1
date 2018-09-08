@@ -9,5 +9,7 @@ namespace WebMvcClient.Services
         Task Checkout(string buyerId, Dictionary<int, int> tickets);
         // ToDo : use user identity Task<Cart> GetCart(ApplicationUser user);
         Task<Cart> GetCart(string userID);
+
+        Task ClearCartForUser(string userID);
     }
 }

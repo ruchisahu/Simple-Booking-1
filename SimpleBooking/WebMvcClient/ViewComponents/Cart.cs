@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Polly.CircuitBreaker;
 using System.Threading.Tasks;
+using WebMvcClient.Models;
 using WebMvcClient.Services;
 using WebMvcClient.ViewModels;
 
@@ -15,12 +16,12 @@ namespace WebMvcClient.ViewComponents
             this.cartSvc = cartSvc;
         }
 
-        public async Task<IViewComponentResult> InvokeAsync()
+        public async Task<IViewComponentResult> InvokeAsync(ApplicationUser user)
         {
             var vm = new CartComponentViewModel();
             try
             {
-                var cart = await cartSvc.GetCart("testUser");
+                var cart = await cartSvc.GetCart(user.Email);
                 if (cart.Items == null)
                 {
                     vm.ItemsInCart = 0;
