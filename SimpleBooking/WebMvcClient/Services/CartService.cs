@@ -50,8 +50,9 @@ namespace WebMvcClient.Services
         //Add the user ApplicationUser user
         public async Task<Cart> GetCart(string userID)
         {
+            var token = await GetUserTokenAsync();
             string basketURI = ApiPaths.Basket.GetBasket(remoteServiceBaseUrl, userID);
-            var data = await apiClient.GetStringAsync(basketURI);
+            var data = await apiClient.GetStringAsync(basketURI, token);
             var response = JsonConvert.DeserializeObject<Cart>(data.ToString());
             if(response==null)
             {
