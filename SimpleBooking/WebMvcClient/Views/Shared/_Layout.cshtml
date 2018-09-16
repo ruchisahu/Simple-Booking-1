@@ -41,30 +41,30 @@
     <link href="css/creative.min.css" rel="stylesheet">
 </head>
 <body id="page-top">
-    @*<header class="navbar navbar-light navbar-static-top">
-            <div class="container">
-                <article class="row">
-                    <section class="col-lg-7 col-md-6 col-xs-12">
-                        <a class="navbar-brand" routerLink="catalog">
-                            <a asp-area="" asp-controller="Catalog" asp-action="Index">
+    <header class="navbar navbar-light navbar-static-top">
+        <div class="container">
+            <article class="row">
+                <section class="col-lg-7 col-md-6 col-xs-12">
+                    <a class="navbar-brand" routerLink="catalog">
+                        <a asp-area="" asp-controller="Catalog" asp-action="Index">
 
-                            </a>
                         </a>
-                    </section>
-                    @await Html.PartialAsync("_LoginPartial")
-                </article>
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
+                    </a>
+                </section>
+                @await Html.PartialAsync("_LoginPartial")
+            </article>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
 
-                        <li><a asp-area="" asp-controller="Catalog" asp-action="About">About</a></li>
+                    <li><a asp-area="" asp-controller="Catalog" asp-action="About">About</a></li>
 
-                    </ul>
+                </ul>
 
-                </div>
             </div>
-        </header>*@
+        </div>
+    </header>
 
-    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+    @*<nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -89,12 +89,15 @@
                     <li>
                         <a class="page-scroll" href="#contact">Contact</a>
                     </li>
+                    <li>
+                        @await Html.PartialAsync("_LoginPartial")
+                    </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
         </div>
         <!-- /.container-fluid -->
-    </nav>
+    </nav>*@
 
     @*<div class="container body-content">
             @RenderBody()
