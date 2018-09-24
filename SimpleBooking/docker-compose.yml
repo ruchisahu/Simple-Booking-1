@@ -18,7 +18,7 @@ services:
          OrderUrl: http://order
          TicketsCartUrl: http://TicketsCart
          EventManagementUrl: http://eventcatalog
-         IdentityUrl: http://10.0.75.1:5000
+         IdentityUrl: http://192.168.1.102:5000
          EventsSearchUrl: http://eventcatalog
          ImageUrl: http://localhost:5030
          CartUrl: http://cart
@@ -43,7 +43,7 @@ services:
          DatabaseName: OrderDb
          DatabaseUser: sa
          DatabaseUserPassword: ProductApi(!)
-         IdentityUrl: http://10.0.75.1:5000
+         IdentityUrl: http://192.168.1.102:5000
       container_name: orderprocessorapi1
       ports:
          - "8000:80"
@@ -61,7 +61,7 @@ services:
          dockerfile: Dockerfile
       environment: 
          ASPNETCORE_ENVIRONMENT: Development
-         IdentityUrl: http://10.0.75.1:5000
+         IdentityUrl: http://192.168.1.102:5000
       container_name: cartapi
       ports:
          - "5050:80"

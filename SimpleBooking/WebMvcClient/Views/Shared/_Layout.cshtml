@@ -41,63 +41,67 @@
     <link href="css/creative.min.css" rel="stylesheet">
 </head>
 <body id="page-top">
-    <header class="navbar navbar-light navbar-static-top">
-        <div class="container">
-            <article class="row">
-                <section class="col-lg-7 col-md-6 col-xs-12">
-                    <a class="navbar-brand" routerLink="catalog">
-                        <a asp-area="" asp-controller="Catalog" asp-action="Index">
+    @*<header class="navbar navbar-light navbar-static-top">
+            <div class="container">
+                <article class="row">
+                    <section class="col-lg-7 col-md-6 col-xs-12">
+                        <a class="navbar-brand" routerLink="catalog">
+                            <a asp-area="" asp-controller="Catalog" asp-action="Index">
 
+                            </a>
                         </a>
-                    </a>
-                </section>
-                @await Html.PartialAsync("_LoginPartial")
-            </article>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
+                    </section>
+                    @await Html.PartialAsync("_LoginPartial")
+                </article>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
 
-                    <li><a asp-area="" asp-controller="Catalog" asp-action="About">About</a></li>
+                        <li><a asp-area="" asp-controller="Catalog" asp-action="About">About</a></li>
 
-                </ul>
+                    </ul>
 
+                </div>
             </div>
-        </div>
-    </header>
+        </header>*@
 
-    @*<nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
-                </button>
-                <a class="navbar-brand page-scroll" href="#page-top">Simple Booking</a>
-            </div>
+    @{
+        ViewBag.ShowNavBar = (string)ViewContext.RouteData.Values["controller"] == "Home" ? false : true;
+    }
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a class="page-scroll" href="#about">About</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#services">Services</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#portfolio">Events</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#contact">Contact</a>
-                    </li>
-                    <li>
-                        @await Html.PartialAsync("_LoginPartial")
-                    </li>
-                </ul>
+    @if (ViewBag.ShowNavBar)
+    {
+        <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+                    </button>
+                    <a class="navbar-brand page-scroll" href="#page-top">Simple Booking</a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a class="page-scroll" href="#about">About</a>
+                        </li>
+                        <li>
+                            <a class="page-scroll" href="#services">Services</a>
+                        </li>
+                        <li>
+                            <a class="page-scroll" href="#portfolio">Events</a>
+                        </li>
+                        <li>
+                            <a class="page-scroll" href="#contact">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
             </div>
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container-fluid -->
-    </nav>*@
+            <!-- /.container-fluid -->
+        </nav>
+    }
 
     @*<div class="container body-content">
             @RenderBody()
