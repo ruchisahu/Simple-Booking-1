@@ -84,11 +84,11 @@ namespace EventCatalogAPI.Controllers
                 events = events.Where(ev => ev.Category == evCategory).ToList();
             }
 
-            if (!startDate.HasValue && !endDate.HasValue)
-            {
-                var today = Today();
-                events = events.Where(ev => ev.StartDate <= today && today <= ev.EndDate).ToList();
-            }
+            //if (!startDate.HasValue && !endDate.HasValue)
+            //{
+            //    var today = Today();
+            //    events = events.Where(ev => ev.StartDate <= today && today <= ev.EndDate).ToList();
+            //}
 
             if (startDate.HasValue && endDate.HasValue)
             {
