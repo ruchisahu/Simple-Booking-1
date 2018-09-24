@@ -22,7 +22,7 @@ namespace WebMvcClient.Controllers
 
         public async Task<IActionResult> Index(string category, string eventType, string price, string location, int? page)
         {
-            const int itemsPage = 2;
+            const int itemsPage = 6;
 
             if(location == null)
             {
