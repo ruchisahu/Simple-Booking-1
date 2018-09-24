@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "catalog";
+    ViewData["Title"] = "Catalog";
     @model WebMvcClient.ViewModels.CatalogIndexViewModel
 }
 
@@ -139,54 +139,83 @@
 </div>*@
 
 <section class="no-padding container-fluid" id="portfolio">
-    @if (Model.Events.Count() > 0)
+    @if (Model.Events.Count() == 1)
     {
-        @Html.Partial("_pagination", Model)
-
-        <div class="row no-gutter">
-            @foreach (var item in Model.Events)
-            {
-                @*<tr>
-                        <td>
-                            <a asp-controller="Catalog" asp-action="EventDetails" asp-route-id="@item.Id">
-                                <img src="@Html.DisplayFor(model => item.ImageURL)" width="280" height="140" />
-                            </a>
-                        </td>
-                        <td>
-                            @Html.DisplayFor(model => item.Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(model => item.Description)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(model => item.Place.City)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(model => item.DisplayPrice)
-                        </td>
-                    </tr>*@
-
-                <div class="col-lg-4 col-sm-6">
-                    <a asp-controller="Catalog" asp-action="EventDetails" asp-route-id="@item.Id" class="portfolio-box">
-                        <img src="@Html.DisplayFor(model => item.ImageURL)" class="img-responsive" alt="">
-                        <div class="portfolio-box-caption">
-                            <div class="portfolio-box-caption-content">
-                                <div class="project-name" style="font-size: 24px; font-weight: bolder;">@Html.DisplayFor(model => item.Name)</div>
-                                <hr class="light" />
-                                <div class="project-category">@Html.DisplayFor(model => item.Description)</div>
-                                <hr class="light" />
-                                <div class="project-category">@Html.DisplayFor(model => item.Place.City) | @Html.DisplayFor(model => item.DisplayPrice)</div>
-                            </div>
-                        </div>
-                    </a>
+    <div class="row container-fluid bg-primary" style="padding-top: 12px; padding-bottom: 12px;">
+        @foreach (var item in Model.Events)
+        {
+            <div class="col-lg-4 col-sm-6 col-lg-offset-2">
+                <img src="@Html.DisplayFor(model => item.ImageURL)" class="img-responsive" alt="">
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                <div class="text-center" style="font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;">
+                    <div class="project-name" style="font-size: 24px; font-weight: bolder;">@Html.DisplayFor(model => item.Name)</div>
+                    <div>@Html.DisplayFor(model => item.StartDate) | @Html.DisplayFor(model => item.Place.City) | @Html.DisplayFor(model => item.DisplayPrice)</div>
+                    <div>
+                        <form asp-controller="Cart" asp-action="Index">
+                            <input type="hidden" name="eventId" value="@item.Id" />
+                            @*<input class="esh-catalog-button" type="submit" value="[ Buy tickets ]" />*@
+                            <button class="btn btn-outline-primary btn-xl transparentbar center-block" style="font-size: 24px; font-family: 'Permanent Marker', cursive;">Buy Ticket</button>
+                        </form>
+                    </div>
+                    <hr class="light" />
+                    <div>@Html.DisplayFor(model => item.Description)</div>
+                    <form asp-controller="Catalog" asp-action="Index">
+                        <button class="btn btn-outline-primary btn-xl transparentbar center-block" style="font-size: 12px; font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;">RETURN</button>
+                    </form>
                 </div>
-            }
-        </div>
+            </div>
+        }
+    </div>
+    }
+    else if (Model.Events.Count() > 0)
+    {
+    @Html.Partial("_pagination", Model)
+
+    <div class="row no-gutter">
+        @foreach (var item in Model.Events)
+        {
+            @*<tr>
+                    <td>
+                        <a asp-controller="Catalog" asp-action="EventDetails" asp-route-id="@item.Id">
+                            <img src="@Html.DisplayFor(model => item.ImageURL)" width="280" height="140" />
+                        </a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.Place.City)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.DisplayPrice)
+                    </td>
+                </tr>*@
+
+            <div class="col-lg-4 col-sm-6">
+                @*<a asp-controller="Catalog" asp-action="EventDetails" asp-route-id="@item.Id" class="portfolio-box">*@
+                <a asp-controller="Catalog" asp-action="Index" asp-route-category="@item.Category" asp-route-eventType="@item.Type" asp-route-price="@item.Price" asp-route-location="@item.Place.City" asp-route-id ="@item.Id" class="portfolio-box">
+                    <img src="@Html.DisplayFor(model => item.ImageURL)" class="img-responsive" alt="">
+                    <div class="portfolio-box-caption">
+                        <div class="portfolio-box-caption-content">
+                            <div class="project-name" style="font-size: 24px; font-weight: bolder;">@Html.DisplayFor(model => item.Name)</div>
+                            <div class="project-category">@Html.DisplayFor(model => item.Place.City) | @Html.DisplayFor(model => item.DisplayPrice)</div>
+                            <hr class="light" />
+                            <div class="project-category">@Html.DisplayFor(model => item.Description)</div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+    </div>
     }
     else
     {
-        <div class="row text-center" style="padding-top: 72px; padding-bottom: 72px;">
-            <strong style="font-family: 'Permanent Marker', cursive; text-align: center; font-size: 48px;">NO EVENTS FOUND</strong>
-        </div>
+    <div class="row text-center" style="padding-top: 72px; padding-bottom: 72px;">
+        <strong style="font-family: 'Permanent Marker', cursive; text-align: center; font-size: 48px;">NO EVENTS FOUND</strong>
+    </div>
     }
 </section>

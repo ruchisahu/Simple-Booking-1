@@ -103,22 +103,22 @@ namespace WebMvcClient
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Home}/{action=Index}/");
 
                 routes.MapRoute(
                   name: "catalog",
                    // template: "{controller=Catalog}");
-                   template: "{controller=Catalog}/{action=Index}/{id?}");
+                   template: "{controller=Catalog}/{action=Index}/");
 
                 routes.MapRoute(
                   name: "cart",
                    // template: "{controller=Catalog}");
                    template: "{controller=Cart}/{action=Index}");
 
-                routes.MapRoute(
-                  name: "EventDetails",
-                   // template: "{controller=Catalog}");
-                   template: "{controller=Catalog}/{action=EventDetails}/{id}");
+                //routes.MapRoute(
+                //  name: "EventDetails",
+                //   // template: "{controller=Catalog}");
+                //   template: "{controller=Catalog}/{action=EventDetails}/{id}");
             });
         }
     }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using WebMvcClient.Models;
 using WebMvcClient.Services;
@@ -20,7 +21,7 @@ namespace WebMvcClient.Controllers
             this.eventManagementService = evManagementService;
         }
 
-        public async Task<IActionResult> Index(string category, string eventType, string price, string location, int? page)
+        public async Task<IActionResult> Index(string category, string eventType, string price, string location, int? page, int? id)
         {
             const int itemsPage = 6;
 
@@ -39,7 +40,7 @@ namespace WebMvcClient.Controllers
                 Categories = await eventsSearchService.Categories(),
                 Types = await eventsSearchService.Types(),
                 Prices = await eventsSearchService.PriceType(),
-                Events = events.Data,
+                Events = id != null ? events.Data.Where(e => e.Id == id) : events.Data,
                 PaginationInfo = new PaginationInfo()
                 {
                     ActualPage = page ?? 0,
@@ -73,7 +74,7 @@ namespace WebMvcClient.Controllers
             return View();
         }
 
-        [HttpGet]
+        
         public async Task<IActionResult> EventDetails(int id)
         {
             var catalogEvent = await eventManagementService.GetEvent(id);
