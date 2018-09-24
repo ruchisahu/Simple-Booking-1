@@ -37,4 +37,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 ## Acknowledgments
 
 * [Black Rock Digital](https://github.com/BlackrockDigital/startbootstrap-creative) for generously providing some excellent Bootstrap UI components.
-* [Wendy Wei](https://www.pexels.com/@wendy-wei-387315), [Vishnu R. Nair](https://www.pexels.com/@vishnu-r-nair-426592), and [Daria Shevtsova](https://www.pexels.com/@daria-shevtsova) for generously providing stock photography.
+* [Wendy Wei](https://www.pexels.com/@wendy-wei-387315), [Vishnu R. Nair](https://www.pexels.com/@vishnu-r-nair-426592), [Daria Shevtsova](https://www.pexels.com/@daria-shevtsova), and [Pixabay](https://www.pexels.com/@pixabay) for generously providing stock photography.
