@@ -1,34 +1,31 @@
 ﻿@model WebMvcClient.ViewModels.CatalogIndexViewModel
 
-<div class="esh-pager">
-    <div class="container">
-        <article class="esh-pager-wrapper row">
-            <nav>
-                <a class="esh-pager-item esh-pager-item--navigable @Model.PaginationInfo.Previous"
-                   id="Previous"
-                   asp-controller="Catalog"
-                   asp-action="Index"
-                   asp-route-page="@(Model.PaginationInfo.ActualPage -1)"
-                   asp-route-location="@(Model.Location)"
-                   asp-route-category="@(Model.Category)"
-                   asp-route-eventType="@(Model.EventType)"
-                   asp-route-price="@(Model.Price)"
-                   aria-label="Previous">
-                    Previous
-                </a>
-                <a class="esh-pager-item esh-pager-item--navigable @Model.PaginationInfo.Next"
-                   id="Next"
-                   asp-controller="Catalog"
-                   asp-action="Index"
-                   asp-route-page="@(Model.PaginationInfo.ActualPage + 1)"
-                   asp-route-location="@(Model.Location)"
-                   asp-route-category="@(Model.Category)"
-                   asp-route-eventType="@(Model.EventType)"
-                   asp-route-price="@(Model.Price)"
-                   aria-label="Next">
-                    Next
-                </a>
-            </nav>
-        </article>
+<div>
+    <div class="row" style="text-align: center; padding-top: 12px; padding-bottom: 12px; font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif; font-size: 18px; font-weight: 500; ">
+        <a class="@Model.PaginationInfo.Previous"
+           id="Previous"
+           asp-controller="Catalog"
+           asp-action="Index"
+           asp-route-page="@(Model.PaginationInfo.ActualPage -1)"
+           asp-route-location="@(Model.Location)"
+           asp-route-category="@(Model.Category)"
+           asp-route-eventType="@(Model.EventType)"
+           asp-route-price="@(Model.Price)"
+           aria-label="Previous">
+            Previous
+        </a>
+        <text> | </text>
+        <a class="@Model.PaginationInfo.Next"
+           id="Next"
+           asp-controller="Catalog"
+           asp-action="Index"
+           asp-route-page="@(Model.PaginationInfo.ActualPage + 1)"
+           asp-route-location="@(Model.Location)"
+           asp-route-category="@(Model.Category)"
+           asp-route-eventType="@(Model.EventType)"
+           asp-route-price="@(Model.Price)"
+           aria-label="Next">
+            Next
+        </a>
     </div>
 </div>

@@ -2,62 +2,151 @@
     ViewData["Title"] = "catalog";
     @model WebMvcClient.ViewModels.CatalogIndexViewModel
 }
-<!DOCTYPE html>
-<html>
-<body>
-    <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
 
-        th, td {
-            text-align: left;
-            padding: 8px;
-        }
+<style>
+    /*table {
+        border-collapse: collapse;
+        width: 100%;
+    }
 
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-    </style>
+    th, td {
+        text-align: left;
+        padding: 8px;
+    }
 
-    <h2>catalog</h2>
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }*/
 
-    <section class="esh-catalog-filters">
-        <div class="container">
-            <form asp-action="index" asp-controller="Catalog" method="post">
-                <input type="text" name="Location" id="location" asp-for="@Model.Location" />
-                <label class="esh-catalog-label" data-title="categories">
-                    <select asp-for="@Model.Category" asp-items="@Model.Categories" class="esh-catalog-filter"></select>
-                </label>
-                <label class="esh-catalog-label" data-title="type">
-                    <select asp-for="@Model.EventType" asp-items="@Model.Types" class="esh-catalog-filter"></select>
-                </label>
-                <label class="esh-catalog-label" data-title="pricetype">
-                    <select asp-for="@Model.Price" asp-items="@Model.Prices" class="esh-catalog-filter"></select>
-                </label>
-                <input class="esh-catalog-send" type="image" src="~/images/arrow-right.svg" />
-            </form>
+    .portfolio-box .portfolio-box-caption {
+        opacity: 1;
+    }
+
+    .portfolio-box:hover .portfolio-box-caption {
+        opacity: 0.3;
+    }
+
+    .transparentbar, .transparentbar:hover {
+        background-repeat: no-repeat;
+        cursor: pointer;
+        outline: none;
+        border: none;
+        box-shadow: none;
+        background-image: none;
+        background-color: transparent;
+        background: transparent;
+        border-color: transparent;
+    }
+
+    header {
+        background-image: url('../img/header2.jpg');
+    }
+</style>
+
+<header>
+    <div class="header-content">
+        <div class="header-content-inner">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 text-center">
+                    <form asp-action="index" asp-controller="Catalog" method="post" class="panel panel-primary" style="background-color: rgba(0, 0, 0, 0.7); border: none; padding: 12px; margin: 12px;">
+                        <div class="row">
+                            <div>
+                                <text class="btn btn-outline-primary dropdown-toggle page-scroll transparentbar">LOCATION</text>
+                            </div>
+                            <div>
+                                <input type="text" name="Location" id="location" asp-for="@Model.Location" class="transparentbar" style="font-size: 36px; font-family: 'Permanent Marker', cursive; text-align: center;" />
+                            </div>
+                        </div>
+                        <div class="row"></div>
+                        <hr class="light" />
+                        <div class="row">
+                            <select asp-for="@Model.Category" asp-items="@Model.Categories" class="page-scroll btn btn-default sr-button"></select>
+                            <select asp-for="@Model.EventType" asp-items="@Model.Types" class="page-scroll btn btn-default sr-button"></select>
+                            <select asp-for="@Model.Price" asp-items="@Model.Prices" class="page-scroll btn btn-default sr-button"></select>
+                        </div>
+                        <div class="row">
+                            @*<button class="btn btn-outline-primary btn-xl transparentbar" style="font-size: 48px; font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;">Search</button>*@
+                            <button class="btn btn-outline-primary btn-xl transparentbar" style="font-size: 48px; font-family: 'Permanent Marker', cursive;">Search</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-    </section>
+    </div>
+</header>
 
+@*<section class="esh-catalog-filters">
     <div class="container">
+        <form asp-action="index" asp-controller="Catalog" method="post">
+            <input type="text" name="Location" id="location" asp-for="@Model.Location" />
+            <label class="esh-catalog-label" data-title="categories">
+                <select asp-for="@Model.Category" asp-items="@Model.Categories" class="esh-catalog-filter"></select>
+            </label>
+            <label class="esh-catalog-label" data-title="type">
+                <select asp-for="@Model.EventType" asp-items="@Model.Types" class="esh-catalog-filter"></select>
+            </label>
+            <label class="esh-catalog-label" data-title="pricetype">
+                <select asp-for="@Model.Price" asp-items="@Model.Prices" class="esh-catalog-filter"></select>
+            </label>
+            <input class="esh-catalog-send" type="image" src="~/images/arrow-right.svg" />
+        </form>
+    </div>
+</section>*@
 
-        @if (Model.Events.Count() > 0)
-        {
-            @Html.Partial("_pagination", Model)
+@*<div class="container" id="eventsCatalog">
+    @if (Model.Events.Count() > 0)
+    {
+        @Html.Partial("_pagination", Model)
 
-            <table>
+        <table>
+            <tr>
+                <th></th>
+                <th>Event Name</th>
+                <th>Description</th>
+                <th>Location</th>
+                <th>Price</th>
+            </tr>
+            @foreach (var item in Model.Events)
+            {
                 <tr>
-                    <th></th>
-                    <th>Event Name</th>
-                    <th>Description</th>
-                    <th>Location</th>
-                    <th>Price</th>
+                    <td>
+                        <a asp-controller="Catalog" asp-action="EventDetails" asp-route-id="@item.Id">
+                            <img src="@Html.DisplayFor(model => item.ImageURL)" width="280" height="140" />
+                        </a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.Place.City)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.DisplayPrice)
+                    </td>
                 </tr>
-                @foreach (var item in Model.Events)
-                {
-                    <tr>
+            }
+        </table>
+    }
+    else
+    {
+        <div class="row text-center" style="padding-top: 72px; padding-bottom: 72px;">
+            <strong style="font-family: 'Permanent Marker', cursive; text-align: center; font-size: 48px;">NO EVENTS FOUND</strong>
+        </div>
+    }
+</div>*@
+
+<section class="no-padding container-fluid" id="portfolio">
+    @if (Model.Events.Count() > 0)
+    {
+        @Html.Partial("_pagination", Model)
+
+        <div class="row no-gutter">
+            @foreach (var item in Model.Events)
+            {
+                @*<tr>
                         <td>
                             <a asp-controller="Catalog" asp-action="EventDetails" asp-route-id="@item.Id">
                                 <img src="@Html.DisplayFor(model => item.ImageURL)" width="280" height="140" />
@@ -75,19 +164,29 @@
                         <td>
                             @Html.DisplayFor(model => item.DisplayPrice)
                         </td>
-                    </tr>
-                }
-            </table>
+                    </tr>*@
 
-            @Html.Partial("_pagination", Model)
-        }
-        else
-        {
-            <div class="esh-catalog-items row">
-                THERE ARE NO RESULTS THAT MATCH YOUR SEARCH
-            </div>
-        }
-    </div>
-
-</body>
-</html>
+                <div class="col-lg-4 col-sm-6">
+                    <a asp-controller="Catalog" asp-action="EventDetails" asp-route-id="@item.Id" class="portfolio-box">
+                        <img src="@Html.DisplayFor(model => item.ImageURL)" class="img-responsive" alt="">
+                        <div class="portfolio-box-caption">
+                            <div class="portfolio-box-caption-content">
+                                <div class="project-name" style="font-size: 24px; font-weight: bolder;">@Html.DisplayFor(model => item.Name)</div>
+                                <hr class="light" />
+                                <div class="project-category">@Html.DisplayFor(model => item.Description)</div>
+                                <hr class="light" />
+                                <div class="project-category">@Html.DisplayFor(model => item.Place.City) | @Html.DisplayFor(model => item.DisplayPrice)</div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="row text-center" style="padding-top: 72px; padding-bottom: 72px;">
+            <strong style="font-family: 'Permanent Marker', cursive; text-align: center; font-size: 48px;">NO EVENTS FOUND</strong>
+        </div>
+    }
+</section>
