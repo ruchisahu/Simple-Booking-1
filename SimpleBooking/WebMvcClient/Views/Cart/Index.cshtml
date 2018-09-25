@@ -2,36 +2,38 @@
     ViewData["Title"] = "Cart";
 }
 @model WebMvcClient.ViewModels.CartViewModel
-<!DOCTYPE html>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Cart</title>
-</head>
-<body>
-    <h2>Select Tickets</h2>
+<style>
+    body {
+        background-color: #F05F40;
+    }
+</style>
 
-    <div class="container">
-
+<div class="container-fluid row" style="padding-top: 72px; padding-bottom: 72px;">
+    <div class="col-lg-4 col-lg-offset-4">
         @if (Model.Items != null && Model.Items.Items != null && Model.Items.Items.Count > 0)
         {
             <form asp-action="Checkout" asp-controller="Cart" method="post">
-                @for (int i = 0; i < Model.Items.Items.Count; i++)
-                {
-                    var item = Model.Items.Items[i];
-                    <div>
-                        <section>@(item.Event.Name)</section>
-                        <section>
-                            <input type="hidden" name="@("tickets[" + i + "].Key")" value="@item.Event.Id" />
-                            <input type="number" class="esh-basket-input" min="1" name="@("tickets[" + i + "].Value")" value="" />
-                        </section>
-                        <section>@(item.Event.PriceType == EventPriceType.Free ? "Free" : ("$ " + item.Event.Price.ToString()))</section>
+                <div class="text-center" style="font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;">
+                    @for (int i = 0; i < Model.Items.Items.Count; i++)
+                    {
+                        var item = Model.Items.Items[i];
+
+                        <div class="row" style="font-size: 24px; font-weight: bolder; color: white;">@item.Event.Name</div>
+                        <input type="hidden" name="@("tickets[" + i + "].Key")" value="@item.Event.Id" />
+                        <div class="row" style="padding-top: 12px; padding-bottom: 12px;">
+                            <div class="col-lg-6 col-lg-offset-3">
+                                <div style="color: white; font-style: italic; font-weight: bolder;">@(item.Event.PriceType == EventPriceType.Free ? "Free" : ("$ " + item.Event.Price.ToString())) per</div>
+                                <input type="number" class="text-center" style="background-color: transparent; background: transparent; border-color: white; color: white;" min="1" name="@("tickets[" + i + "].Value")" value="1" />
+                            </div>
+                        </div>
+                    }
+                    <div class="row center-block">
+                        <input type="submit" class="btn esh-basket-checkout" value="[ Checkout ]" name="action" />
+                        @*<button type="submit" name="action" class="btn btn-outline-primary" style="font-size: 48px; font-family: 'Permanent Marker', cursive; background: transparent; background-color: transparent; color: white;">Purchase</button>*@
                     </div>
-                }
-                <input type="submit" class="btn esh-basket-checkout" value="[ Checkout ]" name="action" />
+                </div>
             </form>
         }
     </div>
-</body>
-</html>
+</div>

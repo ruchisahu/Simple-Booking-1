@@ -149,7 +149,7 @@
             </div>
             <div class="col-lg-4 col-sm-6">
                 <div class="text-center" style="font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;">
-                    <div class="project-name" style="font-size: 24px; font-weight: bolder;">@Html.DisplayFor(model => item.Name)</div>
+                    <div style="font-size: 24px; font-weight: bolder;">@Html.DisplayFor(model => item.Name)</div>
                     <div>@Html.DisplayFor(model => item.StartDate) | @Html.DisplayFor(model => item.Place.City) | @Html.DisplayFor(model => item.DisplayPrice)</div>
                     <div>
                         <form asp-controller="Cart" asp-action="Index">
