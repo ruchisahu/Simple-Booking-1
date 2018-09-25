@@ -4,74 +4,91 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Ticket</h2>
-<div>
-    @*<h4>Ticket</h4>*@
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.EventName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.EventName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.EventDateTime)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.EventDateTime)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.EventLocation)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.EventLocation)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.UserName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.UserName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.TicketId)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.TicketId)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Status)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Status)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Quantity)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Quantity)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.TotalAmount)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.TotalAmount)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.AuthCode)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.AuthCode)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ProcessingTime)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ProcessingTime)
-        </dd>
-    </dl>
+<style>
+    body {
+        background-color: #F05F40;
+        background-image: url('../img/header3.jpg');
+    }
+
+    .transparentbar, .transparentbar:hover {
+        background-repeat: no-repeat;
+        cursor: pointer;
+        outline: none;
+        border: none;
+        box-shadow: none;
+        background-image: none;
+        background-color: transparent;
+        background: transparent;
+        border-color: transparent;
+    }
+    
+    .form-group {
+        color: white;
+    }
+</style>
+
+<div class="container-fluid" style="padding-top: 72px; padding-bottom: 72px;">
+    <div class="row">
+        <div class="col-lg-4 col-lg-offset-4" style="font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;">
+            <div class="panel panel-primary" style="background-color: rgba(0, 0, 0, 0.7); border: none; padding: 12px; margin: 12px;">
+                <div class="form-group text-center"><span style="font-size: 48px; font-family: 'Permanent Marker', cursive; color: white;">Confirmed!</span></div>
+                <div class="form-group">
+                    <span style="font-weight:bold;">Event: </span>
+                    @Html.HiddenFor(model => model.EventName)
+                    @Html.DisplayFor(model => model.EventName)
+                </div>
+                <div class="form-group">
+                    <span style="font-weight:bold;">Date: </span>
+                    @Html.HiddenFor(model => model.EventDateTime)
+                    @Html.DisplayFor(model => model.EventDateTime)
+                </div>
+                <div class="form-group">
+                    <span style="font-weight:bold;">Location: </span>
+                    @Html.HiddenFor(model => model.EventLocation)
+                    @Html.DisplayFor(model => model.EventLocation)
+                </div>
+                <div class="form-group">
+                    <span style="font-weight:bold;">Quantity: </span>
+                    @Html.HiddenFor(model => model.Quantity)
+                    @Html.DisplayFor(model => model.Quantity)
+                </div>
+                <div class="form-group">
+                    <span style="font-weight:bold;">Total: </span>
+                    @Html.HiddenFor(model => model.TotalAmount)
+                    @Html.DisplayFor(model => model.TotalAmount)
+                </div>
+                <hr class="light" />
+                <div class="form-group">
+                    <span style="font-weight:bold;">User: </span>
+                    @Html.HiddenFor(model => model.UserName)
+                    @Html.DisplayFor(model => model.UserName)
+                </div>
+                <div class="form-group">
+                    <span style="font-weight:bold;">Ticket Id: </span>
+                    @Html.HiddenFor(model => model.TicketId)
+                    @Html.DisplayFor(model => model.TicketId)
+                </div>
+                <div class="form-group">
+                    <span style="font-weight:bold;">Status: </span>
+                    @Html.HiddenFor(model => model.TicketId)
+                    @Html.DisplayFor(model => model.TicketId)
+                </div>
+                <div class="form-group">
+                    <span style="font-weight:bold;">Authentication #: </span>
+                    @Html.HiddenFor(model => model.AuthCode)
+                    @Html.DisplayFor(model => model.AuthCode)
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center row" style="font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;">
+        <form asp-controller="Catalog" asp-action="Index">
+            <button class="btn btn-outline-primary btn-xl transparentbar center-block" style="font-size: 12px; font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif; color: white;">RETURN</button>
+        </form>
+    </div>
 </div>
-<div>
+@*<div>
     @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
     <a asp-action="Index">Back to List</a>
-</div>
+</div>*@
