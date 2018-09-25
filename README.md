@@ -2,6 +2,10 @@
 
 Simple Booking is a ticketing and event management system that allows users to create, browse, and purchase tickets for events. The application is developed in ASP.NET Core (and uses Docker for deployment) and broadly follows a microservices architectural pattern.
 
+## Demonstration
+
+[![Simple Booking](http://img.youtube.com/vi/-FnYialTVYY/0.jpg)](https://www.youtube.com/watch?v=-FnYialTVYY "Simple Booking")
+
 ## Getting Started
 
 Clone this project using your preferred Github repository management tool and open it in Visual Studio. Follow the instructions for setting up the application and execute the `Docker Compose` project to begin.
